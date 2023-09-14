@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Hosted Page</title>
+</head>
+<body>
+    <h1 id="message">Waiting for message...</h1>
+    <script>
+        function showMessage(message) {
+            document.getElementById("message").textContent = "Received: " + message;
+        }
+
+        // Function to receive messages from Flutter WebView
+        function receiveMessageFromFlutter(message) {
+            showMessage(message);
+        }
+    </script>
+</body>
+</html>
