@@ -11,6 +11,8 @@ class Categories extends BE_Controller {
 	 */
 	function __construct() {
 
+		//echo 'test print construct truth';
+		
 		parent::__construct( MODULE_CONTROL, 'CATEGORIES' );
 		$this->load->library('uploader');
 		$this->load->library('csvimport');
@@ -24,6 +26,7 @@ class Categories extends BE_Controller {
 		if(empty($this->User->has_permission( $module_id,$user_id )) && $logged_in_user->user_is_sys_admin!=1){
 			return redirect( site_url('/admin/') );
 		}
+		
 		///end check
 	}
 
@@ -366,6 +369,7 @@ class Categories extends BE_Controller {
 
 	function upload() {
 		
+		 
 		if ( $this->is_POST()) {
 
 
@@ -411,7 +415,7 @@ class Categories extends BE_Controller {
 									$data_icon = getimagesize(base_url() . "uploads/" . $row['icon_name']);
 
 									
-									if( count($data_img) != 1) {
+									if( $data_img !== false) {
 
 										$data = getimagesize(base_url() . "uploads/" . $row['photo_name']);
 										$img_width_cover = $data[0];
@@ -420,7 +424,7 @@ class Categories extends BE_Controller {
 									} 
 
 									
-									if( count($data_icon) != 1) {
+									if( $data_icon !== false) {
 
 										$data = getimagesize(base_url() . "uploads/" . $row['icon_name']);
 										$img_width_icon = $data[0];
@@ -429,7 +433,7 @@ class Categories extends BE_Controller {
 									} 
 									
 
-									if( count($data_img) != 1 ) {
+									if( $data_img !== false ) {
 										
 										if( count($data_icon) != 1 ) {
 										
@@ -591,7 +595,7 @@ class Categories extends BE_Controller {
 		} else {
 			redirect( $this->module_site_url());
 		}
-		
+		$this->set_flash_msg( 'error', 'as' );
 
 	}
 

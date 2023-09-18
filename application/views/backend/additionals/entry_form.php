@@ -31,7 +31,7 @@
 						)); ?>
               		</div>
 
-              		<div class="form-group">
+              		<!--<div class="form-group">
 						<label><span style="font-size: 17px; color: red;">*</span>
 							<?php echo get_msg('food_add_description')?>
 							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('food_add_description')?>">
@@ -39,13 +39,13 @@
 							</a>
 						</label>
 						<textarea class="form-control" name="description" placeholder="<?php echo get_msg('food_add_description')?>" rows="5"><?php echo $add->description; ?></textarea>
-					</div>
+					</div>-->
 
               		<?php if ( !isset( $add )): ?>
 
 					<div class="form-group">
 					
-						<label>
+						<label> <span style="font-size: 17px; color: red;">*</span>
 							<?php echo get_msg('food_add_img')?>
 							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
 								<span class='glyphicon glyphicon-info-sign menu-icon'>
@@ -97,13 +97,13 @@
 
 									<br/>
 									
-									<p class="text-center">
+									<!--<p class="text-center">
 										
 										<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 											image="<?php echo $img->img_path; ?>">
 											<?php echo get_msg('remove_label'); ?>
 										</a>
-									</p>
+									</p>-->
 
 								</div>
 

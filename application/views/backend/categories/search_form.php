@@ -71,8 +71,7 @@
 
 
 							<br/>
-
-							<input class="btn btn-sm" type="file" name="file" id="file">
+							<input class="btn btn-sm" type="file" name="file" id="file" accept=".csv">
 						</div>
 
 

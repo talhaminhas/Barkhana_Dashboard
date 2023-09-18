@@ -365,8 +365,8 @@ class Transactionheaders extends API_Controller
 		 		$data['code']  =  $today = date("Ym"); ;
 		 		$data['count'] = $transaction_row_count + 1;
 		 		$data['added_user_id'] = $this->post( 'user_id' );
-		 		$data['added_date'] = date("Y-m-d H:i:s"); 
-		 		$data['updated_date'] = date("Y-m-d H:i:s"); 
+		 		//$data['added_date'] = date("Y-m-d H:i:s"); 
+		 		//$data['updated_date'] = date("Y-m-d H:i:s"); 
 		 		$data['updated_user_id'] = 0;
 		 		$data['updated_flag'] = 0;
 
@@ -450,9 +450,9 @@ class Transactionheaders extends API_Controller
 		 			'discount_amount'       => $this->post( 'discount_amount'),
 		 			'coupon_discount_amount'=> $this->post( 'coupon_discount_amount'),
 		 			'trans_code'            => $trans_code,
-		 			'added_date'            => $current_date_time,
+		 			//'added_date'            => $current_date_time,
 		 			'added_user_id'         => $this->post( 'user_id' ),
-		 			'updated_date'          => $current_date_time,
+		 			//'updated_date'          => $current_date_time,
 		 			'updated_user_id'       => "0",
 		 			'updated_flag'          => "0",
 		 			'currency_symbol'       => $this->post( 'currency_symbol'),
@@ -490,7 +490,7 @@ class Transactionheaders extends API_Controller
 	                    "payment_status" => 'completed',
 	                    "transactions_header_id" => $trans_header_id,
 	                    // "shop_id" => $this->post('shop_id'),
-	                    "added_date" => $current_date_time,
+	                    //"added_date" => $current_date_time,
 	                    "added_user_id" => $this->post( 'user_id' ),
 	                    "trans_code" => $trans_code
 	                );
@@ -516,7 +516,7 @@ class Transactionheaders extends API_Controller
 	                    "payment_status" => 'completed',
 	                    "transactions_header_id" => $trans_header_id,
 	                    // "shop_id" => $this->post('shop_id'),
-	                    "added_date" => $current_date_time,
+	                    //"added_date" => $current_date_time,
 	                    "added_user_id" => $this->post( 'user_id' ),
 	                    "trans_code" => $trans_code
 	                );
@@ -550,9 +550,9 @@ class Transactionheaders extends API_Controller
 				    $trans_detail[ 'discount_percent' ]             = $trans_details[$i]['discount_percent'];
 				    $trans_detail[ 'discount_amount' ]              = $trans_details[$i]['discount_amount'];
 				    $trans_detail['transactions_header_id']         = $trans_header_id;
-				    $trans_detail['added_date']             		= $current_date_time;
+				    //$trans_detail['added_date']             		= $current_date_time;
 				    $trans_detail['added_user_id']          		= $this->post( 'user_id' );
-				    $trans_detail['updated_date']           		= $current_date_time;
+				    //$trans_detail['updated_date']           		= $current_date_time;
 				    $trans_detail['updated_user_id']        		= "0";
 				    $trans_detail['updated_flag']           		= "0";
 				    $trans_detail['currency_short_form']            = $trans_details[$i]['currency_short_form'];
@@ -577,7 +577,7 @@ class Transactionheaders extends API_Controller
 					$trans_count['cat_id']     = $prd_cat_id;
 					$trans_count['sub_cat_id'] = $prd_sub_cat_id;
 					$trans_count['user_id']    = $this->post( 'user_id' );
-					$trans_count['added_date'] = $current_date_time;
+					//$trans_count['added_date'] = $current_date_time;
 
 
 					if ( !$this->Transactioncount->save( $trans_count )) {
