@@ -78,7 +78,7 @@ class Uploader
 		}
 
 		if ( empty( $data )) {
-			$data['error'] = "No file is uploaded";
+			$data['error'] = "No file is uploaded 4";
 		}
 			
 		return $data;

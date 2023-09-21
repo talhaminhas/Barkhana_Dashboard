@@ -1,0 +1,3 @@
+prd_name,subcat_name,photo_name,price,status,is_featured,is_available,ingredients,highlight_info,extras,nutrient
+new2,pita bresad kebabs,a1.jpeg,1.5,1,1,1,"a,b,c",this is great product,fdfd,"a,b,c"
+new3,fried items,a1.jpeg,1.5,1,1,1,"a,b,c",this is great product,"hello,test1,test2,test3","a,b,c"

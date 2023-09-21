@@ -15,7 +15,8 @@ class Products extends BE_Controller {
 		///start allow module check
 		$conds_mod['module_name'] = $this->router->fetch_class();
 		$module_id = $this->Module->get_one_by($conds_mod)->module_id;
-		
+		$this->load->library('uploader');
+		$this->load->library('csvimport');
 		$logged_in_user = $this->ps_auth->get_user_info();
 
 		$user_id = $logged_in_user->user_id;
@@ -42,7 +43,245 @@ class Products extends BE_Controller {
 		// load index logic
 		parent::index();
 	}
+	function upload() {
+		
+		 
+		if ( $this->is_POST()) {
 
+
+		$file = $_FILES['file']['name'];
+		
+		$ext = substr(strrchr($file, '.'), 1);
+		//print_r($ext); die;
+		
+
+
+
+        if(strtolower($ext) == "csv") {
+
+        	 	$upload_data = $this->uploader->upload($_FILES);
+				
+				if (!isset($upload_data['error'])) {
+					foreach ($upload_data as $upload) {
+						
+						$file_data = $this->upload->data();
+		            	$file_path =  './uploads/'.$file_data['file_name'];
+		            	if ($this->csvimport->get_array($file_path)) {
+
+							//get data from imported csv file
+			                $csv_array = $this->csvimport->get_array($file_path);
+
+			                $i = 0; $s = 0; $f=0;
+			                $fail_records = "";
+			                foreach ($csv_array as $row) {
+   
+
+			                     if($row['subcat_name'] && 
+								 $row['photo_name'] && 
+								 $row['prd_name'] &&
+								 $row['price'] 
+								 ) {
+
+									//Get Sub Category Id 
+									$conds_subcat['name'] = trim($row['subcat_name']);
+									$subcat_name =  trim($row['subcat_name']);
+
+
+									// print_r($cat_name); die;
+									//Get Image Info 
+
+									$data_img = getimagesize(base_url() . "uploads/" . $row['photo_name']);
+
+									//$data_icon = getimagesize(base_url() . "uploads/" . $row['icon_name']);
+
+									
+									if( $data_img !== false) {
+
+										$data = getimagesize(base_url() . "uploads/" . $row['photo_name']);
+										$img_width_cover = $data[0];
+										$img_height_cover = $data[1];
+
+									} 
+									
+
+									if( $data_img !== false ) {
+										
+										
+										//Wallpaper must have subcategory
+										if($subcat_name != "") {
+
+											$subcat = $this->Subcategory->get_one_by($conds_subcat);
+											$subcat_id = $subcat->id;
+											$cat_id = $subcat->cat_id;
+											
+											if($subcat_id != "")
+											{
+												//print_r($row['ingredient']); die();
+												$data = array(
+													
+													'name'     		=>	trim($row['prd_name']),
+													'status'   		=>  trim($row['status']),
+													'cat_id'       	=> 	$cat_id,
+													'sub_cat_id'	=>	$subcat_id,
+													'original_price'=>	trim($row['price']),
+													'unit_price'	=>	trim($row['price']),
+													'minimum_order'	=>	'1',
+													'highlight_information'	=>	trim($row['highlight_info']),
+													'is_featured'	=>	trim($row['is_featured']),
+													'is_available'	=>	trim($row['is_available']),
+													'status'		=>	trim($row['status']),
+													'ingredient'	=>	trim($row['ingredients']),
+													'maximum_order'	=>	'100',
+													'nutrient'		=>	trim($row['prd_nutrients']),
+												);
+
+													$id = 0;
+													
+													if($this->Product->save($data, $id)) {
+
+														
+														$id = ( !$id )? $data['id']: $id ;
+														$extrasArray = explode(',', trim($row['extras']));
+
+														foreach ($extrasArray as $extra_name) {
+															$conds_extra['name'] = trim($extra_name);
+															$extra = $this->Additional->get_one_by($conds_extra);
+															//print_r($extra); die;
+															$extra_data = array(
+													
+																'product_id'     		=>	$id,
+																'add_on_id'   		=>  $extra->id,
+															);
+															if($extra->id != '')
+															{$this->Food_additional->save($extra_data);}
+														}
+																									
+														$image = array(
+
+															'img_parent_id' => $id,
+															'img_type' 		=> "product",
+															'img_desc' 		=> "",
+															'img_path' 		=> trim($row['photo_name']),
+															'img_width'     => $img_width_cover,
+															'img_height'    => $img_height_cover
+														);
+
+														//cover photo path
+														$path = "uploads/" . $row['photo_name'];
+														$this->ps_image->create_thumbnail($path);
+														
+														if($this->Image->save($image)) {
+														//both success
+
+														$s++;	
+
+														}
+
+													} else {
+														$f++;
+														$fail_records .= " - " . $row['prd_name'] . ", " . get_msg('because_db_err') . "<br>";
+													}
+
+											}else{
+												//subcategory name invalid
+												$f++;
+												$fail_records .= " - " . $row['prd_name'] .", Invalid Subcategory name. <br>";
+											}
+										} else {
+											//sub Category Missing
+											$f++;
+											$fail_records .= " - " . $row['prd_name'] .", because of missing sub category name.<br>";
+										}	
+
+
+
+									} else {
+										//image at uploads missing 
+										$f++;
+				                			$fail_records .= " - " . $row['prd_name'] . ", because of missing paroduct image.<br>";
+									}
+
+			                	} else {
+			                		$f++;
+			                		$fail_records .= " - " . $row['prd_name'] . ", because of incompelete data.<br>";
+			                	}
+
+
+
+			                	$i++;
+
+			                }
+
+			                $result_str = get_msg("total_subcat").": "  .$i. "<br>";
+			                $result_str .= get_msg("success_subcat") .": ". $s . "<br>";
+			                $result_str .= get_msg("fail_subcat") .": ". $f .  "<br>" . $fail_records;
+			                
+			                // print_r($result_str); die;
+
+			                $this->data['message'] = $result_str;
+			                $this->set_flash_msg( 'success', $result_str);
+
+			            	redirect( $this->module_site_url());
+							
+
+			                //$this->session->set_flashdata('success', $result_str);
+
+			                //$content['content'] = $this->load->view('items/import_items',$data,true);		
+							//$this->load_template($content, false);
+
+			            } else {
+
+			            	//echo "Something wrong in your uploaded data.";
+			                
+			            	$this->set_flash_msg( 'error', get_msg( 'something_wrong_upload' ));
+
+			            	redirect( $this->module_site_url());
+
+			    //             $data['error'] = "Something wrong in your uploaded data.";
+			    //             $this->session->set_flashdata('error', $data['error']);
+			    //              $content['content'] = $this->load->view('items/import_items',$data,true);		
+							// $this->load_template($content, false);
+			            }
+
+
+					}
+				} else {
+					// $data['error'] = $upload_data['error'];
+
+					// $this->session->set_flashdata('error', $data['error']);
+		   //          $content['content'] = $this->load->view('items/import_items',$data,true);		
+					// $this->load_template($content, false);
+
+					//print_r($upload_data['error']);
+
+					$this->set_flash_msg( 'error', $upload_data['error']);
+
+					redirect( $this->module_site_url());
+				}
+
+        } else {
+
+        	//print_r('Please upload CSV file only.');
+
+        	$this->set_flash_msg( 'error',  get_msg( 'pls_upload_csv' ));
+
+			redirect( $this->module_site_url());
+
+   //          $this->session->set_flashdata('error', 'Please upload CSV file only.');
+
+   //          $content['content'] = $this->load->view('items/import_items',$data,true);		
+			// $this->load_template($content, false);
+
+        }
+
+
+
+		} else {
+			redirect( $this->module_site_url());
+		}
+		$this->set_flash_msg( 'error', 'as' );
+
+	}
 	/**
 	 * Searches for the first match.
 	 */

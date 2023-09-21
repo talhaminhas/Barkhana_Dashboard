@@ -16,9 +16,6 @@
 				image:{
 					required : true
 				},
-				icon:{
-					required : true
-				}
 			},
 			messages:{
 				name:{
@@ -30,9 +27,6 @@
 				image:{
 					required : "<?php echo get_msg( 'err_image_missing' ) ;?>."
 				},
-				icon:{
-					required : "<?php echo get_msg( 'err_icon_missing' ) ;?>."
-				}
 			}
 
 		});

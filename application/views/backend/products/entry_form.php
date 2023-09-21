@@ -58,7 +58,7 @@
 					</div>
 
 					<div class="form-group">
-						<label>
+						<label><span style="font-size: 17px; color: red;">*</span>
 							<?php echo get_msg('Prd_search_subcat')?>
 						</label>
 
@@ -174,7 +174,7 @@
 					</div>
 
 
-					<div class="form-group">
+					<!--<div class="form-group">
 						<label>
 							<?php echo get_msg('prd_code')?>
 						</label>
@@ -202,7 +202,7 @@
 							'id' => 'ordering'
 						)); ?>
 
-					</div>
+					</div>-->
 
 					<div class="form-group">
 						<label>
@@ -235,7 +235,7 @@
 
 					</div>
 
-					<br><br>
+					<!--<br><br>
 
 					<div class="form-group">
 		              <label> <span style="font-size: 17px; color: red;"></span>
@@ -243,7 +243,7 @@
 		              </label>
 		            </div>
 
-		            <br><br>
+		            <br><br>-->
             	</div>
 
             	<div class="col-md-6">
@@ -303,7 +303,7 @@
 
 					</div>
 
-					<div class="form-group">
+					<!--<div class="form-group">
 						<label> <span style="font-size: 17px; color: red;">*</span>
 							<?php echo get_msg('prd_desc')?>
 						</label>
@@ -317,39 +317,32 @@
 							'rows' => "5"
 						)); ?>
 
-					</div>
+					</div>-->
 
 					<div class="form-group">
-						<label>
-							<?php echo get_msg('minimum_order')?>
-						</label>
 
-						<?php echo form_input( array(
+						<?php echo form_input(array(
 							'name' => 'minimum_order',
-							'value' => set_value( 'minimum_order', show_data( @$product->minimum_order ), false ),
-							'class' => 'form-control form-control-sm',
-							'placeholder' => get_msg('pls_minimum_order'),
+							'type' => 'hidden', // Set the input type to 'hidden'
+							'value' => '1', // Set the minimum value to 1
 							'id' => 'minimum_order'
 						)); ?>
 
 					</div>
 
 					<div class="form-group">
-						<label> 
-							<?php echo get_msg('maximum_order')?>
-						</label>
 
-						<?php echo form_input( array(
+						<?php echo form_input(array(
 							'name' => 'maximum_order',
-							'value' => set_value( 'maximum_order', show_data( @$product->maximum_order ), false ),
-							'class' => 'form-control form-control-sm',
-							'placeholder' => get_msg('pls_maximum_order'),
+							'type' => 'hidden', // Set the input type to 'hidden'
+							'value' => '100', // Set the maximum value to 100
 							'id' => 'maximum_order'
 						)); ?>
 
 					</div>
 
-					<div class="form-group">
+
+					<!--<div class="form-group">
 						<label>
 							<?php echo get_msg('prd_unit')?>
 						</label>
@@ -377,15 +370,16 @@
 							'id' => 'search_tag'
 						)); ?>
 
-					</div>
+					</div>-->
 
 					<br><br>
 
 					 <?php if ( !isset( $product )): ?>
 
 		              <div class="form-group">
-		                <span style="font-size: 17px; color: red;">*</span>
-		                <label><?php echo get_msg('prd_image')?>
+		                
+		                <label>
+							<?php echo get_msg('prd_image')?>
 		                  <a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('prd_image')?>">
 		                    <span class='glyphicon glyphicon-info-sign menu-icon'>
 		                  </a>
@@ -394,11 +388,15 @@
 		                <br/>
 
 		                <input class="btn btn-sm" type="file" name="images1">
+						<?php
+						
+						?>
 		              </div>
 
 		              <?php else: ?>
-		              <span style="font-size: 17px; color: red;">*</span>
-		              <label><?php echo get_msg('prd_image')?>
+		              
+		              <label>
+						<?php echo get_msg('prd_image')?>
 		                <a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
 		                  <span class='glyphicon glyphicon-info-sign menu-icon'>
 		                </a>
@@ -500,9 +498,9 @@
 				</div>
             </div>
 			
-			<label><?php echo get_msg('prd_specification')?></label>
+			<!--<label><?php echo get_msg('prd_specification')?></label>-->
     		<!-- product specification for edit -->
-			<?php if ( isset( $product )){ ?>
+			<!--<?php if ( isset( $product )){ ?>
 
 				<?php 
 
@@ -556,9 +554,9 @@
 		    		</div>
 		    		<?php endforeach; ?>
 
-				<?php endif; ?>
+				<?php endif; ?>-->
 				<!-- Edit Default save -->
-				<div id="spec_data1">
+				<!--<div id="spec_data1">
 					<div class="col-md-6">
     					<div class="form-group">
 							<label>
@@ -589,9 +587,9 @@
 						</div>
     				</div>
     			</div>
-
+						-->
 			<!-- product specification for save -->
-			<?php } else { ?>
+			<!--<?php } else { ?>
 	    		<div id="spec_data1">
 	    			<div class="col-md-6">
 						<div class="form-group">
@@ -635,7 +633,7 @@
 						</div>
 					</div>
 				</div>
-		</div>
+		</div>-->
 		<?php 
 			if (isset($color_count)) {
 				$color_count = $color_count;
@@ -671,7 +669,7 @@
 					<?php echo get_msg('btn_save')?>
 				</button>
 
-				<button type="submit" name="gallery" id="gallery" class="btn btn-sm btn-primary" style="margin-top: 3px;">
+				<!--<button type="submit" name="gallery" id="gallery" class="btn btn-sm btn-primary" style="margin-top: 3px;">
 					<?php echo get_msg('btn_save_gallery')?>
 				</button>
 
@@ -681,7 +679,7 @@
 
 				<a href="<?php echo site_url() . '/admin/attributes/index/'.$product->id ?>" class="btn btn-sm btn-primary" style="margin-top: 3px;">
 					<?php echo get_msg('btn_cus_list')?>
-				</a>
+				</a>-->
 
 				<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary" style="margin-top: 3px;">
 					<?php echo get_msg('btn_cancel')?>

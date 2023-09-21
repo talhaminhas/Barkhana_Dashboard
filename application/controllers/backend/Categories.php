@@ -412,8 +412,6 @@ class Categories extends BE_Controller {
 
 									$data_img = getimagesize(base_url() . "uploads/" . $row['photo_name']);
 
-									$data_icon = getimagesize(base_url() . "uploads/" . $row['icon_name']);
-
 									
 									if( $data_img !== false) {
 
@@ -423,20 +421,7 @@ class Categories extends BE_Controller {
 
 									} 
 
-									
-									if( $data_icon !== false) {
-
-										$data = getimagesize(base_url() . "uploads/" . $row['icon_name']);
-										$img_width_icon = $data[0];
-										$img_height_icon = $data[1];
-
-									} 
-									
-
 									if( $data_img !== false ) {
-										
-										if( count($data_icon) != 1 ) {
-										
 										
 										//Wallpaper must have category
 										if($cat_name != "") {
@@ -448,65 +433,59 @@ class Categories extends BE_Controller {
 											
 											);
 
-												$id = 0;
+											$id = 0;
+											
+											if($this->Category->save($data, $id)) {
 												
-												if($this->Category->save($data, $id)) {
-							                    	
-														$id = ( !$id )? $data['id']: $id ;
-														// print_r($data['id']); die();
-														$image = array(
+												$id = ( !$id )? $data['id']: $id ;
+													//print_r($data['id']); die();
+												$image = array(
 
-															'img_parent_id' => $id,
-															'img_type' 		=> "category",
-															'img_desc' => "",
-															'img_path' 		=> trim($row['photo_name']),
-															'img_width'     => $img_width_cover,
-															'img_height'    => $img_height_cover
-														);
+													'img_parent_id' => $id,
+													'img_type' 		=> "category",
+													'img_desc' => "",
+													'img_path' 		=> trim($row['photo_name']),
+													'img_width'     => $img_width_cover,
+													'img_height'    => $img_height_cover
+												);
 
-														//cover photo path
-														$path = "uploads/" . $row['photo_name'];
-														$this->ps_image->create_thumbnail($path);
+												//cover photo path
+												$path = "uploads/" . $row['photo_name'];
+												$this->ps_image->create_thumbnail($path);
 
-														$image_icon = array(
+												$image_icon = array(
 
-															'img_parent_id' => $id,
-															'img_type' 		=> "category-icon",
-															'img_desc' => "",
-															'img_path' 		=> trim($row['icon_name']),
-															'img_width'     => $img_width_icon,
-															'img_height'    => $img_height_icon
-														);
+													'img_parent_id' => $id,
+													'img_type' 		=> "category-icon",
+													'img_desc' => "",
+													'img_path' 		=> trim($row['icon_name']),
+													'img_width'     => $img_width_icon,
+													'img_height'    => $img_height_icon
+												);
 
-														//icon photo path
-														$path_icon = "uploads/" . $row['icon_name'];
-														$this->ps_image->create_thumbnail($path_icon);
-														$this->Image->save($image_icon);
-														
-								                    	if($this->Image->save($image)) {
-							                    		//both success
+												//icon photo path
+												$path_icon = "uploads/" . $row['icon_name'];
+												$this->ps_image->create_thumbnail($path_icon);
+												$this->Image->save($image_icon);
+												
+												if($this->Image->save($image)) {
+												//both success
 
-							                    		$s++;	
+												$s++;	
 
-							                    	}
-
-							                    } else {
-							                    	$f++;
-						                			$fail_records .= " - " . $row['cat_name'] . " " . get_msg('because_db_err') . "<br>";
-							                    }
-
+												}
 
 											} else {
-												//Category Missing
 												$f++;
-					                			$fail_records .= " - " . $row['cat_name'] . " " . get_msg('because_miss_cat') ."<br>";
-											}	
+												$fail_records .= " - " . $row['cat_name'] . " " . get_msg('because_db_err') . "<br>";
+											}
+
 
 										} else {
-											//thumbnail missing 
+											//Category Missing
 											$f++;
-				                			$fail_records .= " - " . $row['cat_name'] . " " . get_msg('because_miss_cat_thumb_upload') ."<br>";
-										} 
+											$fail_records .= " - " . $row['cat_name'] . " " . get_msg('because_miss_cat') ."<br>";
+										}	
 
 
 									} else {

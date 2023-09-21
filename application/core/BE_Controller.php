@@ -978,39 +978,40 @@ class BE_Controller extends PS_Controller {
 
 				return false;
 			}
-		} else if($type == "icon") {
+		 } 
+		//else if($type == "icon") {
 
-			// upload images
-			$upload_data = $this->ps_image->upload_icon( $files );
+		// 	// upload images
+		// 	$upload_data = $this->ps_image->upload_icon( $files );
 
-			if ( isset( $upload_data['error'] )) {
-			// if there is an error in uploading
+		// 	if ( isset( $upload_data['error'] )) {
+		// 	// if there is an error in uploading
 
-				// set error message
-				$this->data['error'] = $upload_data['error'];
+		// 		// set error message
+		// 		$this->data['error'] = $upload_data['error'];
 
-				return;
-			}
-			$image = array(
-				'img_parent_id'=> $img_parent_id,
-				'img_type' => $img_type,
-				'img_desc' => "",
-				'img_path' => $upload_data[0]['file_name'],
-				'img_width'=> $upload_data[0]['image_width'],
-				'img_height'=> $upload_data[0]['image_height']
-			);
+		// 		return;
+		// 	}
+		// 	$image = array(
+		// 		'img_parent_id'=> $img_parent_id,
+		// 		'img_type' => $img_type,
+		// 		'img_desc' => "",
+		// 		'img_path' => $upload_data[0]['file_name'],
+		// 		'img_width'=> $upload_data[0]['image_width'],
+		// 		'img_height'=> $upload_data[0]['image_height']
+		// 	);
 
 
-			if ( ! $this->Image->save( $image )) {
-			// if error in saving image
+		// 	if ( ! $this->Image->save( $image )) {
+		// 	// if error in saving image
 
-				// set error message
-				$this->data['error'] = get_msg( 'err_model' );
+		// 		// set error message
+		// 		$this->data['error'] = get_msg( 'err_model' );
 
-				return false;
-			}
+		// 		return false;
+		// 	}
 
-		}
+		// }
 
 		return true;
 	}

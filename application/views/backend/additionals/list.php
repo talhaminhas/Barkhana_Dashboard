@@ -1,10 +1,12 @@
+
+
+
 <div class="table-responsive animated fadeInRight">
 	<table class="table m-0 table-striped">
 		<tr>
 			<th><?php echo get_msg('no'); ?></th>
 			<th><?php echo get_msg('food_add_img'); ?></th>
-			<th><?php echo get_msg('food_add_name'); ?></th>
-			<th><?php echo get_msg('food_add_description'); ?></th>
+			<th class="sortable" data-column="Extras Name"><?php echo get_msg('food_add_name'); ?></th>
 			<th><?php echo get_msg('food_add_price'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
@@ -54,7 +56,6 @@
 
 				<?php } ?>
 				<td><?php echo $add->name;?></td>
-				<td><?php echo $add->description;?></td>
 				<td><?php echo $add->price;?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>

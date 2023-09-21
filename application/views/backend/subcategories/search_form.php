@@ -102,7 +102,7 @@
 				<div class="col-md-6">
 					<label>
 						<?php echo get_msg('csv_upload_instruction_1');?> 
-						<?php echo get_msg('csv_file_sample_link');?> 
+						<?php echo get_msg('subcategory_csv_file_sample_link');?> 
 						<?php echo get_msg('csv_upload_instruction_2');?> 
 					</label>
 				</div>

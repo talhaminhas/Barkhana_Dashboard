@@ -13,6 +13,10 @@
 				cat_id: {
 		       		indexCheck : ""
 		      	},
+				  sub_cat_id: {
+		       		indexCheck : ""
+		      	},
+				  
 				original_price: {
 				blankCheck : "",
 				indexCheck : ""
@@ -23,7 +27,10 @@
                 },
                 maximum_order: {
                     indexCheck : ""
-                }
+                },
+				image:{
+					required : true
+				},
 			},
 			messages:{
 				name:{
@@ -34,6 +41,9 @@
 				cat_id:{
 			       indexCheck: "<?php echo get_msg('f_item_cat_required'); ?>"
 			    },
+				sub_cat_id:{
+			       indexCheck: "<?php echo get_msg('f_item_subcat_required'); ?>"
+			    },
                 minimum_order:{
                     indexCheck: "<?php echo get_msg('minimum_order_cannot_zero'); ?>"
                 },
@@ -43,7 +53,10 @@
 				original_price:{
 					blankCheck : "<?php echo get_msg( 'err_price_blank' ) ;?>",
 					indexCheck: "<?php echo get_msg('price_cannot_zero'); ?>"
-				}
+				},
+				image:{
+					required : "<?php echo get_msg( 'err_image_missing' ) ;?>."
+				},
 			},
 
 			submitHandler: function(form) {

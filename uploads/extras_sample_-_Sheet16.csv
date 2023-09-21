@@ -1,0 +1,4 @@
+extra_name,status,photo_name,price
+e1,1,a1.jpeg,abc
+e2,0,a1.jpeg,1.5
+e3,1,a1.jpeg,2.5

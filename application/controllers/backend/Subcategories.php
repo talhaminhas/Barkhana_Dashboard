@@ -117,7 +117,7 @@ class Subcategories extends BE_Controller {
 			                
 
 			                     if($row['subcat_name'] || $row['cat_name'] || $row['photo_name']) {
-			                     	// print_r($row['photo_name']); die;
+			                     	 //print_r($row['photo_name']); die;
 
 									//Get Sub Category Id 
 									$conds_subcat['subcat_name'] = trim($row['subcat_name']);
@@ -220,12 +220,12 @@ class Subcategories extends BE_Controller {
 											}else{
 												//category name missing
 												$f++;
-												$fail_records .= " - " . $row['subcat_name'] . " because of the missing category.<br>";
+												$fail_records .= " - " . $row['subcat_name'] ." " . get_msg("because_miss_cat_name") . " <br>";
 											}
 										} else {
 											//sub Category Missing
 											$f++;
-											$fail_records .= " - " . $row['subcat_name'] . " because of the missing subcategory.<br>";
+											$fail_records .= " - " . $row['subcat_name'] ." ". get_msg("because_miss_cat_name"). " <br>";
 										}	
 
 
@@ -233,12 +233,12 @@ class Subcategories extends BE_Controller {
 									} else {
 										//image at uploads missing 
 										$f++;
-				                			$fail_records .= " - " . $row['subcat_name'] . " ". get_msg("because_miss_cat_upload") . "<br>";
+				                			$fail_records .= " - " . $row['subcat_name'] . " ". get_msg("because_miss_subcat_upload") . "<br>";
 									}
 
 			                	} else {
 			                		$f++;
-			                		$fail_records .= " - " . $row['subcat_name'] . " " . get_msg("because_miss_cat_name") . "<br>";
+			                		$fail_records .= " - " . $row['subcat_name'] . " " . get_msg("because_miss_subcat_name") . "<br>";
 			                	}
 
 
@@ -247,9 +247,9 @@ class Subcategories extends BE_Controller {
 
 			                }
 
-			                $result_str = "Total Subcategories" .$i. "<br>";
-			                $result_str .= "Success Subcategories" . $s . "<br>";
-			                $result_str .= "Failed Subcategories" . $f .  "<br>" . $fail_records;
+			                $result_str = get_msg("total_subcat").": "  .$i. "<br>";
+			                $result_str .= get_msg("success_subcat") .": ". $s . "<br>";
+			                $result_str .= get_msg("fail_subcat") .": ". $f .  "<br>" . $fail_records;
 			                
 			                // print_r($result_str); die;
 

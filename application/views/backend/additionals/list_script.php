@@ -1,10 +1,45 @@
 <script>
+	
 function runAfterJQ() {
 
 	$(document).ready(function(){
+		$(document).delegate('.publish','click',function(){
+
+			
+		var sortOrder = 'asc';
+		// Toggle sorting order between ascending and descending
+		sortOrder = sortOrder === 'asc' ? 'desc' : 'asc';
+
+		// Get the column name from the header's data attribute
+		var columnName = $(this).data('column');
+		
+
+		
+		var $table = $('.table');
+		var $rows = $table.find('tbody > tr').get();
+
+		$rows.sort(function(a, b) {
+			var keyA = $(a).find('.' + columnName).text().toUpperCase();
+			var keyB = $(b).find('.' + columnName).text().toUpperCase();
+
+			// Compare the values based on sortOrder (ascending or descending)
+			if (sortOrder === 'asc') {
+			return keyA.localeCompare(keyB);
+			} else {
+			return keyB.localeCompare(keyA);
+			}
+		});
+
+		// Reorder the rows in the table
+		$.each($rows, function(index, row) {
+			$table.children('tbody').append(row);
+		});
+		
+			});
+		
 		
 		// Publish Trigger
-		$(document).delegate('.publish','click',function(){
+		$(document).delegate('.publsh','click',function(){
 			
 			// get button and id
 			var btn = $(this);
