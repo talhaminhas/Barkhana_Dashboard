@@ -56,7 +56,7 @@
 
 				<?php } ?>
 				<td><?php echo $add->name;?></td>
-				<td><?php echo $add->price;?></td>
+				<td><?php echo number_format($add->price,2);?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			

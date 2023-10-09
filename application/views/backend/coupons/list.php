@@ -37,7 +37,7 @@
 				<td><?php echo ++$count;?></td>
 				<td><?php echo $coupon->coupon_name;?></td>
 				<td><?php echo $coupon->coupon_code ?></td>
-				<td><?php echo $coupon->coupon_amount; ?></td>
+				<td><?php echo number_format($coupon->coupon_amount, 2); ?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			

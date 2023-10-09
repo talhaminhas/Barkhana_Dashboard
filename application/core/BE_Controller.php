@@ -1021,7 +1021,7 @@ class BE_Controller extends PS_Controller {
 	 */
 	function status_edit( $id,$status_id,$payment_id,$delivery_boy_id )
 	{
-
+		
 		// check access
 		$this->check_access( EDIT );
 
@@ -1030,13 +1030,14 @@ class BE_Controller extends PS_Controller {
 
 			// server side validation
 			if ( $this->input->post()) {
-
+				
 				$this->save( $id,$status_id,$payment_id,$delivery_boy_id );
+				
 			}
 		}
-
+		
 		// load entry form
-		redirect(site_url('admin/transactions/detail/'. $id));
+		redirect(site_url("admin/".$redirect."/detail/". $id));
 	}
 
     /**

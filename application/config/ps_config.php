@@ -51,7 +51,7 @@ $config['upload_thumbnail_path'] = 'uploads/thumbnail/';
 $config['image_type'] = 'jpg|jpeg|png|JPEG|JPG|PNG|ico|csv';
 
 /** Pagination */
-$config['pagination']['per_page'] = 20;
+$config['pagination']['per_page'] = 100;
 $config['pagination']['num_links'] = 5;
 $config['pagination']['uri_segment'] = 4;
 $config['pagination']['attributes'] = array('class' => 'page-link');

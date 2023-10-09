@@ -56,7 +56,7 @@
 
 						$unit_price = $product->unit_price;
 
-						$unit_price = round($unit_price, 2) ;
+						$unit_price = number_format($unit_price, 2) ;
 
 						echo $unit_price;
 
@@ -66,7 +66,7 @@
 
 						$original_price = $product->original_price;
 
-						$original_price = round($original_price, 2) ;
+						$original_price = number_format($original_price, 2);
 
 						echo $original_price;
 

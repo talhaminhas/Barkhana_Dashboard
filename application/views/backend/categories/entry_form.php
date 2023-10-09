@@ -63,7 +63,8 @@
 
 						<br/>
 
-						<input class="btn btn-sm" type="file" name="cover" id="cover">
+						<input class="btn btn-sm" type="file" name="cover" id="cover" accept="image/*">
+
 					</div>
 
 					<?php else: ?>

@@ -319,8 +319,6 @@ class Transactions extends BE_Controller {
 		//End -
 		// load user
 		$this->data['transaction'] = $this->Transactionheader->get_one( $id );
-		
-		
 
 		parent::status_edit($id,$status_id,$payment_id,$delivery_boy_id);
 	}
@@ -335,7 +333,7 @@ class Transactions extends BE_Controller {
 
 		$detail = $this->Transactionheader->get_one( $id );
 		$this->data['transaction'] = $detail;
-
+		//print_r($this->data); die;
 		$this->load_detail( $this->data );
 	}
 	/**

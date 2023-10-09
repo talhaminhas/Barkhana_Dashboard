@@ -43,9 +43,6 @@ function updateDataTableSelectAllCtrl(table){
 					required : true,
 					indexCheck : ""
 				},
-		      	image:{
-					required : true
-				}
 			},
 			messages:{
 				name:{
@@ -57,9 +54,6 @@ function updateDataTableSelectAllCtrl(table){
 					required : "<?php echo get_msg( 'err_dis_percent' ) ;?>",
 					indexCheck: "<?php echo get_msg('dis_cannot_zero'); ?>"
 				},
-			    image:{
-					required : "<?php echo get_msg( 'err_image_missing' ) ;?>."
-				}
 			}
 		});
 		jQuery.validator.addMethod("blankCheck",function( value, element ) {

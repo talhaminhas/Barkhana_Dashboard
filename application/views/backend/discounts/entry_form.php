@@ -64,73 +64,7 @@
 						</div>
 					</div>
 
-					<?php if ( !isset( $discount )): ?>
-
-						<div class="form-group">
-							<label> <span style="font-size: 17px; color: red;">*</span>
-								<?php echo get_msg('discount_photo')?>
-							</label>
-							<br/>
-
-							<input class="btn btn-sm" type="file" name="image" id="image">
-						</div>
-
-					<?php else: ?>
-
-						<label> <span style="font-size: 17px; color: red;">*</span>
-							<?php echo get_msg('discount_photo')?>
-						</label>
-			
-						<div class="btn btn-sm btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-							<?php echo get_msg('btn_replace_photo')?>
-						</div>
-			
-					<hr/>
 					
-					<?php
-						$conds = array( 'img_type' => 'discount', 'img_parent_id' => $discount->id );
-						$images = $this->Image->get_all_by( $conds )->result();
-					?>
-						
-					<?php if ( count($images) > 0 ): ?>
-						
-						<div class="row">
-
-						<?php $i = 0; foreach ( $images as $img ) :?>
-
-							<?php if ($i>0 && $i%3==0): ?>
-									
-							</div><div class='row'>
-							
-							<?php endif; ?>
-								
-							<div class="col-md-4" style="height:100">
-
-								<div class="thumbnail">
-
-									<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>">
-
-									<br/>
-									
-									<p class="text-center">
-										
-										<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
-											image="<?php echo $img->img_path; ?>">
-											<?php echo get_msg('remove_label'); ?>
-										</a>
-									</p>
-
-								</div>
-
-							</div>
-
-						<?php $i++; endforeach; ?>
-
-						</div>
-					
-					<?php endif; ?>
-
-				<?php endif; ?>	
 
 				</div>	
 			</div>	

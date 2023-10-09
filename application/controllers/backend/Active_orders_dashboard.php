@@ -261,6 +261,19 @@ class Active_orders_dashboard extends BE_Controller {
 	/**
 	* View transaction Detail
 	*/
+	// function detail($id)
+	// {
+	// 	// breadcrumb urls
+	// 	$this->data['action_title'] = get_msg( 'trans_detail' );
+
+	// 	$detail = $this->Transactionheader->get_one( $id );
+	// 	$this->data['transaction'] = $detail;
+	// 	print_r($this->data); die;
+	// 	$this->load_detail( $this->data );
+	// }
+	/**
+	* View transaction Detail
+	*/
 	function detail($id)
 	{
 		$sess_array = array('from_active_order_detail' => 1);
@@ -281,10 +294,191 @@ class Active_orders_dashboard extends BE_Controller {
 		}
 		
 		$this->data['transaction'] = $detail;
-
+		//print_r($this->data); die;
 		$this->load_detail( $this->data );
 	}
-
+/** Update the existing one
+		*/
+		function update() {
+		
+			
+			$id = $this->input->post('trans_header_id');
+			$status_id = $this->input->post('trans_status_id');
+			$payment_id = $this->get_data('payment_status_id');
+			$delivery_boy_id = $this->get_data( 'delivery_boy_id' );
+			$user_id = $this->Transactionheader->get_one( $id )->user_id;
+	
+			//start PPP @ 24/Aug/2020
+	
+			$existing_status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
+			$existing_payment_id = $this->Transactionheader->get_one( $id )->payment_status_id;
+			$existing_deli_boy = $this->Transactionheader->get_one( $id )->delivery_boy_id;
+	
+			//for transaction status
+			if ($status_id != '0' ) {
+				if ($status_id != "") {
+					//check existing and form status
+					if ($status_id != $existing_status_id) {
+	
+						$title = $this->Transactionstatus->get_one($status_id)->title;
+						$message = get_msg('order_status_changed') . " " . $title;
+	
+						$data['message'] = $message;
+						$data['flag'] = 'transaction';
+						$data['trans_header_id'] = $id;
+	
+						$devices = $this->Notitoken->get_all_device_in($user_id)->result();
+	
+						$device_ids = array();
+						if ( count( $devices ) > 0 ) {
+							foreach ( $devices as $device ) {
+								$device_ids[] = $device->device_id;
+							}
+						}
+	
+						$platform_names = array();
+						if ( count( $devices ) > 0 ) {
+							foreach ( $devices as $platform ) {
+								$platform_names[] = $platform->platform_name;
+							}
+						}
+	
+						$status = send_android_fcm( $device_ids, $data, $platform_names );					
+	
+	
+						if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
+	
+	
+						if( $delivery_boy_id != '0' ) {
+	
+							if( $delivery_boy_id != "" ){
+	
+								$title = $this->Transactionstatus->get_one($status_id)->title;
+								$message = get_msg('order_status_changed') . " " . $title;
+	
+								$data['message'] = $message;
+								$data['flag'] = 'transaction';
+								$data['trans_header_id'] = $id;
+			
+								$devices = $this->Notitoken->get_all_device_in($delivery_boy_id)->result();
+			
+								$device_ids = array();
+								if ( count( $devices ) > 0 ) {
+									foreach ( $devices as $device ) {
+										$device_ids[] = $device->device_id;
+									}
+								}
+			
+								$platform_names = array();
+								if ( count( $devices ) > 0 ) {
+									foreach ( $devices as $platform ) {
+										$platform_names[] = $platform->platform_name;
+									}
+								}
+			
+								$status = send_android_fcm( $device_ids, $data, $platform_names );					
+								
+								if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
+	
+							}
+	
+						}
+						//update status save at trans header
+						$trans_data['trans_status_id'] = $status_id;
+	
+						$this->Transactionheader->save($trans_data,$id);
+					}
+				}
+				
+			}
+	
+			//for payment status
+			if ($payment_id != '0') {
+				if ($payment_id != "") {
+					if ($payment_id != $existing_payment_id) {
+	
+					$title = $this->Paymentstatus->get_one($payment_id)->title;
+					$message = "Your order payment status is " . $title;
+	
+					$data['message'] = $message;
+					$data['flag'] = 'transaction';
+					$data['trans_header_id'] = $id;
+	
+					$devices = $this->Notitoken->get_all_device_in($user_id)->result();
+	
+					$device_ids = array();
+					if ( count( $devices ) > 0 ) {
+						foreach ( $devices as $device ) {
+							$device_ids[] = $device->device_id;
+						}
+					}
+	
+					$platform_names = array();
+					if ( count( $devices ) > 0 ) {
+						foreach ( $devices as $platform ) {
+							$platform_names[] = $platform->platform_name;
+						}
+					}
+	
+					$status = send_android_fcm( $device_ids, $data, $platform_names );
+	
+					if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
+	
+					//update payment status save at trans header
+	
+					$trans_data['payment_status_id'] = $payment_id;
+	
+					$this->Transactionheader->save($trans_data,$id);
+	
+					}
+				}
+				
+			}
+	
+			//for deli boy
+			if( $delivery_boy_id != '0' ) {
+	
+				if( $delivery_boy_id != "" ){
+					if ($delivery_boy_id != $existing_deli_boy) {
+						
+						$message = "You have the order to deliver.";
+	
+						$data['message'] = $message;
+						$data['flag'] = 'transaction';
+						$data['trans_header_id'] = $id;
+	
+						$devices = $this->Notitoken->get_all_device_in($delivery_boy_id)->result();
+	
+						$device_ids = array();
+						if ( count( $devices ) > 0 ) {
+							foreach ( $devices as $device ) {
+								$device_ids[] = $device->device_id;
+							}
+						}
+	
+						$platform_names = array();
+						if ( count( $devices ) > 0 ) {
+							foreach ( $devices as $platform ) {
+								$platform_names[] = $platform->platform_name;
+							}
+						}
+	
+						$status = send_android_fcm( $device_ids, $data, $platform_names );
+						
+						if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
+	
+						//update deli boy save at trans header
+						$trans_data['delivery_boy_id'] = $delivery_boy_id;
+	
+						$this->Transactionheader->save($trans_data,$id);
+					}	
+				}	
+			}
+			//End -
+			// load user
+			$this->data['transaction'] = $this->Transactionheader->get_one( $id );
+			parent::status_edit($id,$status_id,$payment_id,$delivery_boy_id);
+		}
 	/**
 	 * Saving Logic
 	 * 1) upload image
@@ -328,14 +522,14 @@ class Active_orders_dashboard extends BE_Controller {
 			}
 
 
-			redirect(site_url() . "/admin/transactions/detail/" . $id);
+			redirect(site_url() . "/admin/active_orders_dashboard/detail/" . $id);
 	}
 
 	function filter_from_dashboard($status_id) {
 		
 		$this->session->set_userdata("trans_status_id", $status_id);
 
-		redirect(site_url() . "/admin/transactions/search");
+		redirect(site_url() . "/admin/active_orders_dashboard/search");
 
 	}
 

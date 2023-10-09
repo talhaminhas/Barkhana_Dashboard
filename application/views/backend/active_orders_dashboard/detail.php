@@ -3,7 +3,7 @@
   	<div class="row">
     	<div class="col-12">
       		<h4>
-        	<?php echo ucwords($action_title) ?>
+        	<?php echo get_msg('trans_detail'); ?>
         	<small class="float-right"><?php echo get_msg('trans_date_label'); ?>: <?php echo $transaction->added_date; ?></small>
       		</h4>
     	</div>
@@ -15,14 +15,14 @@
 		<div class="col-sm-4 invoice-col">
 			<b><u><?php echo get_msg('cust_info'); ?></u></b> <br><br>
 			 	<address>
-          <?php echo get_msg('name_label'); ?>: <?php echo $transaction->contact_name; ?><br>
-          <?php echo get_msg('email_label'); ?>: <?php echo $transaction->contact_email; ?><br>
-          <?php echo get_msg('phone_label'); ?>: <?php echo $transaction->contact_phone;?><br>
-          <?php echo get_msg('address_label'); ?>: <?php echo $transaction->contact_address;?>
+                 <?php echo get_msg('name_label'); ?>: <?php echo $transaction->contact_name; ?><br>
+                 <?php echo get_msg('email_label'); ?>: <?php echo $transaction->contact_email; ?><br>
+                 <?php echo get_msg('phone_label'); ?>: <?php echo $transaction->contact_phone;?><br>
+                 <?php echo get_msg('address_label'); ?>: <?php echo $transaction->contact_address;?>
 			 	</address>
-        <?php if($transaction->user_id == '-1'): ?>
-        <span class="text-danger"><?php echo get_msg("deleted_user"); ?></span>
-        <?php endif; ?>
+                <?php if($transaction->user_id == '-1'): ?>
+                <span class="text-danger"><?php echo get_msg("deleted_user"); ?></span>
+                <?php endif; ?>
 		</div>
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
@@ -33,36 +33,168 @@
 		</div>
 	
 		<div class="col-sm-4 invoice-col">
-            <b><?php echo get_msg('invoice_label'); ?> <?php echo $transaction->trans_code?></b><br>
-            <br>
+		  <b><?php echo get_msg('invoice_label'); ?> <?php echo $transaction->trans_code?></b><br>
+		  <br>
 		  	
-            <div class="table-responsive">
-                <table class="table">
-                    <tr>
-                        <th><?php echo get_msg('status_label'); ?>:</th>
-                        <td>
-                            <?php echo $this->Transactionstatus->get_one($transaction->trans_status_id)->title; ?>
-                        </td>
-                    </tr>
-                    <tr>
-                        <th><?php echo get_msg('payment_status'); ?>:</th>
-                        <td>
-                            <?php echo $this->Paymentstatus->get_one($transaction->payment_status_id)->title; ?>
-                        </td>
-                    </tr>
-                    <?php if($transaction->pick_at_shop != 1 && $transaction->trans_status_id != 'trans_sts29a4b0cd2fa6ae0449e47e9568320f3a') { ?>
-                        <tr>
-                            <th><?php echo get_msg('deliboy_label'); ?>:</th>
-                            <td>
-                                 <?php echo $this->User->get_one($transaction->delivery_boy_id)->user_name==''?get_msg('deleted_deliboy'):$this->User->get_one($transaction->delivery_boy_id)->user_name; ?>                                
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-                <input type="hidden" name="trans_header_id" value=<?php  echo $transaction->id;  ?>>
-            </div>
+				<?php
+					$attributes = array('class' => 'form-inline');
+						echo form_open('/admin/active_orders_dashboard/update', $attributes);
+				
+				?>
+                    <?php if ($transaction->trans_status_id == 'trans_sts47fe98346e0f80d844d307981eaef7ec') { ?>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th><?php echo get_msg('status_label'); ?>:</th>
+                                    <td><select  name="trans_status_id" id="trans_status_id" disabled>
 
-		  	<b><?php echo get_msg('account_label'); ?>:</b> <?php echo $transaction->sub_total_amount ." ". $transaction->currency_short_form; ?>		
+                                            <option value="0"><?php echo get_msg('select_status'); ?></option>
+                                            <?php
+                                            $conds['is_optional'] = 0;
+                                            $status = $this->Transactionstatus->get_all_by($conds);
+                                            foreach ($status->result() as $status)
+                                            {
+                                                echo "<option value='".$status->id."'";
+                                                if($transaction->trans_status_id == $status->id)
+                                                {
+                                                    echo " selected ";
+                                                }
+                                                echo ">".$status->title."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo get_msg('payment_status_label'); ?>s:</th>
+                                    <td><select  name="payment_status_id" id="payment_status_id" disabled>
+                                            <option value="0"><?php echo get_msg('select_pay_status'); ?></option>
+                                            <?php
+                                            $status = $this->Paymentstatus->get_all();
+                                            foreach ($status->result() as $status)
+                                            {
+                                                echo "<option value='".$status->id."'";
+                                                if($transaction->payment_status_id == $status->id)
+                                                {
+                                                    echo " selected ";
+                                                }
+                                                echo ">".$status->title."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <?php if($transaction->pick_at_shop != 1) { ?>
+                                    <tr>
+                                        <th><?php echo get_msg('deliboy_label'); ?>:</th>
+                                        <td><select  name="delivery_boy_id" id="delivery_boy_id" disabled>
+                                                <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
+                                                <?php
+                                                $conds['role_id'] = 5;
+                                                $conds['status']= 1;
+                                                $deli_boys = $this->User->get_all_by($conds);
+                                                foreach ($deli_boys->result() as $boy)
+                                                {
+                                                    echo "<option value='".$boy->user_id."'";
+                                                    if($transaction->delivery_boy_id == $boy->user_id)
+                                                    {
+                                                        echo " selected ";
+                                                    }
+                                                    echo ">".$boy->user_name."</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <?php if($transaction->delivery_boy_id == '-1'): ?>
+    										<br/>
+    										<span class="text-danger"><?php echo get_msg("deliboy_trans_deleted"); ?></span>
+    										<?php endif; ?>
+                                            </td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+
+                        </div>
+
+                    <?php } else { ?>
+
+                        <div class="table-responsive">
+                            <table class="table">
+                                <tr>
+                                    <th><?php echo get_msg('status_label'); ?>:</th>
+                                    <td><select  name="trans_status_id" id="trans_status_id">
+
+                                            <option value="0"><?php echo get_msg('select_status'); ?></option>
+                                            <?php
+                                            $conds['is_optional'] = 0;
+                                            $status = $this->Transactionstatus->get_all_by($conds);
+                                            foreach ($status->result() as $status)
+                                            {
+                                                echo "<option value='".$status->id."'";
+                                                if($transaction->trans_status_id == $status->id)
+                                                {
+                                                    echo " selected ";
+                                                }
+                                                echo ">".$status->title."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th><?php echo get_msg('payment_status_label'); ?>:</th>
+                                    <td><select  name="payment_status_id" id="payment_status_id">
+                                            <option value="0"><?php echo get_msg('select_pay_status'); ?></option>
+                                            <?php
+                                            $status = $this->Paymentstatus->get_all();
+                                            foreach ($status->result() as $status)
+                                            {
+                                                echo "<option value='".$status->id."'";
+                                                if($transaction->payment_status_id == $status->id)
+                                                {
+                                                    echo " selected ";
+                                                }
+                                                echo ">".$status->title."</option>";
+                                            }
+                                            ?>
+                                        </select>
+                                    </td>
+                                </tr>
+                                <?php if($transaction->pick_at_shop != 1) { ?>
+                                    <tr>
+                                        <th><?php echo get_msg('deliboy_label'); ?>:</th>
+                                        <td><select  name="delivery_boy_id" id="delivery_boy_id">
+                                                <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
+                                                <?php
+                                                $conds['role_id'] = 5;
+                                                $conds['status']= 1;
+                                                $deli_boys = $this->User->get_all_by($conds);
+                                                foreach ($deli_boys->result() as $boy)
+                                                {
+                                                    echo "<option value='".$boy->user_id."'";
+                                                    if($transaction->delivery_boy_id == $boy->user_id)
+                                                    {
+                                                        echo " selected ";
+                                                    }
+                                                    echo ">".$boy->user_name."</option>";
+                                                }
+                                                ?>
+                                            </select>
+                                            <?php if($transaction->delivery_boy_id == '-1'): ?>
+    										<br/>
+    										<span class="text-danger"><?php echo get_msg("deliboy_trans_deleted"); ?></span>
+    										<?php endif; ?>
+                                        </td>
+                                    </tr>
+                                <?php } ?>
+                            </table>
+                            <input type="hidden" name="trans_header_id" value=<?php  echo $transaction->id;  ?>>
+                            <button type="submit" class="btn btn-sm btn-primary <?php echo $langauge_class; ?>" style="padding : 2px 5px; margin: 5px;"><?php echo get_msg('btn_update')?></button>
+                            <?php echo form_close(); ?>
+                        </div>
+
+                    <?php } ?>
+		
+		  		<!--<b><?php echo get_msg('account_label'); ?>:</b> <?php echo $transaction->sub_total_amount ." ". $transaction->currency_short_form; ?>-->		
 		</div>	
 	</div>
 
@@ -108,7 +240,7 @@
 								
 								if($att_name_info[$k] != "") {
 									$att_flag = 1;
-									$att_info_str .= $att_name_info[$k] . " : " . $att_price_info[$k] . "(". $transaction->currency_symbol ."),";
+									$att_info_str .= $att_name_info[$k] . ": ". $transaction->currency_symbol  . $att_price_info[$k] . ", ";
 
 								}
 							}
@@ -134,7 +266,7 @@
 								
 								if($addon_name_info[$k] != "") {
 									$addon_flag = 1;
-									$addon_info_str .= $addon_name_info[$k] . " : " . $addon_price_info[$k] . "(". $transaction->currency_symbol ."),";
+									$addon_info_str .= $addon_name_info[$k] . ": " . $transaction->currency_symbol . number_format($addon_price_info[$k], 2) . ", ";
 
 								}
 							}
@@ -163,7 +295,7 @@
 
 						if ($transaction_detail->product_color_id != "") {
 
-							echo get_msg('color_label') . " :";
+							echo "Color:";
 
 							$color_value =  $this->Color->get_one($transaction_detail->product_color_id)->color_value . '}';
 							
@@ -174,19 +306,19 @@
 
 						<div style="background-color:<?php echo  $this->Color->get_one($transaction_detail->product_color_id)->color_value ; ?>; width: 20px; height: 20px; margin-top: -20px; margin-left: 50px;"> 
 						</div>
-						<?php echo get_msg('prd_unit') . " : " . $transaction_detail->product_unit_value . " " . $transaction_detail->product_unit; ?> <br>
+						
 
 
 					</td>
-					<td><?php echo $transaction_detail->original_price ." ". $transaction->currency_symbol; ?></td>
+					<td><?php echo  $transaction->currency_symbol. number_format($transaction_detail->price, 2) ; ?></td>
 					<!-- <td><?php echo $transaction_detail->price ." ". $transaction->currency_symbol; ?></td> -->
 					<td><?php echo $transaction_detail->qty ?></td>
-					<td><?php echo "-" . $transaction_detail->discount_amount . $transaction->currency_symbol . " (" .$transaction_detail->discount_percent . "% off)"; ?></td>
+					<td><?php echo "-" .$transaction->currency_symbol . number_format($transaction_detail->discount_amount, 2) .  " (" .$transaction_detail->discount_percent . "% off)"; ?></td>
 
 					<td>
 						<?php 
 
-							echo $transaction_detail->qty * $transaction_detail->original_price  ." ". $transaction->currency_symbol; 
+							echo $transaction->currency_symbol. number_format($transaction_detail->qty * $transaction_detail->price, 2)  ; 
 						?>
 					</td>
 				</tr>
@@ -202,27 +334,9 @@
         <!-- accepted payments column -->
        
         <div class="col-6">
-        	 <br>
-          <p><?php echo get_msg('trans_payment_method'); ?>
+        	
 
-          <?php 
-
-          echo $transaction->payment_method; 
-
-          if($transaction->razor_id != "") {
-          	echo "( ".get_msg('id_label')." : " . $transaction->razor_id . " )";
-          }
-
-          if($transaction->flutter_wave_id != "") {
-            echo "( ".get_msg('id_label')." : " . $transaction->flutter_wave_id . " )";
-          }
-
-          ?>
-          	
-
-          </p>
-
-          <p> <?php echo get_msg('trans_memo'); ?> <?php echo $transaction->memo; ?></p>
+          <p> <?php //echo get_msg('trans_memo'); ?> <?php //echo $transaction->memo; ?></p>
 
           <?php if($transaction->pick_at_shop == 1) { ?>
           <p><?php echo get_msg('cus_pick_up_order'); ?></p>
@@ -242,25 +356,18 @@
 
               <tr>
                 <th><?php echo get_msg('trans_coupon_discount_amount'); ?></th>
-                <td><?php echo $transaction->coupon_discount_amount . " ". $transaction->currency_symbol;; ?></td>
+                <td><?php echo "-". $transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2) ; ?></td>
               </tr>	
 
               <tr>
                 <th style="width:50%"><?php echo get_msg('trans_item_sub_total'); ?></th>
-                <td><?php echo $transaction->sub_total_amount . " ". $transaction->currency_symbol; ?></td>
+                <td><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
               </tr>
 
+              
               <tr>
-                <th><?php echo get_msg('trans_overall_tax'); ?> <?php echo "(" . $transaction->tax_percent * 100 . "%)"  ?> : (+)</th>
-                <td><?php echo $transaction->tax_amount . " ". $transaction->currency_symbol;; ?></td>
-              </tr>
-              <tr>
-                <th><?php echo get_msg('trans_shipping_cost'); ?><?php echo $transaction->shipping_method_name ?>): (+)</th>
-                <td><?php echo $transaction->shipping_amount . " ". $transaction->currency_symbol;; ?></td>
-              </tr>
-              <tr>
-                <th><?php echo get_msg('trans_shipping_tax'); ?> <?php echo "(" . $transaction->shipping_tax_percent * 100 . ")"  ?>% : (+)</th>
-                <td><?php echo $transaction->shipping_amount * $transaction->shipping_tax_percent . " ". $transaction->currency_symbol;; ?></td>
+                <th><?php echo get_msg('trans_shipping_cost'); ?>:</th>
+                <td><?php echo $transaction->currency_symbol.number_format($transaction->shipping_amount, 2)  ; ?></td>
               </tr>
             
               
@@ -272,8 +379,8 @@
 
                 	//balance_amount = total_item_amount - coupon_discont + (overall_tax + shipping_cost + shipping_tax (based on shipping cost)) 
 
-                	echo  ($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + ($transaction->shipping_amount * $transaction->shipping_tax_percent)) );  
-                	echo " ". $transaction->currency_symbol;
+                	echo  $transaction->currency_symbol.($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + ($transaction->shipping_amount * $transaction->shipping_tax_percent)) );  
+                	
                 	?>
                 </td>
               </tr>
@@ -284,71 +391,70 @@
     </div>
 </div>
 
-
 <script>
-            <?php
-                if (isset($transaction)) {
-                    $lat = $transaction->trans_lat;
-                    $lng = $transaction->trans_lng;
-            ?>
-                    var trans_map = L.map('transaction_map').setView([<?php echo $lat;?>, <?php echo $lng;?>], 5);
-            <?php
-                } else {
-            ?>
-                    var trans_map = L.map('transaction_map').setView([0, 0], 5);
-            <?php
-                }
-            ?>
+    <?php
+        if (isset($transaction)) {
+            $lat = $transaction->trans_lat;
+            $lng = $transaction->trans_lng;
+    ?>
+            var trans_map = L.map('transaction_map').setView([<?php echo $lat;?>, <?php echo $lng;?>], 15);
+    <?php
+        } else {
+    ?>
+            var trans_map = L.map('transaction_map').setView([0, 0], 5);
+    <?php
+        }
+    ?>
 
-            const trans_attribution =
-            '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
-            const trans_tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            const trans_tiles = L.tileLayer(trans_tileUrl, { trans_attribution });
-            trans_tiles.addTo(trans_map);
-            <?php if(isset($transaction)) {?>
-                var trans_marker = new L.Marker(new L.LatLng(<?php echo $lat;?>, <?php echo $lng;?>));
-                trans_map.addLayer(trans_marker);
-                // results = L.marker([<?php echo $lat;?>, <?php echo $lng;?>]).addTo(mymap);
+    const trans_attribution =
+    '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
+    const trans_tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    const trans_tiles = L.tileLayer(trans_tileUrl, { trans_attribution });
+    trans_tiles.addTo(trans_map);
+    <?php if(isset($transaction)) {?>
+        var trans_marker = new L.Marker(new L.LatLng(<?php echo $lat;?>, <?php echo $lng;?>));
+        trans_map.addLayer(trans_marker);
+        // results = L.marker([<?php echo $lat;?>, <?php echo $lng;?>]).addTo(mymap);
 
-            <?php } else { ?>
-                var trans_marker = new L.Marker(new L.LatLng(0, 0));
-                //mymap.addLayer(marker2);
-            <?php } ?>
-            var trans_searchControl = L.esri.Geocoding.geosearch().addTo(trans_map);
-            var results = L.layerGroup().addTo(trans_map);
+    <?php } else { ?>
+        var trans_marker = new L.Marker(new L.LatLng(0, 0));
+        //mymap.addLayer(marker2);
+    <?php } ?>
+    var trans_searchControl = L.esri.Geocoding.geosearch().addTo(trans_map);
+    var results = L.layerGroup().addTo(trans_map);
 
-            trans_searchControl.on('results',function(data){
-                results.clearLayers();
+    trans_searchControl.on('results',function(data){
+        results.clearLayers();
 
-                for(var i= data.results.length -1; i>=0; i--) {
-                    trans_map.removeLayer(trans_marker);
-                    results.addLayer(L.marker(data.results[i].latlng));
-                    var trans_search_str = data.results[i].latlng.toString();
-                    var trans_search_res = trans_search_str.substring(trans_search_str.indexOf("(") + 1, trans_search_str.indexOf(")"));
-                    var trans_searchArr = new Array();
-                    trans_searchArr = trans_search_res.split(",");
+        for(var i= data.results.length -1; i>=0; i--) {
+            trans_map.removeLayer(trans_marker);
+            results.addLayer(L.marker(data.results[i].latlng));
+            var trans_search_str = data.results[i].latlng.toString();
+            var trans_search_res = trans_search_str.substring(trans_search_str.indexOf("(") + 1, trans_search_str.indexOf(")"));
+            var trans_searchArr = new Array();
+            trans_searchArr = trans_search_res.split(",");
 
-                    document.getElementById("lat").value = trans_searchArr[0].toString();
-                    document.getElementById("lng").value = trans_searchArr[1].toString(); 
-                   
-                }
-            })
-            var popup = L.popup();
+            document.getElementById("lat").value = trans_searchArr[0].toString();
+            document.getElementById("lng").value = trans_searchArr[1].toString(); 
+            
+        }
+    })
+    var popup = L.popup();
 
-            function onMapClick(e) {
+    function onMapClick(e) {
 
-                var trans = e.latlng.toString();
-                var trans_res = trans.substring(trans.indexOf("(") + 1, trans.indexOf(")"));
-                trans_map.removeLayer(trans_marker);
-                results.clearLayers();
-                results.addLayer(L.marker(e.latlng));   
+        var trans = e.latlng.toString();
+        var trans_res = trans.substring(trans.indexOf("(") + 1, trans.indexOf(")"));
+        trans_map.removeLayer(trans_marker);
+        results.clearLayers();
+        results.addLayer(L.marker(e.latlng));   
 
-                var trans_tmpArr = new Array();
-                trans_tmpArr = trans_res.split(",");
+        var trans_tmpArr = new Array();
+        trans_tmpArr = trans_res.split(",");
 
-                document.getElementById("lat").value = trans_tmpArr[0].toString(); 
-                document.getElementById("lng").value = trans_tmpArr[1].toString();
-            }
+        document.getElementById("lat").value = trans_tmpArr[0].toString(); 
+        document.getElementById("lng").value = trans_tmpArr[1].toString();
+    }
 
-            trans_map.on('click', onMapClick);
-        </script>
+    trans_map.on('click', onMapClick);
+</script>

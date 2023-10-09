@@ -194,7 +194,7 @@
 
                     <?php } ?>
 		
-		  		<b><?php echo get_msg('account_label'); ?>:</b> <?php echo $transaction->sub_total_amount ." ". $transaction->currency_short_form; ?>		
+		  		<!--<b><?php echo get_msg('account_label'); ?>:</b> <?php echo $transaction->sub_total_amount ." ". $transaction->currency_short_form; ?>-->		
 		</div>	
 	</div>
 
@@ -240,7 +240,7 @@
 								
 								if($att_name_info[$k] != "") {
 									$att_flag = 1;
-									$att_info_str .= $att_name_info[$k] . " : " . $att_price_info[$k] . "(". $transaction->currency_symbol ."),";
+									$att_info_str .= $att_name_info[$k] . ": ". $transaction->currency_symbol  . $att_price_info[$k] . ", ";
 
 								}
 							}
@@ -266,7 +266,7 @@
 								
 								if($addon_name_info[$k] != "") {
 									$addon_flag = 1;
-									$addon_info_str .= $addon_name_info[$k] . " : " . $addon_price_info[$k] . "(". $transaction->currency_symbol ."),";
+									$addon_info_str .= $addon_name_info[$k] . ": " . $transaction->currency_symbol . number_format($addon_price_info[$k], 2) . ", ";
 
 								}
 							}
@@ -306,19 +306,19 @@
 
 						<div style="background-color:<?php echo  $this->Color->get_one($transaction_detail->product_color_id)->color_value ; ?>; width: 20px; height: 20px; margin-top: -20px; margin-left: 50px;"> 
 						</div>
-						<?php echo get_msg('prd_unit') . " : " . $transaction_detail->product_unit_value . " " . $transaction_detail->product_unit; ?> <br>
+						
 
 
 					</td>
-					<td><?php echo $transaction_detail->original_price ." ". $transaction->currency_symbol; ?></td>
+					<td><?php echo  $transaction->currency_symbol. number_format($transaction_detail->price, 2) ; ?></td>
 					<!-- <td><?php echo $transaction_detail->price ." ". $transaction->currency_symbol; ?></td> -->
 					<td><?php echo $transaction_detail->qty ?></td>
-					<td><?php echo "-" . $transaction_detail->discount_amount . $transaction->currency_symbol . " (" .$transaction_detail->discount_percent . "% off)"; ?></td>
+					<td><?php echo "-" .$transaction->currency_symbol . number_format($transaction_detail->discount_amount, 2) .  " (" .$transaction_detail->discount_percent . "% off)"; ?></td>
 
 					<td>
 						<?php 
 
-							echo $transaction_detail->qty * $transaction_detail->original_price  ." ". $transaction->currency_symbol; 
+							echo $transaction->currency_symbol. number_format($transaction_detail->qty * $transaction_detail->price, 2)  ; 
 						?>
 					</td>
 				</tr>
@@ -334,27 +334,9 @@
         <!-- accepted payments column -->
        
         <div class="col-6">
-        	 <br>
-          <p><?php echo get_msg('trans_payment_method'); ?>
+        	
 
-          <?php 
-
-          echo $transaction->payment_method; 
-
-          if($transaction->razor_id != "") {
-          	echo "( ". get_msg('id_label') ." : " . $transaction->razor_id . " )";
-          }
-
-          if($transaction->flutter_wave_id != "") {
-            echo "( ". get_msg('id_label') ." : " . $transaction->flutter_wave_id . " )";
-          }
-
-          ?>
-          	
-
-          </p>
-
-          <p> <?php echo get_msg('trans_memo'); ?> <?php echo $transaction->memo; ?></p>
+          <p> <?php //echo get_msg('trans_memo'); ?> <?php //echo $transaction->memo; ?></p>
 
           <?php if($transaction->pick_at_shop == 1) { ?>
           <p><?php echo get_msg('cus_pick_up_order'); ?></p>
@@ -374,25 +356,18 @@
 
               <tr>
                 <th><?php echo get_msg('trans_coupon_discount_amount'); ?></th>
-                <td><?php echo $transaction->coupon_discount_amount . " ". $transaction->currency_symbol;; ?></td>
+                <td><?php echo "-". $transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2) ; ?></td>
               </tr>	
 
               <tr>
                 <th style="width:50%"><?php echo get_msg('trans_item_sub_total'); ?></th>
-                <td><?php echo $transaction->sub_total_amount . " ". $transaction->currency_symbol; ?></td>
+                <td><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
               </tr>
 
+              
               <tr>
-                <th><?php echo get_msg('trans_overall_tax'); ?> <?php echo "(" . $transaction->tax_percent * 100 . "%)"  ?> : (+)</th>
-                <td><?php echo $transaction->tax_amount . " ". $transaction->currency_symbol;; ?></td>
-              </tr>
-              <tr>
-                <th><?php echo get_msg('trans_shipping_cost'); ?><?php echo $transaction->shipping_method_name ?>): (+)</th>
-                <td><?php echo $transaction->shipping_amount . " ". $transaction->currency_symbol;; ?></td>
-              </tr>
-              <tr>
-                <th><?php echo get_msg('trans_shipping_tax'); ?> <?php echo "(" . $transaction->shipping_tax_percent * 100 . ")"  ?>% : (+)</th>
-                <td><?php echo $transaction->shipping_amount * $transaction->shipping_tax_percent . " ". $transaction->currency_symbol;; ?></td>
+                <th><?php echo get_msg('trans_shipping_cost'); ?>:</th>
+                <td><?php echo $transaction->currency_symbol.number_format($transaction->shipping_amount, 2)  ; ?></td>
               </tr>
             
               
@@ -404,8 +379,8 @@
 
                 	//balance_amount = total_item_amount - coupon_discont + (overall_tax + shipping_cost + shipping_tax (based on shipping cost)) 
 
-                	echo  ($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + ($transaction->shipping_amount * $transaction->shipping_tax_percent)) );  
-                	echo " ". $transaction->currency_symbol;
+                	echo  $transaction->currency_symbol.($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + ($transaction->shipping_amount * $transaction->shipping_tax_percent)) );  
+                	
                 	?>
                 </td>
               </tr>
@@ -422,7 +397,7 @@
             $lat = $transaction->trans_lat;
             $lng = $transaction->trans_lng;
     ?>
-            var trans_map = L.map('transaction_map').setView([<?php echo $lat;?>, <?php echo $lng;?>], 5);
+            var trans_map = L.map('transaction_map').setView([<?php echo $lat;?>, <?php echo $lng;?>], 15);
     <?php
         } else {
     ?>

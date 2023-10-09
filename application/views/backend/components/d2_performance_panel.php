@@ -48,14 +48,14 @@
                     </span>
                 </td>
             </tr>
-            <tr>
+            <!--<tr>
                 <td style="font-weight: bold;"><?php echo get_msg('collect_label'); ?></td>
                 <td align="right">
                     <span class="text-danger" style="font-size: 18px;font-weight: bold;">
                         <?php echo $this->Collection->count_all_by( $conds ); ?>
                     </span>
                 </td>
-            </tr>
+            </tr>-->
         </tbody>
     </table>
 </div>

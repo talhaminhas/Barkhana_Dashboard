@@ -63,11 +63,11 @@ echo form_open( '', $attributes);
             <li class="nav-item"><a class="nav-link <?php echo $active_tab_payment;?>" href="#payment"  value="payment" data-toggle="tab"><?php echo get_msg('payment_setting'); ?></a></li>
             <li class="nav-item"><a class="nav-link <?php echo $active_tab_currency;?>" href="#currency" value="currency" data-toggle="tab"><?php echo get_msg('currency_setting'); ?></a></li>
             <li class="nav-item"><a class="nav-link <?php echo $active_tab_sender;?>" href="#sender" value="sender" data-toggle="tab"><?php echo get_msg('sending_email_setting'); ?></a></li>
-            <li class="nav-item"><a class="nav-link <?php echo $active_tab_tax;?>" href="#tax" value="tax" data-toggle="tab"><?php echo get_msg('tax_label'); ?></a></li>
-            <li class="nav-item"><a class="nav-link <?php echo $active_tab_policy;?>" href="#policy" value="policy" data-toggle="tab"><?php echo get_msg('policy_and_terms'); ?></a></li>
+            <!-- <li class="nav-item"><a class="nav-link <?php echo $active_tab_tax;?>" href="#tax" value="tax" data-toggle="tab"><?php echo get_msg('tax_label'); ?></a></li>-->
+            <li class="nav-item"><a class="nav-link <?php echo $active_tab_policy;?>" href="#policy" value="policy" data-toggle="tab"><?php echo get_msg('policy_and_terms'); ?></a></li> 
             <li class="nav-item"><a class="nav-link <?php echo $active_tab_order;?>" href="#order" value="order" data-toggle="tab"><?php echo get_msg('order_setting'); ?></a></li>
              <li class="nav-item"><a class="nav-link <?php echo $active_tab_delivery;?>" href="#delivery" value="delivery" data-toggle="tab"><?php echo get_msg('delivery_setting'); ?></a></li>
-			 <li class="nav-item"><a class="nav-link <?php echo $active_tab_checkout;?>" href="#checkout" value="checkout" data-toggle="tab"><?php echo get_msg('checkout_setting'); ?></a></li>
+			 <!-- <li class="nav-item"><a class="nav-link <?php echo $active_tab_checkout;?>" href="#checkout" value="checkout" data-toggle="tab"><?php echo get_msg('checkout_setting'); ?></a></li> -->
         </ul>
         <!-- /.card-header -->
         <div class="card-body">
@@ -114,7 +114,7 @@ echo form_open( '', $attributes);
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('phone_label') ?>" name='about_phone1' id='about_phone1' value="<?php echo $shop->about_phone1;?>">
 							</div>
 
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label>
 									<?php echo get_msg('phone_label2') ?>
 									<a href="#" class="tooltip-ps" data-toggle="tooltip" 
@@ -136,7 +136,7 @@ echo form_open( '', $attributes);
 								</label>
 
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('phone_label') ?>" name='about_phone3' id='about_phone3' value="<?php echo $shop->about_phone3;?>">
-							</div>
+							</div>-->
 
 							<div class="form-group">
 								<label><?php echo get_msg('contact_email_label')?>
@@ -149,7 +149,7 @@ echo form_open( '', $attributes);
 								value="<?php echo $shop->email;?>">
 							</div>
 
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label>
 									<?php echo get_msg('price_level')?>
 								</label>
@@ -181,7 +181,7 @@ echo form_open( '', $attributes);
 								
 								
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('highlighted_info') ?>" name='highlighted_info' id='highlighted_info' value="<?php echo $shop->highlighted_info;?>">
-							</div>
+							</div>-->
 
 								
 						</div>
@@ -200,7 +200,7 @@ echo form_open( '', $attributes);
 								<textarea class="form-control" name="address1" placeholder="<?php echo get_msg('address_label1')?>" rows="5"><?php echo $shop->address1;?></textarea>
 							</div>
 
-							<div class="form-group">
+							<!--<div class="form-group">
 								<label><?php echo get_msg('address_label2')?>
 									<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('shop_address_tooltips')?>">
 										<span class='glyphicon glyphicon-info-sign menu-icon'>
@@ -216,7 +216,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 								<textarea class="form-control" name="address3" placeholder="<?php echo get_msg('address_label3')?>" rows="5"><?php echo $shop->address3;?></textarea>
-							</div>
+							</div>-->
 
 						<?php if ( !isset( $shop )): ?>
 							<div class="form-group">
@@ -836,11 +836,10 @@ echo form_open( '', $attributes);
 						<br>
 
 						<hr>
-					<!-- -->
 		
 						<br>
 
-						<label><?php echo get_msg('stripe_label')?></label>
+						<!-- <label><?php echo get_msg('stripe_label')?></label>
 						
 						<br>
 
@@ -887,8 +886,8 @@ echo form_open( '', $attributes);
 
 								</label>
 							</div>
-						</div>
-
+						</div> -->
+<!-- 
 						<br>
 
 						<hr>
@@ -1265,7 +1264,7 @@ echo form_open( '', $attributes);
 
 								</label>
 							</div>
-						</div>
+						</div>-->
 
 					</div>
           		</div>
@@ -1298,7 +1297,7 @@ echo form_open( '', $attributes);
 
 						</div>
 					</div>
-          		</div>
+          		</div> 
                   
            		<div class="tab-pane <?php echo $active_tab_sender;?>" id="sender">
             		
@@ -1317,7 +1316,7 @@ echo form_open( '', $attributes);
 					</div>
           		</div>
 
-          		<div class="tab-pane <?php echo $active_tab_tax;?>" id="tax">
+          		<!-- <div class="tab-pane <?php echo $active_tab_tax;?>" id="tax">
           			<div class="row">
           				<div class="col-md-6">
           					<div class="form-group">
@@ -1347,7 +1346,7 @@ echo form_open( '', $attributes);
 							</div>
 						</div>	
           			</div>
-          		</div>
+          		</div> -->
 
           		<div class="tab-pane <?php echo $active_tab_policy;?>" id="policy">
           			<div class="row">
@@ -1624,7 +1623,7 @@ echo form_open( '', $attributes);
           		</div>
 
 				<!-- checkout setting -->
-				<div class="tab-pane <?php echo $active_tab_checkout;?>" id="checkout">
+				<!-- <div class="tab-pane <?php echo $active_tab_checkout;?>" id="checkout">
           			<div class="row">
           				<div class="col-md-6">
           					<div class="form-group" style="padding-top: 30px;">
@@ -1720,7 +1719,7 @@ echo form_open( '', $attributes);
 
           				
           			</div>
-          		</div>
+          		</div> -->
 
             </div>
             <!-- /.tab-content -->
