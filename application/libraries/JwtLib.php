@@ -14,11 +14,10 @@ class JwtLib {
 				 $dateTime = new DateTime('now',$timezone); 
 				 
 				 $iat = $dateTime->getTimestamp(); // current timestamp value
-				 $dateTime->modify('+1 minutes');
+				 $dateTime->modify('+30 minutes');
 				 $exp = $dateTime->getTimestamp();
 				//$d = DateTime::createFromFormat('d-m-Y H:i:s', '22-09-2008 00:00:00');
 				//$exp=$d->getTimestamp();
-		
 				$payload = array(
 					"iss" => "IT Retail System Ltd",
 					"aud" => "Barkhana",

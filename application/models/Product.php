@@ -166,9 +166,9 @@ class Product extends PS_Model {
 		//  search name, description by keyword
 		if ( isset( $conds['keyword'] )) {
 			$this->db->like( 'name', $conds['keyword'] );
-			$this->db->or_like( 'description', $conds['keyword'] );
-			$this->db->or_like( 'highlight_information', $conds['keyword'] );
-			$this->db->or_like( 'ingredient', $conds['keyword'] );
+			//$this->db->or_like( 'description', $conds['keyword'] );
+			//$this->db->or_like( 'highlight_information', $conds['keyword'] );
+			//$this->db->or_like( 'ingredient', $conds['keyword'] );
 		}
 
 		if( isset($conds['min_price'])) {
