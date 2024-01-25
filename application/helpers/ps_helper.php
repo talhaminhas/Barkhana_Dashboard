@@ -141,6 +141,7 @@ if ( ! function_exists( 'get_msg' ))
 		// if message is empty, return the key
 			return $key;
 		}
+
 		// return the message
 		return $message;
 	}

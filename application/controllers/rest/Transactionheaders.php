@@ -36,7 +36,7 @@ class Transactionheaders extends API_Controller
 		if ( $this->is_get ) {
 		// if is get record using GET method
 			$conds['order_by'] = 1;
-			$conds['order_by_field'] = "added_date";
+			$conds['order_by_field'] = "updated_date";
 			$conds['order_by_type'] = "asc";
 		}
 
@@ -191,7 +191,8 @@ class Transactionheaders extends API_Controller
 
 		$shop_id = $shop_obj[0]->id;
 
-
+	
+	
 
 		if($this->post( 'is_paypal' ) == 1) {
 
@@ -361,7 +362,7 @@ class Transactionheaders extends API_Controller
 			// echo $payment_method; die;
 
 			$this->db->trans_start();
-
+			date_default_timezone_set('Europe/London');
 			//First Time
 	 		$transaction_row_count = $this->Transactionheader->count_all();
 	 		$current_date_month = date("Ym");
@@ -505,7 +506,7 @@ class Transactionheaders extends API_Controller
 	                    "payment_status" => 'completed',
 	                    "transactions_header_id" => $trans_header_id,
 	                    // "shop_id" => $this->post('shop_id'),
-	                    //"added_date" => $current_date_time,
+	                    "added_date" => $current_date_time,
 	                    "added_user_id" => $this->post( 'user_id' ),
 	                    "trans_code" => $trans_code
 	                );
@@ -567,6 +568,7 @@ class Transactionheaders extends API_Controller
 				    $trans_detail['transactions_header_id']         = $trans_header_id;
 				    //$trans_detail['added_date']             		= $current_date_time;
 				    $trans_detail['added_user_id']          		= $this->post( 'user_id' );
+					date_default_timezone_set('Europe/London');
 				    $trans_detail['updated_date']           		= $current_date_time;
 				    $trans_detail['updated_user_id']        		= "0";
 				    $trans_detail['updated_flag']           		= "0";

@@ -416,17 +416,19 @@ if ( !function_exists( 'send_user_register_email' )) {
 					</style>
 				</head>
 				<body>
-				<div class='container'>
-				<div class='header'>
+					<div class='container'>
+						<div class='header'>
 							<h1>Hi, {$user_name} </h1>
 						</div>
-				<div class='content'>
-				<p>{$new_user_acc}</p>
-				<p class='reset-link'>{$verify_code}: {$code}</p>
-				<p>{$best_regards},<br/>{$sender_name}.</p>
-											</div>
-											</div>
-											</body>
+						<div class='content'>
+							<p>{$new_user_acc}</p>
+							<p class='reset-link'>
+								Verification Code: <strong>{$code}</strong>
+							</p>
+							<p>{$best_regards},<br/>{$sender_name}.</p>
+						</div>
+					</div>
+				</body>
 				</html>";
     $msg1 = <<<EOL
 <p>{$hi} {$user_name},</p>

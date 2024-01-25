@@ -140,14 +140,14 @@ class CI_Email {
 	 *
 	 * @var	string	'text' or 'html'
 	 */
-	public $mailtype	= 'html';
+	public $mailtype	= 'text';
 
 	/**
 	 * Character set (default: utf-8)
 	 *
 	 * @var	string
 	 */
-	public $charset		= 'UFT_8';
+	public $charset		= 'UTF-8';
 
 	/**
 	 * Alternative message (for HTML messages only)
@@ -393,7 +393,7 @@ class CI_Email {
 	 */
 	public function __construct(array $config = array())
 	{
-		
+		$this->charset = config_item('charset');
 		$this->initialize($config);
 		$this->_safe_mode = ( ! is_php('5.4') && ini_get('safe_mode'));
 
@@ -674,11 +674,7 @@ class CI_Email {
 	 */
 	public function message($body)
 	{
-		echo "Original Body: " . $body;
-		$this->_body = $body;
-		echo "Assigned Body: " . $this->_body;
-		$this->mailtype = 'html';
-		//$this->_body =  $body;//rtrim(str_replace("\r", '', $body));
+		$this->_body = rtrim(str_replace("\r", '', $body));
 
 		/* strip slashes only if magic quotes is ON
 		   if we do it with magic quotes OFF, it strips real, user-inputted chars.
@@ -688,7 +684,7 @@ class CI_Email {
 		*/
 		if ( ! is_php('5.4') && get_magic_quotes_gpc())
 		{
-			//$this->_body = stripslashes($this->_body);
+			$this->_body = stripslashes($this->_body);
 		}
 
 		return $this;
@@ -1296,7 +1292,7 @@ class CI_Email {
 
 				if ($this->send_multipart === FALSE)
 				{
-					$hdr .= 'Content-Type: text/html; charset='.$this->charset .$this->newline
+					$hdr .= 'Content-Type: text/html; charset='.$this->charset.$this->newline
 						.'Content-Transfer-Encoding: quoted-printable';
 				}
 				else

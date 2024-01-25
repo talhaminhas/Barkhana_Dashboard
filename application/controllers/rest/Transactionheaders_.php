@@ -366,7 +366,8 @@ class Transactionheaders extends API_Controller
 		 		$data['count'] = $transaction_row_count + 1;
 		 		$data['added_user_id'] = $this->post( 'user_id' );
 		 		//$data['added_date'] = date("Y-m-d H:i:s"); 
-		 		//$data['updated_date'] = date("Y-m-d H:i:s"); 
+				 date_default_timezone_set('Europe/London');
+		 		$data['updated_date'] = date("Y-m-d H:i:s"); 
 		 		$data['updated_user_id'] = 0;
 		 		$data['updated_flag'] = 0;
 
@@ -452,7 +453,8 @@ class Transactionheaders extends API_Controller
 		 			'trans_code'            => $trans_code,
 		 			//'added_date'            => $current_date_time,
 		 			'added_user_id'         => $this->post( 'user_id' ),
-		 			//'updated_date'          => $current_date_time,
+					 date_default_timezone_set('Europe/London');
+		 			'updated_date'          => $current_date_time,
 		 			'updated_user_id'       => "0",
 		 			'updated_flag'          => "0",
 		 			'currency_symbol'       => $this->post( 'currency_symbol'),
@@ -552,7 +554,8 @@ class Transactionheaders extends API_Controller
 				    $trans_detail['transactions_header_id']         = $trans_header_id;
 				    //$trans_detail['added_date']             		= $current_date_time;
 				    $trans_detail['added_user_id']          		= $this->post( 'user_id' );
-				    //$trans_detail['updated_date']           		= $current_date_time;
+					date_default_timezone_set('Europe/London');
+				    $trans_detail['updated_date']           		= $current_date_time;
 				    $trans_detail['updated_user_id']        		= "0";
 				    $trans_detail['updated_flag']           		= "0";
 				    $trans_detail['currency_short_form']            = $trans_details[$i]['currency_short_form'];

@@ -69,6 +69,9 @@ class Delivery_status extends API_Controller
 		// get the post data
 		$id = $this->post('transactions_header_id');
 		$data['trans_status_id'] = $this->post('trans_status_id');
+		date_default_timezone_set('Europe/London');
+		$data['updated_date'] = date('Y-m-d H:i:s');
+		
 		if ( !$this->Transactionheader->save( $data, $id )) {
 			$this->error_response( get_msg( 'err_model' ), 500);
 		}
@@ -137,40 +140,62 @@ class Delivery_status extends API_Controller
 		$this->custom_response( $obj );
 	}
 
-	/**
-	 * Completed order a post.
-	 */
+
 	function completed_order_post()
 	{
-
 		// validation rules for user register
 		$rules = array(
 			array(
-	        	'field' => 'delivery_boy_id',
-	        	'rules' => 'required'
-	        )
-        );
+				'field' => 'delivery_boy_id',
+				'rules' => 'required'
+			)
+		);
 
-		// exit if there is an error in validation,
-        if ( !$this->is_valid( $rules )) exit;
+		// exit if there is an error in validation
+		if (!$this->is_valid($rules)) exit;
 
-        $user_id = $this->post('delivery_boy_id');
-        $users = global_user_check($user_id);
+		$user_id = $this->post('delivery_boy_id');
+		$users = global_user_check($user_id);
 
-		// get trans status id that is final stage
+		// get trans status id that is the final stage
 		$conds_stage['final_stage'] = '1';
 		$trans_data = $this->Transactionstatus->get_one_by($conds_stage);
 		$trans_status_id = $trans_data->id;
-		
-		
+
 		$conds['delivery_boy_id'] = $this->post('delivery_boy_id');
 		$conds['trans_status_id'] = $trans_status_id;
-		$conds['status'] = "completed";
-		// response the inserted object	
-		$tmp_deli_com = $this->Transactionheader->get_all_order_delivery( $conds )->result();
+		//$conds['title'] = "refunded";
+		$conds['updated_date >='] = date('Y-m-d 00:00:00');
+		$conds['updated_date <='] = date('Y-m-d 23:59:59');
 
-		$this->custom_response( $tmp_deli_com );
+		// Check if 'updated_date' parameter is provided
+		$justToday = $this->post('just_today');
+		
+
+		// response the inserted object
+		$tmp_deli_com = $this->Transactionheader->get_all_order_delivery($conds)->result();
+
+		if ($justToday == '1') {
+
+			$today = date('Y-m-d');
+			$tmp_deli_com = array_filter($tmp_deli_com, function($item) use ($today) {
+			return substr($item->updated_date, 0, 10) === $today;
+		});
+
+		
+		}
+		// Filter the results to include only today's date
+		
+
+		// Sort the result based on 'updated_date' column
+		usort($tmp_deli_com, function ($a, $b) {
+			return strtotime($b->updated_date) - strtotime($a->updated_date);
+		});
+
+		$this->custom_response($tmp_deli_com);
+
 	}
+
 
 	/**
 	 * Pending order a post.
