@@ -560,7 +560,6 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 			$CI =& get_instance();
 			$message = $data['message'];
 			$flag = $data['flag'];
-
 			//to get prj name
 			$dyn_link_deep_url = $CI->Backend_config->get_one('be1')->dyn_link_deep_url;
 			$prj_url = explode('/', $dyn_link_deep_url);
@@ -584,7 +583,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				}
 
 			}
-
+			
 			//Google cloud messaging GCM-API url
 			$url = 'https://fcm.googleapis.com/fcm/send';
 
@@ -780,7 +779,235 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 			return $result;
 		}
 	}
+	if ( ! function_exists( 'send_android_deli_fcm' ))
+	{
+		function send_android_deli_fcm( $registatoin_ids, $data, $platform_names) 
+		{
+			// get ci instance
+			$CI =& get_instance();
+			$message = $data['message'];
+			$flag = $data['flag'];
 
+			//echo('deli noti called');die;
+			//to get prj name
+			$dyn_link_deep_url = $CI->Backend_config->get_one('be1')->dyn_link_deep_url;
+			$prj_url = explode('/', $dyn_link_deep_url);
+			$i = count($prj_url)-2;
+			$prj_name = $prj_url[$i];
+
+			for ($i=0; $i <count($platform_names) ; $i++) { 
+				
+				$click_action = "";
+				
+				if ($click_action =="" && $platform_names[$i] == "frontend" && $flag == "rating") {
+					$click_action = $prj_name. '/' . 'review-list?user_id=' . $data['delivery_boy_id'];
+				} elseif ($click_action =="" && $platform_names[$i] == "frontend" && $flag == "route_order") {
+					$click_action = $prj_name. '/' . 'route-order/' . '?route_id=' . $data['route_id'];
+				} elseif ($click_action =="" && $platform_names[$i] == "frontend" && $flag == "transaction") {
+					$click_action = $prj_name. '/' . 'transaction/' . '?transaction_header_id=' . $data['trans_header_id'];
+				} elseif ($click_action =="" && $platform_names[$i] == "frontend" && $flag == "approval") {
+					$click_action = "";
+				} elseif ($platform_names[$i] == "android" || $platform_names[$i] == "IOS") {
+					$click_action = "FLUTTER_NOTIFICATION_CLICK";
+				}
+
+			}
+
+			//Google cloud messaging GCM-API url
+			$url = 'https://fcm.googleapis.com/fcm/send';
+
+			if ($flag == 'approval') {
+				// - Testing Start
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'sound' => 'default',
+					'message' => $message,
+					'flag' => $flag,
+					'click_action' => $click_action
+				);
+
+				$fields = array(
+					'sound' => 'default',
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'message' => $message,
+						'flag' => $flag,
+						'click_action' => $click_action
+					)
+
+				);
+			} elseif ($flag == 'transaction') {
+
+				$trans_header_id = $data['trans_header_id'];
+
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'sound' => 'default',
+					'message' => $message,
+					'flag' => $flag,
+					'trans_header_id' => $trans_header_id,
+					'click_action' => $click_action
+				);
+
+				$fields = array(
+					'sound' => 'default',
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'message' => $message,
+						'trans_header_id' => $trans_header_id,
+						'flag' => $flag,
+						'click_action' => $click_action
+					)
+				);
+
+			} elseif ($flag == 'route_order') {
+
+				$route_id = $data['route_id'];
+
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'sound' => 'default',
+					'message' => $message,
+					'flag' => $flag,
+					'route_id' => $route_id,
+					'click_action' => $click_action
+				);
+
+				$fields = array(
+					'sound' => 'default',
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'message' => $message,
+						'route_id' => $route_id,
+						'flag' => $flag,
+						'click_action' => $click_action
+					)
+				);
+				
+			}elseif ($flag = 'rating'){
+
+				$trans_header_id = $data['trans_header_id'];
+
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'sound' => 'default',
+					'message' => $data['description'],
+					'flag' => $flag,
+					'trans_header_id' => $trans_header_id,
+					'click_action' => $click_action
+				);
+
+				$fields = array(
+					'sound' => 'default',
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'message' => $data['description'],
+						'trans_header_id' => $trans_header_id,
+						'flag' => $flag,
+						'click_action' => $click_action
+					)
+				);
+
+			}elseif($flag == 'reservation_super' || $flag == 'reservation_shop'){
+				
+				$user_id = $data['user_id'];
+				$user_name = $data['user_name'];
+				$reservation_id = $data['reservation_id'];
+				
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'sound' => 'default',
+					'message' => $message,
+					'flag' => $flag,
+					'user_id' => $user_id,
+					'reservation_id' => $reservation_id,
+					'user_name' => $user_name,
+					'action' => "abc",
+					'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
+				);
+
+				$fields = array(
+					'sound' => 'default',
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'message' => $message,
+						'flag' => $flag,
+						'user_id' => $user_id,
+						'reservation_id' => $reservation_id,
+						'user_name' => $user_name,
+						'action' => "abc",
+						'click_action' => 'FLUTTER_NOTIFICATION_CLICK'
+					)
+
+				);
+			}elseif ($flag == 'reservation'){
+
+				$reservation_id = $data['reservation_id'];
+
+				$noti_arr = array(
+					'title' => get_msg('site_name'),
+					'body' => $message,
+					'message' => $message,
+					'flag' => $flag,
+					'sound'=> 'default'
+				);
+		
+				$fields = array(
+					'notification' => $noti_arr,
+					'registration_ids' => $registatoin_ids,
+					'data' => array(
+						'click_action' => 'FLUTTER_NOTIFICATION_CLICK',
+						'message' => $message,
+						'flag' => $flag,
+						'reservation_id' => $reservation_id
+					)
+		
+				);
+		
+			}
+
+			// print_r($fields);die;
+
+			// Update your Google Cloud Messaging API Key
+			//define("GOOGLE_API_KEY", "AIzaSyAzKBPuzGuR0nlvY0AxPrXsEMBuRUxO4WE");
+			$fcm_api_key = $CI->Backend_config->get_one('be1')->fcm_api_key_deli_boy;
+			define("GOOGLE_API_KEY", $fcm_api_key);
+			//define("GOOGLE_API_KEY", $this->config->item( 'fcm_api_key' ));  	
+			
+			//print_r(GOOGLE_API_KEY); die; 
+			//print_r($fields); die;
+			$headers = array(
+				'Authorization: key=' . $fcm_api_key,
+				'Content-Type: application/json'
+			);
+			//print_r($headers);die;
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_POST, true);
+			curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);	
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+			$result = curl_exec($ch);	
+			if ($result === FALSE) {
+				die('Curl failed: ' . curl_error($ch));
+			}
+			curl_close($ch);
+
+			return $result;
+		}
+	}
 	/**
 	* Sending Message From FCM For Android & iOS By using topics subscribe
 	*/
@@ -820,9 +1047,8 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 
 			} 
 			// print_r($fields); die;
-
 			define("GOOGLE_API_KEY", $CI->Backend_config->get_one('be1')->fcm_api_key);  	
-				
+			
 			$headers = array(
 				'Authorization: key=' . GOOGLE_API_KEY,
 				'Content-Type: application/json'

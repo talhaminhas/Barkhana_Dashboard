@@ -106,7 +106,6 @@ class Transaction_status extends BE_Controller {
 		 * Insert Language Records 
 		 */
 		$data = array();
-
 		// prepare id
 		if ( $this->has_data( 'id' )) {
 			$data['id'] = $this->get_data( 'id' );

@@ -195,7 +195,7 @@ class Notis extends BE_Controller {
 
 			$noti_message = array('description' => $description, 'message' => $message);
 
-
+		
 			$error_msg = "";
 			$success_device_log = "";
 

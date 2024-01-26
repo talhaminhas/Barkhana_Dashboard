@@ -164,7 +164,7 @@ class Transactions extends BE_Controller {
 
 					$title = $this->Transactionstatus->get_one($status_id)->title;
 					$message = get_msg('order_status_changed') . " " . $title;
-
+					//$message = "Customer t" . $title;
 					$data['message'] = $message;
 					$data['flag'] = 'transaction';
 					$data['trans_header_id'] = $id;
@@ -184,9 +184,8 @@ class Transactions extends BE_Controller {
 							$platform_names[] = $platform->platform_name;
 						}
 					}
-
-					$status = send_android_fcm( $device_ids, $data, $platform_names );					
-
+					
+					$status = send_android_fcm( $device_ids, $data, $platform_names );		
 
 					if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
 
@@ -197,7 +196,7 @@ class Transactions extends BE_Controller {
 
 							$title = $this->Transactionstatus->get_one($status_id)->title;
 							$message = get_msg('order_status_changed') . " " . $title;
-
+							//$message = "Delivery Boy t" . $title;
 							$data['message'] = $message;
 							$data['flag'] = 'transaction';
 							$data['trans_header_id'] = $id;
@@ -218,8 +217,8 @@ class Transactions extends BE_Controller {
 								}
 							}
 		
-							$status = send_android_fcm( $device_ids, $data, $platform_names );					
-							
+							$status = send_android_deli_fcm( $device_ids, $data, $platform_names );					
+							//echo($status); die;
 							if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 
 						}
@@ -305,7 +304,7 @@ class Transactions extends BE_Controller {
 						}
 					}
 
-					$status = send_android_fcm( $device_ids, $data, $platform_names );
+					$status = send_android_deli_fcm( $device_ids, $data, $platform_names );
 					
 					if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 

@@ -77,11 +77,11 @@ class Delivery_status extends API_Controller
 		}
 		$trans_status_id = $data['trans_status_id'];
 		$title = $this->Transactionstatus->get_one($trans_status_id)->title;
-		$message = "Your order delivery status is " . $title;
+		$message = "Your Order Is " . $title;
 
 		//@start
 		//// Start - Send Noti to user /////
-		$message = "Your order delivery status is " . $title;
+		$message = "Your Order Is " . $title;
 		$data['message'] = $message;
 		$data['flag'] = 'transaction';
 		$data['trans_header_id'] = $id;

@@ -322,7 +322,7 @@ class Active_orders_dashboard extends BE_Controller {
 	
 						$title = $this->Transactionstatus->get_one($status_id)->title;
 						$message = get_msg('order_status_changed') . " " . $title;
-	
+						//$message = "Customer a" . $title;
 						$data['message'] = $message;
 						$data['flag'] = 'transaction';
 						$data['trans_header_id'] = $id;
@@ -355,7 +355,7 @@ class Active_orders_dashboard extends BE_Controller {
 	
 								$title = $this->Transactionstatus->get_one($status_id)->title;
 								$message = get_msg('order_status_changed') . " " . $title;
-	
+								//$message = "delivery boy a " . $title;
 								$data['message'] = $message;
 								$data['flag'] = 'transaction';
 								$data['trans_header_id'] = $id;
@@ -375,9 +375,8 @@ class Active_orders_dashboard extends BE_Controller {
 										$platform_names[] = $platform->platform_name;
 									}
 								}
-			
-								$status = send_android_fcm( $device_ids, $data, $platform_names );					
 								
+								$status = send_android_deli_fcm( $device_ids, $data, $platform_names );				
 								if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 	
 							}
@@ -463,7 +462,7 @@ class Active_orders_dashboard extends BE_Controller {
 							}
 						}
 	
-						$status = send_android_fcm( $device_ids, $data, $platform_names );
+						$status = send_android_fcm_deli( $device_ids, $data, $platform_names );
 						
 						if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 	
