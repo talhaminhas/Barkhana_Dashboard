@@ -819,7 +819,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 			if ($flag == 'approval') {
 				// - Testing Start
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'sound' => 'default',
 					'message' => $message,
@@ -843,7 +843,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				$trans_header_id = $data['trans_header_id'];
 
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'sound' => 'default',
 					'message' => $message,
@@ -869,7 +869,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				$route_id = $data['route_id'];
 
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'sound' => 'default',
 					'message' => $message,
@@ -895,7 +895,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				$trans_header_id = $data['trans_header_id'];
 
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'sound' => 'default',
 					'message' => $data['description'],
@@ -923,7 +923,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				$reservation_id = $data['reservation_id'];
 				
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'sound' => 'default',
 					'message' => $message,
@@ -955,7 +955,7 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 				$reservation_id = $data['reservation_id'];
 
 				$noti_arr = array(
-					'title' => get_msg('site_name'),
+					'title' => get_msg('deliviery_boy_app_name'),
 					'body' => $message,
 					'message' => $message,
 					'flag' => $flag,
