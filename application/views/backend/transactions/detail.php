@@ -1,51 +1,193 @@
+<style>
+    .invoice-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .fixed-size-btn {
+    width: 100%; 
+    height: 60px; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+    .invoice-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .cust-info-cell {
+        background-color: #f2f2f2;
+        text-align: center;
+    }
+
+    .label-column {
+        font-weight: bold;
+    }
+    .transaction-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    .transaction-table td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+    }
+
+    .table-header {
+        font-weight: bold;
+        background-color: #f2f2f2;
+        text-align: center;
+    }
+
+    .select{
+        width:100%;
+        height: 40px;
+        text-align: center;
+    }
+    .order-collection{
+        width: 100%; 
+        height: 40px;
+        font-weight: bold; 
+        color: #fc3903; 
+        border: 2px solid #fc3903; 
+        padding: 5px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .order-delivery{
+        width: 100%; 
+        height: 40px;
+        font-weight: bold; 
+        color: #9003fc;
+        border: 2px solid #9003fc; 
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .subtotal{
+        font-weight: bold; 
+        color: red;
+        font-size: 25px;
+    }
+    .discount-label{
+        font-weight: bold; 
+        color: red;
+    }
+    .addon-container{
+        border: 1px solid #000000; 
+    }
+    .height-fill{
+        height: 100%;
+    }
+</style>
+<script>
+$('.btn-assign').click(function(){
+		
+
+		// get id and links
+		var id = $(this).attr('id');
+		var formLink = $('#assign-deliboy-form').attr('action');
+
+		// modify link with id
+		$('#assign-deliboy-form').attr( 'action', formLink + id );
+		// Reset refresh timer to 0
+		//resetRefreshTimer();
+	});
+</script>
 <div class="invoice p-3 mb-3 shadow-sm rounded">
   	<!-- title row -->
   	<div class="row">
-    	<div class="col-12">
-      		<h4>
-        	<?php echo get_msg('trans_detail'); ?>
-        	<small class="float-right"><?php echo get_msg('trans_date_label'); ?>: <?php echo $transaction->added_date; ?></small>
-      		</h4>
-    	</div>
+      <div class="col-12">
+    <table class="table table-bordered">
+        <tr>
+            <td class="table-header" colspan="6">
+                <h4><b>Order Detail</b></h4>
+            </td>
+        </tr>
+        <tr>
+            <td class="label-column text-center align-middle">Order Number</td>
+            <td class="text-center align-middle"><?php echo $transaction->trans_code; ?></td>
+            <td class="label-column text-center align-middle">Date</td>
+            <td class="text-center align-middle"><?php echo date('Y-m-d', strtotime($transaction->added_date)); ?></td>
+            <td class="label-column text-center align-middle">Time</td>
+            <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->added_date)); ?></td>
+        </tr>
+    </table>
+</div>
     <!-- /.col -->
   	</div>
   <!-- info row -->
 	<div class="row invoice-info">
 
-		<div class="col-sm-4 invoice-col">
-			<b><u><?php echo get_msg('cust_info'); ?></u></b> <br><br>
-			 	<address>
-                 <?php echo get_msg('name_label'); ?>: <?php echo $transaction->contact_name; ?><br>
-                 <?php echo get_msg('email_label'); ?>: <?php echo $transaction->contact_email; ?><br>
-                 <?php echo get_msg('phone_label'); ?>: <?php echo $transaction->contact_phone;?><br>
-                 <?php echo get_msg('address_label'); ?>: <?php echo $transaction->contact_address;?>
-			 	</address>
-                <?php if($transaction->user_id == '-1'): ?>
-                <span class="text-danger"><?php echo get_msg("deleted_user"); ?></span>
+    <div class="col-sm-4 invoice-col">
+        <div style="height: 100%; padding-bottom: 15px;">
+                <table class="table table-bordered" style="height: 100%;">
+                    <tr>
+                        <td class="cust-info-cell" colspan="2">
+                            <b><?php echo get_msg('cust_info'); ?></b>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="label-column text-center align-middle"><?php echo get_msg('name_label'); ?></td>
+                        <td class="align-middle"><?php echo $transaction->contact_name; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label-column text-center align-middle"><?php echo get_msg('email_label'); ?></td>
+                        <td class="align-middle"><?php echo $transaction->contact_email; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label-column text-center align-middle"><?php echo get_msg('phone_label'); ?></td>
+                        <td class="align-middle"><?php echo $transaction->contact_phone; ?></td>
+                    </tr>
+                    <tr>
+                        <td class="label-column text-center align-middle"><?php echo get_msg('address_label'); ?></td>
+                        <td class="align-middle"><?php echo $transaction->contact_address; ?></td>
+                    </tr>
+                </table>
+
+                <?php if ($transaction->user_id == '-1'): ?>
+                    <span class="text-danger"><?php echo get_msg("deleted_user"); ?></span>
                 <?php endif; ?>
-		</div>
+            </div>
+        </div>
+
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
-		  	<b><u><?php echo get_msg('cust_loc'); ?></u></b> <br><br>
-		  		<div id="transaction_map" style="width: 200px; height: 150px;"></div>
-
-				<div class="clearfix">&nbsp;</div>
-		</div>
-	
+            <div style="height: 100%; padding-bottom: 15px;">
+                <table class="table table-bordered" style="height: 100%;">
+                    <tr>
+                        <td class="table-header" >
+                            <?php echo get_msg('cust_loc'); ?>
+                        </td>
+                    </tr>
+                    <tr style="width: 100%; height: 100%">
+                        <td class="label-column">
+                            <div id="transaction_map" style="width: 100%; height: 100%"></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
 		<div class="col-sm-4 invoice-col">
-		  <b><?php echo get_msg('invoice_label'); ?> <?php echo $transaction->trans_code?></b><br>
-		  <br>
 		  	
 				<?php
 					$attributes = array('class' => 'form-inline');
-						echo form_open('/admin/transactions/update', $attributes);
+						echo form_open('/admin/active_orders_dashboard/update', $attributes);
 				
 				?>
                     <?php if ($transaction->trans_status_id == 'trans_sts47fe98346e0f80d844d307981eaef7ec') { ?>
                         <div class="table-responsive">
-                            <table class="table">
+                            <table class="table table-bordered">
                                 <tr>
-                                    <th><?php echo get_msg('status_label'); ?>:</th>
+                                    <th>Order Status</th>
                                     <td><select  name="trans_status_id" id="trans_status_id" disabled>
 
                                             <option value="0"><?php echo get_msg('select_status'); ?></option>
@@ -117,79 +259,71 @@
 
                     <?php } else { ?>
 
-                        <div class="table-responsive">
-                            <table class="table">
-                                <tr>
-                                    <th><?php echo get_msg('status_label'); ?>:</th>
-                                    <td><select  name="trans_status_id" id="trans_status_id">
+                        <div class="table-responsive" style=" ">
+                            <table class="table table-bordered" style="height=100%">
+                            <tr>
+                                    <th class="text-center align-middle">Order Type</th>
+                                    <td>
+                                        <?php
+                                            $pick_at_shop = $transaction->pick_at_shop;
 
-                                            <option value="0"><?php echo get_msg('select_status'); ?></option>
-                                            <?php
-                                            $conds['is_optional'] = 0;
-                                            $status = $this->Transactionstatus->get_all_by($conds);
-                                            foreach ($status->result() as $status)
-                                            {
-                                                echo "<option value='".$status->id."'";
-                                                if($transaction->trans_status_id == $status->id)
-                                                {
-                                                    echo " selected ";
-                                                }
-                                                echo ">".$status->title."</option>";
+                                            if ($pick_at_shop == "0") {
+                                                echo '<span class="order-delivery">Delivery</span>';
+                                            } else {
+                                                echo '<span class="order-collection">Collection</span>';
                                             }
-                                            ?>
-                                        </select>
+                                        ?>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <th><?php echo get_msg('payment_status_label'); ?>:</th>
-                                    <td><select  name="payment_status_id" id="payment_status_id">
-                                            <option value="0"><?php echo get_msg('select_pay_status'); ?></option>
-                                            <?php
-                                            $status = $this->Paymentstatus->get_all();
-                                            foreach ($status->result() as $status)
-                                            {
-                                                echo "<option value='".$status->id."'";
-                                                if($transaction->payment_status_id == $status->id)
-                                                {
-                                                    echo " selected ";
-                                                }
-                                                echo ">".$status->title."</option>";
-                                            }
-                                            ?>
-                                        </select>
+                                    <th class="text-center align-middle">Order Status</th>
+                                    <td>
+                                        <span class="order-collection" style="color: green; border-color: green;">
+                                                <?php
+                                                    $conds['is_optional'] = 0;
+                                                    $status = $this->Transactionstatus->get_all_by($conds);
+                                                    foreach ($status->result() as $status)
+                                                    {
+                                                        if($transaction->trans_status_id == $status->id)
+                                                        {
+                                                            echo $status->title;
+                                                        }
+                                                    }
+                                                ?>
+                                            </span>
                                     </td>
                                 </tr>
                                 <?php if($transaction->pick_at_shop != 1) { ?>
                                     <tr>
-                                        <th><?php echo get_msg('deliboy_label'); ?>:</th>
-                                        <td><select  name="delivery_boy_id" id="delivery_boy_id">
-                                                <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
+                                        <th class="text-center align-middle"><?php echo get_msg('deliboy_label'); ?></th>
+                                        <td>
+                                        <span class="order-collection" style="color: #0275d8; border-color: #0275d8;">
                                                 <?php
-                                                $conds['role_id'] = 5;
-                                                $conds['status']= 1;
-                                                $deli_boys = $this->User->get_all_by($conds);
-                                                foreach ($deli_boys->result() as $boy)
-                                                {
-                                                    echo "<option value='".$boy->user_id."'";
-                                                    if($transaction->delivery_boy_id == $boy->user_id)
+                                                    $conds['role_id'] = 5;
+                                                    $conds['status']= 1;
+                                                    $deli_boys = $this->User->get_all_by($conds);
+                                                    foreach ($deli_boys->result() as $boy)
                                                     {
-                                                        echo " selected ";
+                                                        if($transaction->delivery_boy_id == $boy->user_id)
+                                                        {
+                                                            echo $boy->user_name;
+                                                        }
                                                     }
-                                                    echo ">".$boy->user_name."</option>";
-                                                }
                                                 ?>
-                                            </select>
-                                            <?php if($transaction->delivery_boy_id == '-1'): ?>
-    										<br/>
-    										<span class="text-danger"><?php echo get_msg("deliboy_trans_deleted"); ?></span>
-    										<?php endif; ?>
+                                            </span>
                                         </td>
                                     </tr>
                                 <?php } ?>
+                                <tr>
+                                    <th class="text-center align-middle">Completed At</th>
+                                    <td>
+                                    <span class="order-collection" style="color: red; border-color: red;">
+                                            <?php echo date('H:i', strtotime($transaction->updated_date)); ?>
+                                        </span>
+                                    </td>
+                                </tr>
                             </table>
-                            <input type="hidden" name="trans_header_id" value=<?php  echo $transaction->id;  ?>>
-                            <button type="submit" class="btn btn-sm btn-primary <?php echo $langauge_class; ?>" style="padding : 2px 5px; margin: 5px;"><?php echo get_msg('btn_update')?></button>
-                            <?php echo form_close(); ?>
+                            
                         </div>
 
                     <?php } ?>
@@ -200,18 +334,23 @@
 
 	<div class="row">
 		<div class="col-12 table-responsive">
-		  <table class="table table-striped">
-		    <thead>
+		  <table class="table table-bordered">
+            <?php $count = 0; ?>
+            <tr>
+                <td class="cust-info-cell" colspan="6">
+                    <b>Items Detail</b>
+                </td>
+            </tr>
 			    <tr>
-			      	<th><?php echo get_msg('Prd_name'); ?></th>
-					<th><?php echo get_msg('Prd_price'); ?></th>
+                    <th  class="text-center align-middle">No</th>
+			      	<th  class="">Name</th>
+                      <th class="text-center align-middle">Discount</th>
+					<th class="text-center align-middle">Unit Price</th>
 					<!-- <th><?php echo get_msg('Prd_dis_price'); ?></th> -->
-					<th><?php echo get_msg('Prd_qty'); ?></th>
-					<th><?php echo get_msg('Prd_dis'); ?></th>
-					<th><?php echo get_msg('Prd_amt'); ?></th>
+					<th class="text-center align-middle"><?php echo get_msg('Prd_qty'); ?></th>
+					
+					<th class="text-center align-middle"><?php echo get_msg('Prd_amt'); ?></th>
 			    </tr>
-		    </thead>
-		    <tbody>
 		    	<?php 
 					$conds['transactions_header_id'] = $transaction->id;
 					$all_detail =  $this->Transactiondetail->get_all_by( $conds );
@@ -220,7 +359,8 @@
 
 				?>
 				<tr>
-					<td>
+                    <td class="text-center align-middle"><?php echo ++$count; ?></td>
+					<td class="">
 						<?php 
 
 						
@@ -262,17 +402,17 @@
 						if( $addon_name_info[0] != '' ) {
 
 							//loop attribute info
-							for($k = 0; $k < count($addon_name_info); $k++) {
-								
-								if($addon_name_info[$k] != "") {
-									$addon_flag = 1;
-									$addon_info_str .= $addon_name_info[$k] . ": " . $transaction->currency_symbol . number_format($addon_price_info[$k], 2) . ", ";
-
-								}
-							}
-
-
-						} else {
+							for ($k = 0; $k < count($addon_name_info); $k++) : 
+                                if ($addon_name_info[$k] != "") :
+                                    
+                                    $addon_flag = 1;
+                                    $addon_info_str .= '<tr><td class="text-center">' . $addon_name_info[$k] . '</td><td class="text-center">+' . $transaction->currency_symbol . number_format($addon_price_info[$k], 2) . '</tr></td> ';
+                                  
+                               endif; 
+                            endfor; 
+                            
+						} 
+                        else {
 							$addon_info_str = "";
 						}
 
@@ -285,7 +425,12 @@
 
 						if( $att_flag == 1 || $addon_flag == 1 ) {
 
-							echo $transaction_detail->product_name .'<br> ' . $att_info_str  .'<br>' . $addon_info_str  .'<br>'; 
+							echo '<table style="width:100%"><tr><th class=" text-center" >'.$transaction_detail->product_name .
+                            '<th class="text-center">'.$transaction->currency_symbol . 
+                            number_format($transaction_detail->price + $transaction_detail->discount_amount, 2) .'</th>'.
+                            '</th></tr>' . $addon_info_str  .
+                            '<tr><th class="table-header text-center">Total</th><th class="table-header text-center" >'.
+                            $transaction->currency_symbol . number_format($transaction_detail->original_price, 2).'</th></tr></table>'; 
 
 						} else {
 
@@ -310,21 +455,29 @@
 
 
 					</td>
-					<td><?php echo  $transaction->currency_symbol. number_format($transaction_detail->price, 2) ; ?></td>
-					<!-- <td><?php echo $transaction_detail->price ." ". $transaction->currency_symbol; ?></td> -->
-					<td><?php echo $transaction_detail->qty ?></td>
-					<td><?php echo "-" .$transaction->currency_symbol . number_format($transaction_detail->discount_amount, 2) .  " (" .$transaction_detail->discount_percent . "% off)"; ?></td>
-
-					<td>
+                    <?php
+                    if($transaction_detail->discount_amount == 0)
+					    echo('<td class="text-center align-middle">-</td>');
+                    else
+                        echo('<td class="text-center align-middle discount-label">-' .$transaction->currency_symbol . number_format($transaction_detail->discount_amount, 2) .  " (" .$transaction_detail->discount_percent . '% off)</td>');
+                    ?>
+					<td class="text-center align-middle "><?php 
+                    if($transaction_detail->discount_amount != 0)
+                        echo '<span class="discount-label" style="text-decoration: line-through;">'.$transaction->currency_symbol. 
+                        number_format($transaction_detail->original_price, 2).'</span> ' ;
+                    echo  $transaction->currency_symbol. 
+                    number_format($transaction_detail->original_price - $transaction_detail->discount_amount, 2) ; ?></td>
+					<td class="text-center align-middle"><?php echo $transaction_detail->qty ?></td>
+                    
+					<td class="text-center align-middle">
 						<?php 
 
-							echo $transaction->currency_symbol. number_format($transaction_detail->qty * $transaction_detail->price, 2)  ; 
+							echo $transaction->currency_symbol. number_format($transaction_detail->qty * ($transaction_detail->original_price - $transaction_detail->discount_amount), 2)  ; 
 						?>
 					</td>
 				</tr>
 
 					<?php endforeach; ?>
-		    </tbody>
 		  </table>
 		</div>
 	<!-- /.col -->
@@ -333,59 +486,54 @@
 	<div class="row">
         <!-- accepted payments column -->
        
-        <div class="col-6">
-        	
-
-          <p> <?php //echo get_msg('trans_memo'); ?> <?php //echo $transaction->memo; ?></p>
-
-          <?php if($transaction->pick_at_shop == 1) { ?>
-          <p><?php echo get_msg('cus_pick_up_order'); ?></p>
-      	  <?php } ?>
-
-         <p> <?php echo get_msg('trans_delivery_pickup_date'); ?> <?php echo $transaction->delivery_pickup_date; ?></p>
-
-         <p> <?php echo get_msg('trans_delivery_pickup_time'); ?> <?php echo $transaction->delivery_pickup_time; ?></p>
-        </div>
-
-        <!-- /.col -->
-        <div class="col-6">
-         
-
-          <div class="table-responsive">
-            <table class="table">
+        <div class="col-12">
+        <div class="table-responsive">
+            <table class="table table-bordered">
 
               <tr>
-                <th><?php echo get_msg('trans_coupon_discount_amount'); ?></th>
-                <td><?php echo "-". $transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2) ; ?></td>
-              </tr>	
-
-              <tr>
-                <th style="width:50%"><?php echo get_msg('trans_item_sub_total'); ?></th>
-                <td><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
-              </tr>
-
-              
-              <tr>
-                <th><?php echo get_msg('trans_shipping_cost'); ?>:</th>
-                <td><?php echo $transaction->currency_symbol.number_format($transaction->shipping_amount, 2)  ; ?></td>
-              </tr>
-            
-              
-              <tr>
-                <th><?php echo get_msg('trans_total_balance_amount'); ?></th>
-                <td>
+                <th class="text-center">Coupon Discount</th>
+                <?php if($transaction->coupon_discount_amount == 0)
+                    echo('<td class="text-center">-</td>');
+                else 
+                    echo('<td class="text-center">-'.$transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2).'</td>');
+                ?>
+                <th class = "text-center align-middle" rowspan = "3">
+                    <span class = "">Sub Total</span>
+                </th>
+                <th class = "text-center align-middle subtotal" rowspan = "3">
                 	
                 	<?php 
 
                 	//balance_amount = total_item_amount - coupon_discont + (overall_tax + shipping_cost + shipping_tax (based on shipping cost)) 
 
-                	echo  $transaction->currency_symbol.($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + ($transaction->shipping_amount * $transaction->shipping_tax_percent)) );  
+                	echo  $transaction->currency_symbol.
+                    number_format(($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + 
+                    ($transaction->shipping_amount * $transaction->shipping_tax_percent))),2);  
                 	
                 	?>
-                </td>
+                </th>
+              </tr>	
+
+              <tr>
+                <th class="text-center" style="width:50%">Item Sub total</th>
+                <td class="text-center"><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
+              </tr>
+
+              
+              <tr>
+                <th class="text-center">Delivery Cost</th>
+                
+                <?php if($transaction->shipping_amount == 0)
+                    echo('<td class="text-center">-</td>');
+                else 
+                    echo('<td class="text-center">+'.$transaction->currency_symbol.number_format($transaction->shipping_amount, 2).'</td>');
+                ?>
               </tr>
             </table>
           </div>
+        <!-- /.col -->
+        <div class="col-5">
+    
         </div>
         <!-- /.col -->
     </div>

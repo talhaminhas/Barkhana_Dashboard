@@ -3,7 +3,7 @@
 <div class="container-fluid">
    <div class="content-wrapper"  style="background-color: #fff;">
 		<div class="row">
-			<div class="col-12 col-md-3 sidebar teamps-sidebar-open">
+			<div class="col-12 col-md-3 sidebar teamps-sidebar-collapse">
 				
 				<?php $this->load->view( $template_path .'/partials/sidebar' ); ?>
 			</div>

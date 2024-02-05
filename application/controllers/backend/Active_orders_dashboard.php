@@ -488,10 +488,10 @@ class Active_orders_dashboard extends BE_Controller {
 			
 			$id = $this->input->post('trans_header_id');
 			$status_id = $this->input->post('trans_status_id');
-			$payment_id = $this->get_data('payment_status_id');
+			$payment_id = '0'; //$this->get_data('payment_status_id');
 			$delivery_boy_id = $this->get_data( 'delivery_boy_id' );
 			$user_id = $this->Transactionheader->get_one( $id )->user_id;
-	
+			
 			//start PPP @ 24/Aug/2020
 	
 			$existing_status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
@@ -620,7 +620,7 @@ class Active_orders_dashboard extends BE_Controller {
 	
 			//for deli boy
 			if( $delivery_boy_id != '0' ) {
-	
+				
 				if( $delivery_boy_id != "" ){
 					if ($delivery_boy_id != $existing_deli_boy) {
 						
@@ -631,7 +631,7 @@ class Active_orders_dashboard extends BE_Controller {
 						$data['trans_header_id'] = $id;
 	
 						$devices = $this->Notitoken->get_all_device_in($delivery_boy_id)->result();
-	
+						
 						$device_ids = array();
 						if ( count( $devices ) > 0 ) {
 							foreach ( $devices as $device ) {
@@ -645,22 +645,27 @@ class Active_orders_dashboard extends BE_Controller {
 								$platform_names[] = $platform->platform_name;
 							}
 						}
-	
-						$status = send_android_fcm_deli( $device_ids, $data, $platform_names );
+						
+						$status = send_android_deli_fcm( $device_ids, $data, $platform_names );
 						
 						if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 	
 						//update deli boy save at trans header
 						$trans_data['delivery_boy_id'] = $delivery_boy_id;
-	
+						
 						$this->Transactionheader->save($trans_data,$id);
 					}	
 				}	
 			}
+			
+			
 			//End -
 			// load user
 			$this->data['transaction'] = $this->Transactionheader->get_one( $id );
+			redirect( $module_site_url.'/'.$shop_id);
 			parent::status_edit($id,$status_id,$payment_id,$delivery_boy_id);
+			
+			
 		}
 	/**
 	 * Saving Logic

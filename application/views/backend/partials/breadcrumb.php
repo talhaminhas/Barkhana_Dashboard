@@ -1,65 +1,73 @@
-<ul class="breadcrumb" style="background-color: #ffff;">
-	
-	<li class="breadcrumb-item">
-		<a href="<?php echo site_url( '/admin'); ?>">
-			<?php echo get_msg( 'dashboard_label' ); ?>
-		</a>
-	</li>
+<ul class="breadcrumb " style="background-color: #ffff; padding: 10px; border-radius: 10px;">
 
-	<?php if ( !empty( $urls )): ?>
+    <li class="breadcrumb-item">
+        <a href="<?php echo site_url('/admin'); ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">
+            <?php echo get_msg('dashboard_label'); ?>
+        </a>
+    </li>
 
-	<li class="breadcrumb-item">
-		<span class="divider"></span>
+    <?php if (!empty($urls)): ?>
 
-		<a href="<?php echo $module_site_url; ?>">
-			<?php echo ucfirst( strtolower( $module_name )); ?>
-		</a>
-	</li>	
+        <li class="breadcrumb-item">
+            
 
-		<?php if ( !is_array( $urls )): ?>
-		
-		<li class="breadcrumb-item">
-			<span class="divider"></span>
-			
-			<?php echo $urls; ?>
+            <a href="<?php echo $module_site_url; ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">
+                <?php echo ucfirst(strtolower($module_name)); ?>
+            </a>
+        </li>
 
-		</li>
+        <?php if (!is_array($urls)): ?>
 
-		<?php else: ?>
+            <li class="breadcrumb-item">
+               
 
-			<?php  foreach ( $urls as $url ):  ?>
+                <span style="background-color: #ccc; padding: 5px 10px; border-radius: 5px;">
+                    <?php echo $urls; ?>
+                </span>
 
-				<li class="breadcrumb-item">
+            </li>
 
-					<span class="divider"></span>
+        <?php else: ?>
 
-					<?php if ( !empty( $url['url'] )): ?>
+            <?php foreach ($urls as $url): ?>
 
-						<?php $link = $be_url .'/'. strtolower( $module_name ) .'/'. $url['url']; ?>
-					
-						<a href="<?php echo $link; ?>">
-							
-							<?php echo $url['label']; ?>
-						
-						</a>
-					
-					<?php else: ?>
-				
-						<?php echo $url['label']; ?>
+                <li class="">
 
-					<?php endif; ?>
-				</li>
+                    <?php if (!empty($url['url'])): ?>
 
-			<?php endforeach; ?>
+                        <?php $link = $be_url . '/' . strtolower($module_name) . '/' . $url['url']; ?>
 
-		<?php endif; ?>
+                        <a href="<?php echo $link; ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">
 
-	<?php else: ?>
+                            <?php echo $url['label']; ?>
 
-	<li class="breadcrumb-item">
-		<?php echo ucfirst( strtolower( $module_name )); ?>
-	</li>	
+                        </a>
 
-	<?php endif; ?>
+                    <?php else: ?>
+
+                        <span style="background-color: #ccc; padding: 5px 10px; border-radius: 5px;">
+
+                            <?php echo $url['label']; ?>
+
+                        </span>
+
+                    <?php endif; ?>
+                </li>
+
+            <?php endforeach; ?>
+
+        <?php endif; ?>
+
+    <?php else: ?>
+
+        <li class="breadcrumb-item">
+            
+
+            <span style="background-color: #ccc; padding: 5px 10px; border-radius: 5px;">
+                <?php echo ucfirst(strtolower($module_name)); ?>
+            </span>
+        </li>
+
+    <?php endif; ?>
 
 </ul>

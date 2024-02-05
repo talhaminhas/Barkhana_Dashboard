@@ -114,5 +114,87 @@
 	?>
 
 	</div>
-<body id="<?php echo strtolower( $module_name ); ?>">
+<body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse">
 <div class="wrapper">
+	<style>
+.table-header {
+        font-weight: bold;
+        background-color: #f2f2f2;
+        text-align: center;
+    }
+	.icon-btn{
+	width: 40px;
+	height: 40px;
+	font-weight: bold; 
+	border: 1px solid ; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+	border-radius: 5px;
+  }
+	.navbar.fixed-top {
+		box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+		}
+	
+	.main-sidebar, .main-sidebar::before {
+    width: 300px; /* default 250px */
+	}
+
+	body:not(.sidebar-mini-md) .content-wrapper,
+	body:not(.sidebar-mini-md) .main-footer,
+	body:not(.sidebar-mini-md) .main-header {
+		margin-left: 300px; /* default 250px */
+	}
+
+	.sidebar-collapse .main-sidebar,
+	.sidebar-collapse .main-sidebar::before {
+		margin-left: -300px;
+	}
+
+	.sidebar-mini.sidebar-collapse .main-sidebar:hover,
+	.sidebar-mini.sidebar-collapse .main-sidebar.sidebar-focused {
+		width: 300px; /* default 250px */
+	}
+
+	.sidebar-collapse .wrapper,
+	.sidebar-collapse .fixed-top {
+		margin-left: -300px;
+		transition: margin-left 0.3s ease-in-out;
+	}
+
+	.sidebar-open .wrapper,
+	.sidebar-open .fixed-top {
+		margin-left: 0;
+		transition: margin-left 0.3s ease-in-out;
+	}
+	.table-cell {
+        text-align: center;
+		vertical-align: middle;
+    }
+	.fixed-size-btn {
+    width: 100%; 
+    height: 60px; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  	.std-btn-size{
+		width: 100px; 
+		height: 60px;
+		display: flex; 
+		align-items: center; 
+		justify-content: center;
+	}
+	.lrg-btn-size{
+		width: 150px; 
+		height: 60px;
+		display: flex; 
+		align-items: center; 
+		justify-content: center;
+	}
+	.std-field{
+        width:250px;
+        height: 40px;
+        
+    }
+	</style>

@@ -1,84 +1,148 @@
+<style>
+    
+
+    .table-header {
+        font-weight: bold;
+        background-color: #f2f2f2;
+        text-align: center;
+		vertical-align: middle;
+    }
+	.table-cell {
+        text-align: center;
+		vertical-align: middle;
+    }
+    .fixed-size-btn {
+    width: 100%; 
+    height: 60px; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .order-collection{
+	width: 100%; 
+    height: 60px;
+	font-weight: bold; 
+	color: #fc3903; 
+	border: 2px solid #fc3903; 
+	padding: 5px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .order-delivery{
+	width: 100%; 
+    height: 60px;
+	font-weight: bold; 
+	color: #9003fc;
+	border: 2px solid #9003fc; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+</style>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" class="table-responsive animated fadeInRight">
 
 <div class="card-body table-responsive p-0">
-
+	
     <input type="hidden" name="noti_time" id="noti_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_noti_sound_refresh_time ?>">
     <input type="hidden" name="page_time" id="page_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_page_refresh_time ?>">
-  	<table class="table m-0 table-striped">
+  	<table class="table  table-bordered ">
 		<?php $count = $this->uri->segment(4) or $count = 0; ?>
-
+			<tr>
+				<th class="align-middle table-header" style="font-size: 30px" colspan = "9">Completed Orders</th>
+			</tr>
+			<tr>
+				<th class="align-middle table-header"><?php echo get_msg('no'); ?></th>
+				<th class="align-middle table-header"><?php echo get_msg('trans_code'); ?></th>
+				<th class="align-middle table-header"><?php echo get_msg('total_amount_label') ?></th>
+				<th class="align-middle table-header">Date & Time</th>
+				<th class="align-middle table-header"><span class="th-title">Customer Details</span></th>
+				<th class="align-middle table-header">Order Type</th>
+				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+					<th class="align-middle table-header"><span class="th-title">Delivery Boy</span></th>
+				<?php endif; ?>
+				<th class="align-middle table-header">Delete Order</th>
+				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
+				<?php endif; ?>
+			</tr>
 		<?php if ( !empty( $transactions ) && count( $transactions->result()) > 0 ): ?>
-			<?php foreach($transactions->result() as $transaction): ?>
-
-	  					<tbody style="font-size: 16px;">
-		  					<tr>
-		  						<td style="width: 35%;">
-		  							<?php
-										echo $transaction->contact_name . "( Contact: " . $transaction->contact_phone . " )";
+			
+			<?php $count = 0; ?>
+			<?php foreach($transactions->result() as $transaction): 
+				if($transaction->trans_status_id == 'trans_sts159cbfb84410ebea91919234532885ec'){?>
+					
+					<tr>
+						
+						<tr >
+								<td class="align-middle table-cell"><?php echo ++$count; ?></td>
+								<td class="align-middle table-cell"><?php echo $transaction->trans_code; ?></td>
+								<td class="align-middle table-cell">
+									<?php
+										$total_amount = '£' . number_format($transaction->total_item_amount, 2);
+										echo $total_amount;
 									?>
 								</td>
-								<td style="width: 10%;">
-										<?php 
-										$conds['id'] = $transaction->trans_status_id;
-										$title = $this->Transactionstatus->get_one_by($conds)->title;
-										if ($transaction->trans_status_id == 'trans_sts29a4b0cd2fa6ae0449e47e9568320f3a') { ?>
-							                <span class="badge badge-secondary">
-							                  <?php echo $title; ?>
-							                </span>
-							            <?php } elseif ($transaction->trans_status_id == 'trans_stsabda7751186eb039c98f7602553a0ba0') { ?>
-							                <span class="badge badge-success">
-							                  <?php echo $title; ?>
-							                </span>
-							            <?php } elseif ($transaction->trans_status_id == 'trans_sts3e03079b68d8c052480c22d91ca2a0b9') { ?>
-							                <span class="badge badge-warning">
-							                  <?php echo $title; ?>
-							                </span>
-							            <?php } elseif ($transaction->trans_status_id == 'trans_sts8a3df6bad54007f1db11ed9531828112') { ?>
-							                <span class="badge badge-info">
-							                  <?php echo $title; ?>
-							                </span>
-                                        <?php } elseif ($transaction->trans_status_id == 'trans_sts47fe98346e0f80d844d307981eaef7ec') { ?>
-                                            <span class="badge" style="background-color : #FF7B7B;">
-							                  <?php echo $title; ?>
-							                </span>
-										<?php } elseif ($transaction->trans_status_id == 'trans_sts1432c4708d810e38dc04f017c0b329dc') { ?>
-                                            <span class="badge" style="background-color : #FF5252;">
-							                  <?php echo $title; ?>
-							                </span>
-                                        <?php } elseif ($transaction->trans_status_id == 'trans_stsef071eefcc46df677fe52e7afe414199') { ?>
-                                            <span class="badge" style="background-color : #FFBEAF;">
-							                  <?php echo $title; ?>
-							                </span>
-                                        <?php } else { ?>
-							                <span class="badge badge-primary" style="background-color: #53D1FF;">
-							                  <?php echo $title; ?>
-							                </span>
-						            	<?php } ?>
-									</td>
-								<td>
+								<td class="align-middle table-cell">
 									<?php
-
-										echo "<small style='padding: 0 50px'>" . $transaction->total_item_count . " Foods </small>";
-									 ?>
+										$added_date = new DateTime($transaction->added_date);
+										echo $added_date->format('d-m-Y H:i'); 
+									?>
 								</td>
+								
+								<td class="align-middle table-cell">
+										<?php echo $this->User->get_one($transaction->user_id)->user_name; ?>
+										<br>
+										<?php echo $this->User->get_one($transaction->user_id)->user_phone; ?>
+									</td>
+									<td class="align-middle table-cell">
+										<?php
+											$pick_at_shop = $transaction->pick_at_shop;
+
+											if ($pick_at_shop == "0") {
+												echo '<span class="order-delivery">Delivery</span>';
+											} else {
+												echo '<span class="order-collection">Collection</span>';
+											}
+										?>
+									</td>
+									</td>
+									<?php if ($this->ps_auth->has_access(EDIT)): ?>
+										<td class="align-middle  table-cell">
+									<?php if (
+										($transaction->delivery_boy_id == "" || $transaction->delivery_boy_id == "0") &&
+										$this->Shop->get_one($shop_id)->deli_manual_assign == 1 &&
+										$transaction->pick_at_shop == "0"
+									): ?>
+										-
+									<?php elseif ($transaction->pick_at_shop == "1"): ?>
+										-
+									<?php else: ?>
+										<?php echo $this->User->get_one($transaction->delivery_boy_id)->user_name; ?>
+										<br>
+										<?php echo $this->User->get_one($transaction->delivery_boy_id)->user_phone; ?>
+									<?php endif; ?>
+								</td>
+
+								<?php endif; ?>
 								<td>
-									<?php echo $transaction->added_date; ?>
-								</td>
-                                <td>
-                                    <a herf='#' class='btn-delete' data-toggle="modal" data-target="#reportsmodal" id="<?php echo "$transaction->id";?>">
-                                        <i class='fa fa-trash-o'></i>
-                                    </a>
-                                </td>
-								<td>
-									<a class="pull-right btn btn-sm btn-primary" href="<?php echo $module_site_url . "/detail/" . $transaction->id;?>">
-										<?php echo get_msg('detail_label'); ?>
-									</a>
-								</td>
-							</tr>
-						</tbody>
+							<a herf='#' class='btn-delete btn fixed-size-btn btn-danger' data-toggle="modal" data-target="#reportsmodal" id="<?php echo "$transaction->id";?>">
+								<span style="color: white;">Delete</span>
+							</a>
+							<!--<button class=" btn fixed-size-btn btn-danger" data-toggle="modal" data-target="#reportsmodal" id="<?php echo $transaction->id; ?>">
+								Delete
+							</button>-->
+						</td>
+						<td>
+							<a class=" btn fixed-size-btn btn-primary" href="<?php echo $module_site_url . "/detail/" . $transaction->id;?>">
+								<?php echo get_msg('detail_label');  ?>
+							</a>
+						</td>
+					</tr>
 
 
-		<?php endforeach; ?>
+		<?php }endforeach; ?>
 		<?php else: ?>
 
 			<?php $this->load->view( $template_path .'/partials/no_data' ); ?>

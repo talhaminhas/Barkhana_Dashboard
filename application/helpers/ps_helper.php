@@ -783,11 +783,12 @@ if ( ! function_exists( 'deep_linking_shorten_url' ))
 	{
 		function send_android_deli_fcm( $registatoin_ids, $data, $platform_names) 
 		{
+			//echo('-----');die;
 			// get ci instance
 			$CI =& get_instance();
 			$message = $data['message'];
 			$flag = $data['flag'];
-
+			
 			//echo('deli noti called');die;
 			//to get prj name
 			$dyn_link_deep_url = $CI->Backend_config->get_one('be1')->dyn_link_deep_url;

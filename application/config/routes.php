@@ -62,8 +62,8 @@ $route['reset_request'] = "main/reset_request";
 $route['reset_email/(.*)'] = "main/reset_email/$1";
 
 // if both backend and frontend exist,
+$route['admin'] = "backend/active_orders_dashboard";
 //$route['admin'] = "backend/dashboard";
-$route['admin'] = "backend/dashboard";
 $route['admin/(.*)'] = "backend/$1";
 $route['rest/(.*)'] = "rest/$1";
 $route['guestajax/(.*)'] = "frontend/guestajax/$1";

@@ -443,7 +443,7 @@ class Transactionheaders extends API_Controller
 				$this->success_response( get_msg( 'order_success_with_whatsapps'));
 				
 			} else {
-
+				date_default_timezone_set('Europe/London');
 				//Need to save inside transaction header table 
 				$trans_header = array(
 		 			'user_id' 				=> $this->post( 'user_id' ),
@@ -468,6 +468,7 @@ class Transactionheaders extends API_Controller
 		 			'trans_code'            => $trans_code,
 		 			//'added_date'            => $current_date_time,
 		 			'added_user_id'         => $this->post( 'user_id' ),
+					 
 		 			'updated_date'          => $current_date_time,
 		 			'updated_user_id'       => "0",
 		 			'updated_flag'          => "0",

@@ -3,38 +3,39 @@
     <input type="hidden" name="page_time" id="page_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_page_refresh_time ?>">
   		
 	<!-- New Orders  -->
-
-	<legend class="text-center ml-3 mt-3 mb-5 font-weight-bold"><?php echo get_msg('new_orders')?></legend>
 			
-	<table class="table table-bordered m-0 table-striped text-center">
+	<table class="table table-bordered m-0  text-center">
 		<?php 
 			$selected_shop_id = $this->session->userdata('selected_shop_id');
           	$shop_id = $selected_shop_id['shop_id'];
 		?>
+		<tr>
+			<th class="align-middle  table-header" style="font-size: 30px" colspan = "9">New Orders</th>
+		</tr>
 		<tr >
-			<th class="align-middle "><?php echo get_msg('no'); ?></th>
-			<th class="align-middle">Order Number</th>
-			<th class="align-middle"><?php echo get_msg('total_amount_label') ?></th>
-			<th class="align-middle">Time</th>
-			<th class="align-middle"><span class="th-title">Customer Details</span></th>
-			<th class="align-middle">Order Type</th>
+			<th class="align-middle  table-header"><?php echo get_msg('no'); ?></th>
+			<th class="align-middle table-header">Order Number</th>
+			<th class="align-middle table-header"><?php echo get_msg('total_amount_label') ?></th>
+			<th class="align-middle table-header">Time</th>
+			<th class="align-middle table-header"><span class="th-title">Customer Details</span></th>
+			<th class="align-middle table-header">Order Type</th>
 
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th class="align-middle"><span class="th-title"><?php echo get_msg('accept_order_label')?></span></th>
+				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('accept_order_label')?></span></th>
 			
 			<?php endif; ?>
 
 
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th class="align-middle"><span class="th-title"><?php echo get_msg('reject_order_label')?></span></th>
+				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('reject_order_label')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th class="align-middle"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
+				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
 			
 			<?php endif; ?>
 
@@ -140,26 +141,29 @@
 
 	<!-- Ongoing Orders  -->
 
-	<legend class="ml-3 mt-3 mb-5 font-weight-bold text-center"><?php echo get_msg('ongoing_orders')?></legend>
+	
 			
-		<table class="table table-bordered m-0 table-striped text-center align-middle" >
+		<table class="table table-bordered m-0  text-center align-middle" >
 			<?php 
 				$selected_shop_id = $this->session->userdata('selected_shop_id');
 	          	$shop_id = $selected_shop_id['shop_id'];
 			?>
 			<tr>
-				<th class="align-middle"><?php echo get_msg('no'); ?></th>
-				<th class="align-middle"><?php echo get_msg('trans_code'); ?></th>
-				<th class="align-middle"><?php echo get_msg('total_amount_label') ?></th>
-				<th class="align-middle">Time</th>
-				<th class="align-middle"><span class="th-title">Customer Details</span></th>
-				<th class="align-middle">Order Type</th>
+				<th class="align-middle table-header" style="font-size: 30px" colspan = "9">Ongoing Orders</th>
+			</tr>
+			<tr>
+				<th class="align-middle table-header"><?php echo get_msg('no'); ?></th>
+				<th class="align-middle table-header"><?php echo get_msg('trans_code'); ?></th>
+				<th class="align-middle table-header"><?php echo get_msg('total_amount_label') ?></th>
+				<th class="align-middle table-header">Time</th>
+				<th class="align-middle table-header"><span class="th-title">Customer Details</span></th>
+				<th class="align-middle table-header">Order Type</th>
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-					<th class="align-middle"><span class="th-title">Delivery Boy</span></th>
+					<th class="align-middle table-header"><span class="th-title">Delivery Boy</span></th>
 				<?php endif; ?>
-				<th class="align-middle"><?php echo get_msg('order_status_label'); ?></th>
+				<th class="align-middle table-header"><?php echo get_msg('order_status_label'); ?></th>
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-					<th class="align-middle"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
+					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
 				<?php endif; ?>
 			</tr>
 
@@ -355,10 +359,8 @@
 	display: flex;
     align-items: center;
     justify-content: center;
-	border-radius: 5px;
   }
   .rounded-corners{
-	border-radius: 5px; 
   }
   .order-collection{
 	width: 100%; 
@@ -366,12 +368,10 @@
 	font-weight: bold; 
 	color: #fc3903; 
 	border: 2px solid #fc3903; 
-	border-radius: 5px; 
 	padding: 5px;
 	display: flex;
     align-items: center;
     justify-content: center;
-	border-radius: 5px;
   }
   .order-delivery{
 	width: 100%; 
@@ -379,12 +379,15 @@
 	font-weight: bold; 
 	color: #9003fc;
 	border: 2px solid #9003fc; 
-	border-radius: 5px; 
 	display: flex;
     align-items: center;
     justify-content: center;
-	border-radius: 5px;
   }
+  .table-header {
+        font-weight: bold;
+        background-color: #f2f2f2;
+        text-align: center;
+    }
 </style>
 <?php
 	// Assign Delivery Boy Modal

@@ -1,22 +1,22 @@
 <div class='row my-3'>
-	<div class='col-6'>
+	<div class='col-8' >
 	<?php
 		$attributes = array('class' => 'form-inline');
 		echo form_open( $module_site_url .'/search', $attributes);
 	?>
 		
-		<div class="form-group mr-3">
+		<div class="form-group mr-3" >
 
 			<?php echo form_input(array(
 				'name' => 'searchterm',
 				'value' => set_value( 'searchterm' ),
-				'class' => 'form-control form-control-sm',
+				'class' => 'form-control form-control-sm std-field',
 				'placeholder' => get_msg( 'btn_search' )
 			)); ?>
 
 	  	</div>
 
-	  	<div class="form-group" style="padding-right: 5px;">
+	  	<div class="form-group " style="padding-right: 5px;">
 
 			<?php
 				$options=array();
@@ -31,20 +31,21 @@
 					'cat_id',
 					$options,
 					set_value( 'cat_id', show_data( @$subcategories->cat_id), false ),
-					'class="form-control form-control-sm" id="cat_id"'
+					'class="  std-field" id="cat_id"'
+
 				);
 			?>
 
 	  	</div>
 
 	  	<div class="form-group" style="padding-right: 2px;">
-		  	<button type="submit" class="btn btn-sm btn-primary">
+		  	<button type="submit" class="btn std-btn-size btn-primary">
 		  		<?php echo get_msg( 'btn_search' )?>
 		  	</button>
 	  	</div>
 
 	  	<div class="form-group">
-		  	<a href='<?php echo $module_site_url; ?>' class='btn btn-sm btn-primary'>
+		  	<a href='<?php echo $module_site_url; ?>' class='btn std-btn-size btn-primary'>
 				<?php echo get_msg( 'btn_reset' )?>
 			</a>
 	  	</div>
@@ -53,8 +54,8 @@
 
 	</div>	
 
-	<div class='col-6'>
-		<a href='<?php echo $module_site_url .'/add';?>' class='btn btn-sm btn-primary pull-right'>
+	<div class='col-4' >
+		<a href='<?php echo $module_site_url .'/add';?>' class='btn lrg-btn-size btn-primary pull-right'>
 			<span class='fa fa-plus'></span> 
 			<?php echo get_msg( 'subcat_add' )?>
 		</a>
@@ -112,12 +113,12 @@
         </div>
         <!-- /.card-body -->
 
-		<div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-primary">
+		<div class="card-footer" style="display: flex; justify-content: start; align-items: start;">
+            <button type="submit" class="btn std-btn-size btn-primary">
 				<?php echo get_msg('btn_save')?>
 			</button>
 
-			<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary">
+			<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-primary" style="margin-left: 10px; display: flex; align-items: center; justify-content: center;">
 				<?php echo get_msg('btn_cancel')?>
 			</a>
         </div>

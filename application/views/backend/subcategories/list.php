@@ -1,25 +1,25 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<tr>
-			<th><?php echo get_msg('no'); ?></th>
-			<th><?php echo get_msg('subcat_name'); ?></th>
-			<th><?php echo get_msg('cat_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('no'); ?></th>
+			<th class="table-header"><?php echo get_msg('subcat_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('cat_name'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
 			
 			<?php endif; ?>
 
@@ -32,15 +32,15 @@
 		<?php foreach($subcategories->result() as $subcategory): ?>
 			
 			<tr>
-				<td><?php echo ++$count;?></td>
-				<td><?php echo $subcategory->name;?></td>
-				<td><?php echo $this->Category->get_one( $subcategory->cat_id )->name; ?></td>
+				<td class="table-cell align-middle"><?php echo ++$count;?></td>
+				<td class="table-cell align-middle"><?php echo $subcategory->name;?></td>
+				<td class="table-cell align-middle"><?php echo $this->Category->get_one( $subcategory->cat_id )->name; ?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $subcategory->id; ?>'>
-							<i class='fa fa-pencil-square-o'></i>
+						<span class='btn fixed-size-btn btn-warning'>Edit</span>
 						</a>
 					</td>
 				
@@ -48,9 +48,9 @@
 				
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
-						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo $subcategory->id;?>">
-							<i class='fa fa-trash-o'></i>
+					<td class="table-cell align-middle">
+						<a herf='#' class=' btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo $subcategory->id;?>">
+							<span class='btn fixed-size-btn btn-danger'>Delete</span>
 						</a>
 					</td>
 				
@@ -58,13 +58,13 @@
 				
 				<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<?php 
 						if ( $subcategory->status == 1): ?>
-							<button class="btn btn-sm btn-success unpublish" id='<?php echo $subcategory->id;?>'>
+							<button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $subcategory->id;?>'>
 							<?php echo get_msg('btn_yes'); ?></button>
 						<?php else:?>
-							<button class="btn btn-sm btn-danger publish" id='<?php echo $subcategory->id;?>'>
+							<button class="btn fixed-size-btn btn-danger publish" id='<?php echo $subcategory->id;?>'>
 							<?php echo get_msg('btn_no'); ?></button><?php endif;?>
 					</td>
 				
