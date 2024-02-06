@@ -117,7 +117,13 @@
 
 				<?php endif; ?>
 
-				<label><?php echo get_msg('profile_img')?>
+				
+			
+		
+
+		</div>
+		<div class="col-6">
+		<label><?php echo get_msg('profile_img')?>
 					<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
 						<span class='glyphicon glyphicon-info-sign menu-icon'>
 					</a>
@@ -138,7 +144,7 @@
 					
 					<?php endif; ?>
 						
-					<div class="col-md-4" style="height:100">
+					<div class="image-container" style="">
 
 						<div class="thumbnail">
 							<?php $logged_in_user = $this->ps_auth->get_user_info(); ?>
@@ -146,11 +152,11 @@
 
 							<br/>
 							
-							<p class="text-center">
+							<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 								
 								<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 									image="<?php echo $img->img_path; ?>">
-									<?php echo get_msg('remove_label'); ?>
+									<span class="btn btn-danger">Remove</span>
 								</a>
 							</p>
 
@@ -159,16 +165,12 @@
 					</div>
 
 				</div>
-			
-		
-
 		</div>
-
 	</div>
 	
-	<div class="my-3">
-		<button type="submit" class="btn btn-sm btn-primary"><?php echo get_msg('btn_save')?></button>
-		<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary"><?php echo get_msg('btn_cancel')?></a>
+	<div class="modal-footer">
+		<button type="submit" class="btn std-btn-size btn-success"><?php echo get_msg('btn_save')?></button>
+		<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary"><?php echo get_msg('btn_cancel')?></a>
 	</div>
 
 <?php echo form_close(); ?>

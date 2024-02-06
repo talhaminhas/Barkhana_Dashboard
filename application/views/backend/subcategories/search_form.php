@@ -114,11 +114,12 @@
         <!-- /.card-body -->
 
 		<div class="card-footer" style="display: flex; justify-content: start; align-items: start;">
-            <button type="submit" class="btn std-btn-size btn-primary">
+            <button type="submit" class="btn std-btn-size btn-success">
 				<?php echo get_msg('btn_save')?>
 			</button>
 
-			<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-primary" style="margin-left: 10px; display: flex; align-items: center; justify-content: center;">
+			<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary" 
+			style="margin-left: 10px; display: flex; align-items: center; justify-content: center;">
 				<?php echo get_msg('btn_cancel')?>
 			</a>
         </div>

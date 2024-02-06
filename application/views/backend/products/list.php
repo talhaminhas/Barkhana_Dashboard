@@ -1,5 +1,5 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<?php
 
 			$shop_obj = $this->Shop->get_all()->result();
@@ -9,28 +9,27 @@
 			$currency_symbol = $this->Shop->get_one( $shop_id )->currency_symbol;
 		?>
 		<tr>
-			<th><?php echo get_msg('no'); ?></th>
-			<th><?php echo get_msg('product_name'); ?></th>
-			<th><?php echo get_msg('cat_name'); ?></th>
-			<th><?php echo get_msg('subcat_name'); ?></th>
-			<th><?php echo get_msg('unit_price') . '('. $currency_symbol . ')'; ?></th>
-			<th><?php echo get_msg('original_price') . '('. $currency_symbol . ')'; ?></th>
+			<th class="table-header"><?php echo get_msg('no'); ?></th>
+			<th class="table-header"><?php echo get_msg('product_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('cat_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('subcat_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('unit_price') ; ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
 			
 			<?php endif; ?>
 
@@ -44,39 +43,35 @@
 		<?php foreach($products->result() as $product): ?>
 			
 			<tr>
-				<td><?php echo ++$count;?></td>
+				<td class="table-cell align-middle"><?php echo ++$count;?></td>
 				<?php if($product->is_featured == 1 ) { ?>
-				<td><span class="fa fa-diamond" style="color:red;"></span>&nbsp;<?php echo $product->name;?></td>
+				<td class="table-cell align-middle"><span class="fa fa-diamond" style="color:red;"></span>&nbsp;<?php echo $product->name;?></td>
 				<?php } else { ?>
-				<td>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product->name;?></td>
+				<td class="table-cell align-middle">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product->name;?></td>
 				<?php } ?>
-				<td><?php echo $this->Category->get_one( $product->cat_id )->name; ?></td>
-				<td><?php echo $this->Subcategory->get_one( $product->sub_cat_id )->name; ?></td>
-				<td><?php  
+				<td class="table-cell align-middle"><?php echo $this->Category->get_one( $product->cat_id )->name; ?></td>
+				<td class="table-cell align-middle"><?php echo $this->Subcategory->get_one( $product->sub_cat_id )->name; ?></td>
+				
 
+				 <td class="table-cell align-middle"><?php  
+
+					if ($product->is_discount == 1) {
+						echo '<span class="discount-label" style="text-decoration: line-through;">' . $currency_symbol .
+							number_format($product->original_price, 2) . '</span> ';
+					} 
 						$unit_price = $product->unit_price;
-
-						$unit_price = number_format($unit_price, 2) ;
-
+						$unit_price = $this->Shop->get_one($shop_id)->currency_symbol . number_format($unit_price, 2);
 						echo $unit_price;
+					
 
-				 ?></td>
-
-				 <td><?php  
-
-						$original_price = $product->original_price;
-
-						$original_price = number_format($original_price, 2);
-
-						echo $original_price;
 
 				 ?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $product->id; ?>'>
-							<i class='fa fa-pencil-square-o'></i>
+							<span class="btn fixed-size-btn btn-warning">Edit</span>
 						</a>
 					</td>
 				
@@ -84,9 +79,9 @@
 				
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo "$product->id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn fixed-size-btn btn-danger">Delete</span>
 						</a>
 					</td>
 				
@@ -94,12 +89,12 @@
 				
 				<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<?php if ( @$product->status== 1): ?>
-							<button class="btn btn-sm btn-success unpublish" id='<?php echo $product->id;?>'>
+							<button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $product->id;?>'>
 							<?php echo get_msg('btn_yes'); ?></button>
 						<?php else:?>
-							<button class="btn btn-sm btn-danger publish" id='<?php echo $product->id;?>'>
+							<button class="btn fixed-size-btn btn-danger publish" id='<?php echo $product->id;?>'>
 							<?php echo get_msg('btn_no'); ?></button><?php endif;?>
 					</td>
 				

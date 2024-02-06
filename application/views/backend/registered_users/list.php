@@ -1,28 +1,28 @@
-<table class="table table-striped table-bordered table-responsive animated fadeInRight">
+
+<table class="table m-0 table-bordered" >
 
 	<tr>
-		<th><?php echo get_msg('no')?></th>
-		<th><?php echo get_msg('user_name')?></th>
-		<th><?php echo get_msg('user_email')?></th>
-		<th><?php echo get_msg('user_phone')?></th>
-		<th><?php echo get_msg('role')?></th>
+		<th class="table-header"><?php echo get_msg('no')?></th>
+		<th class="table-header"><?php echo get_msg('user_name')?></th>
+		<th class="table-header"><?php echo get_msg('user_email')?></th>
+		<th class="table-header"><?php echo get_msg('user_phone')?></th>
 
 		<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-			<th><?php echo get_msg('btn_edit')?></th>
+			<th class="table-header"><?php echo get_msg('btn_edit')?></th>
 
 		<?php endif;?>
 
 
 		<?php if ( $this->ps_auth->has_access( BAN )): ?>
 					
-			<th><?php echo get_msg('user_ban')?></th>
+			<th class="table-header"><?php echo get_msg('user_ban')?></th>
 
 		<?php endif;?>
 
 		<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-		<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+		<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 	
 		<?php endif; ?>
 
@@ -35,17 +35,16 @@
 		<?php foreach($users->result() as $user): ?>
 			
 			<tr>
-				<td><?php echo ++$count;?></td>
-				<td><?php echo $user->user_name;?></td>
-				<td><?php echo $user->user_email;?></td>
-				<td><?php echo $user->user_phone;?></td>
-				<td><?php echo "Registered User";?></td>
+				<td class="table-cell align-middle"><?php echo ++$count;?></td>
+				<td class="table-cell align-middle"><?php echo $user->user_name;?></td>
+				<td class="table-cell align-middle"><?php echo $user->user_email;?></td>
+				<td class="table-cell align-middle"><?php echo $user->user_phone;?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<td>
+				<td class="table-cell align-middle">
 					<a href='<?php echo $module_site_url .'/edit/'. $user->user_id; ?>'>
-						<i class='fa fa-pencil-square-o'></i>
+					<span class="btn btn-warning fixed-size-btn">Edit</span>
 					</a>
 				</td>
 			
@@ -54,17 +53,17 @@
 
 				<?php if ( $this->ps_auth->has_access( BAN )):?>
 						
-					<td>
+					<td class="table-cell align-middle">
 						<?php if ( @$user->is_banned == 0 ): ?>
 							
-							<button class="btn btn-sm btn-primary-green ban" userid='<?php echo @$user->user_id;?>'>
-								<?php echo get_msg( 'user_ban_label' ); ?>
+							<button class="btn fixed-size-btn ban" userid='<?php echo @$user->user_id;?>'>
+								Ban
 							</button>
 						
 						<?php else: ?>
 							
-							<button class="btn btn-sm btn-danger unban" userid='<?php echo @$user->user_id;?>'>
-								<?php echo get_msg( 'user_unban' ); ?>
+							<button class="btn fixed-size-btn btn-danger unban" userid='<?php echo @$user->user_id;?>'>
+								Unban
 							</button>
 						
 						<?php endif; ?>
@@ -75,9 +74,9 @@
 
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo "$user->user_id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn btn-danger fixed-size-btn">Delete</span>
 						</a>
 					</td>
 				

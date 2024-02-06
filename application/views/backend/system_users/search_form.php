@@ -10,7 +10,7 @@
 				<?php echo form_input(array(
 					'name' => 'searchterm',
 					'value' => set_value( 'searchterm' ),
-					'class' => 'form-control form-control-sm',
+					'class' => 'std-field',
 					'placeholder' => get_msg( 'btn_search' ),
 					'id' => ''
 				)); ?>
@@ -18,7 +18,7 @@
 		  	</div>
 
 			<div class="form-group" style="padding-right: 2px;">
-			  	<button type="submit" class="btn btn-sm btn-primary">
+			  	<button type="submit" class="btn std-btn-size btn-primary">
 			  		<?php echo get_msg( 'btn_search' ); ?>
 			  	</button>
 		  	</div>
@@ -26,20 +26,20 @@
 		  	<div class="form-group">
 			  	<?php if( isset( $system_users ) && $system_users == true ) : ?>
 				  	
-				  	<a href="<?php echo site_url() . '/admin/system_users'; ?>" class="btn btn-sm btn-primary">
+				  	<a href="<?php echo site_url() . '/admin/system_users'; ?>" class="btn std-btn-size btn-primary">
 				  		<?php echo get_msg( 'btn_reset' ); ?>
 				  	</a>
 
 			  	<?php else: ?>
 
-				  	<a href="<?php echo site_url() . '/admin/registered_users'; ?>" class="btn btn-sm btn-primary">
+				  	<a href="<?php echo site_url() . '/admin/registered_users'; ?>" class="btn std-btn-size btn-primary">
 				  		<?php echo get_msg( 'btn_reset' ); ?>
 				  	</a>
 
 			  	<?php endif; ?>
 		  	</div> -->
 		  	<div class="form-group">
-	  			<a href="<?php echo site_url() . '/admin/system_users'; ?>" class="btn btn-sm btn-primary">
+	  			<a href="<?php echo site_url() . '/admin/system_users'; ?>" class="btn std-btn-size btn-primary">
 			  		<?php echo get_msg( 'btn_reset' ); ?>
 			  	</a>
 		  	</div>
@@ -51,7 +51,7 @@
 	<?php if ( !( isset( $system_users ) && $system_users == false )): ?>
 
 		<div class='col-6'>
-			<a href='<?php echo $module_site_url .'/add';?>' class='btn btn-sm btn-primary pull-right'>
+			<a href='<?php echo $module_site_url .'/add';?>' class='btn lrg-btn-size btn-primary pull-right'>
 				<i class='fa fa-plus'></i> 
 				<?php echo get_msg( 'btn_add_new' ); ?>
 			</a>

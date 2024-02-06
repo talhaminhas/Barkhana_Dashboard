@@ -73,28 +73,28 @@
 			<div class="row" style="padding: 10px 20px 5px 10px;">
 			   
 			    <div class="col-md-12">
-				  <table id="product-table" class="table table-bordered table-striped table-hover">
+				  <table id="product-table" class="table table-bordered table-hover">
 				     
 				     <thead>
 					      <tr>
-					      	<th><input name="select_all" value="1" type="checkbox"></th>
-					     	<th><?php echo get_msg('prd_name'); ?></th>
-					     	<th><?php echo get_msg('prd_code'); ?></th>
-			         	    <th><?php echo get_msg('product_price'); ?></th>
+					      	<th class="table-header"><input name="select_all" value="1" type="checkbox"></th>
+					     	<th class="table-header"><?php echo get_msg('prd_name'); ?></th>
+					     	<th class="table-header"><?php echo get_msg('prd_code'); ?></th>
+			         	    <th class="table-header"><?php echo get_msg('product_price'); ?></th>
 					      </tr>
 					   </thead>
-				     <tbody>
+				     <tbody class="text-center">
 				     </tbody>
 			   	  </table>
 			    </div>
 			</div>
 	
-			<div class="card-footer">		
-				<button type="submit" class="btn btn-sm btn-primary" >
+			<div class="modal-footer">		
+				<button type="submit" class="btn std-btn-size btn-success" >
 					<?php echo get_msg('btn_save')?> 
 				</button>
 
-				<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary">
+				<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary">
 					<?php echo get_msg('btn_cancel')?>
 				</a>
 

@@ -1,23 +1,23 @@
 <div class="table-responsive animated fadeInRight" style="padding: 10px 30px 10px 30px;">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 
 		<tr>
-			<th><?php echo get_msg('no')?></th>
-			<th><?php echo get_msg('user_name')?></th>
-			<th><?php echo get_msg('user_email')?></th>
-			<th><?php echo get_msg('user_phone')?></th>
-			<th><?php echo get_msg('role')?></th>
+			<th class="table-header"><?php echo get_msg('no')?></th>
+			<th class="table-header"><?php echo get_msg('user_name')?></th>
+			<th class="table-header"><?php echo get_msg('user_email')?></th>
+			<th class="table-header"><?php echo get_msg('user_phone')?></th>
+			<th class="table-header"><?php echo get_msg('role')?></th>
 
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><?php echo get_msg('btn_view')?></th>
+				<th class="table-header"><?php echo get_msg('btn_view')?></th>
 
 			<?php endif;?>
 
 
 			<?php if ( $this->ps_auth->has_access( BAN )): ?>
 				
-				<th><?php echo get_msg('user_ban')?></th>
+				<th class="table-header"><?php echo get_msg('user_ban')?></th>
 
 			<?php endif;?>
 
@@ -30,10 +30,10 @@
 			<?php foreach($users->result() as $user): ?>
 				
 				<tr>
-					<td><?php echo ++$count;?></td>
-					<td><?php echo $user->user_name;?></td>
-					<td><?php echo $user->user_email;?></td>
-					<td><?php echo $user->user_phone;?></td>
+					<td class="table-cell align-middle"><?php echo ++$count;?></td>
+					<td class="table-cell align-middle"><?php echo $user->user_name;?></td>
+					<td class="table-cell align-middle"><?php echo $user->user_email;?></td>
+					<td class="table-cell align-middle"><?php echo $user->user_phone;?></td>
 
 					<?php if ($user->role_id == "4") {
 						$user_role = "Registered User";
@@ -41,13 +41,13 @@
 						$user_role = "Delivery Boy";
 					} ?>
 
-					<td><?php echo $user_role;?></td>
+					<td class="table-cell align-middle"><?php echo $user_role;?></td>
 
 					<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $user->user_id; ?>'>
-							<i class='fa fa-eye'></i>
+							<span class="btn btn-primary fixed-size-btn">View</span>
 						</a>
 					</td>
 				
@@ -56,17 +56,17 @@
 
 					<?php if ( $this->ps_auth->has_access( BAN )):?>
 					
-						<td>
+						<td class="table-cell align-middle">
 							<?php if ( @$user->is_banned == 0 ): ?>
 								
-								<button class="btn btn-sm btn-primary-green ban" userid='<?php echo @$user->user_id;?>'>
-									<?php echo get_msg( 'user_ban' ); ?>
+								<button class="btn fixed-size-btn btn-primary-green ban" userid='<?php echo @$user->user_id;?>'>
+									Ban
 								</button>
 							
 							<?php else: ?>
 								
-								<button class="btn btn-sm btn-danger unban" userid='<?php echo @$user->user_id;?>'>
-									<?php echo get_msg( 'user_unban' ); ?>
+								<button class="btn fixed-size-btn btn-danger unban" userid='<?php echo @$user->user_id;?>'>
+									Unban
 								</button>
 							
 							<?php endif; ?>
@@ -103,7 +103,7 @@ function runAfterJQ() {
 					if(msg == 'true')
 						btn.addClass('unban btn-danger')
 							.removeClass('btn-primary-green ban')
-							.html('User Unban');
+							.html('Unban');
 					else
 						console.log( "<?php echo get_msg('sys_err_occur'); ?>" );
 				}
@@ -121,7 +121,7 @@ function runAfterJQ() {
 					if(msg == 'true')
 						btn.addClass('ban btn-primary-green')
 							.removeClass('btn-danger unban')
-							.html('User Ban');
+							.html('Ban');
 					else
 						console.log( 'System error occured. Please contact your system administrator.' );
 				}

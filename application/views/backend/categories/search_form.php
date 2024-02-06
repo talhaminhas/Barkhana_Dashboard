@@ -1,6 +1,6 @@
 <div class='row my-3'>
 
-	<div class='col-6'>
+	<div class='col-8'>
 	<?php
 		$attributes = array('class' => 'form-inline');
 		echo form_open( $module_site_url .'/search', $attributes);
@@ -33,7 +33,7 @@
 
 	</div>	
 
-	<div class='col-6'>
+	<div class='col-4'>
 		<a href='<?php echo $module_site_url .'/add';?>' class='btn btn-primary lrg-btn-size pull-right' style = "height: ">
 			<span class='fa fa-plus'></span> 
 			<?php echo get_msg( 'cat_add' )?>

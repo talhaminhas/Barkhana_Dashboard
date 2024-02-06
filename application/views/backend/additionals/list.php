@@ -2,28 +2,27 @@
 
 
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<tr>
-			<th><?php echo get_msg('no'); ?></th>
-			<th><?php echo get_msg('food_add_img'); ?></th>
-			<th class="sortable" data-column="Extras Name"><?php echo get_msg('food_add_name'); ?></th>
-			<th><?php echo get_msg('food_add_price'); ?></th>
+			<th class="table-header"><?php echo get_msg('no'); ?></th>
+			<th class="sortable table-header"   data-column="Extras Name"><?php echo get_msg('food_add_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('food_add_price'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
+				<th class="table-header "><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
 			
 			<?php endif; ?>
 
@@ -39,30 +38,15 @@
 		foreach($additionals->result() as $add): ?>
 			
 			<tr>
-				<td><?php echo  $i++;?></td>
-				<?php 
-
-				$default_photo = get_default_photo( $add->id, 'food-additional' );
-
-				if($default_photo->img_path != "") {
-				 ?>		
-				
-
-				<td><img class="img-rounded " width="128" height="128" src="<?php echo img_url( ''. $default_photo->img_path ); ?>"/></td>
-
-				<?php } else { ?>
-
-				<td><img width="128" height="128" src="<?php echo img_url( '/thumbnail/no_image.png'); ?>"/></td>
-
-				<?php } ?>
-				<td><?php echo $add->name;?></td>
-				<td><?php echo number_format($add->price,2);?></td>
+				<td class="table-cell align-middle" ><?php echo  $i++;?></td>
+				<td class="table-cell align-middle"><?php echo $add->name;?></td>
+				<td class="table-cell align-middle"><?php echo number_format($add->price,2);?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $add->id .'/' . $add->food_id; ?>'>
-							<i class='fa fa-pencil-square-o'></i>
+							<span class="btn fixed-size-btn btn-warning">Edit</span>
 						</a>
 					</td>
 				
@@ -70,9 +54,9 @@
 				
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo "$add->id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn fixed-size-btn btn-danger">Delete</span>
 						</a>
 					</td>
 				
@@ -80,12 +64,12 @@
 				
 				<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<?php if ( @$add->status == 1): ?>
-							<button class="btn btn-sm btn-success unpublish" id='<?php echo $add->id;?>'>
+							<button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $add->id;?>'>
 							<?php echo get_msg('btn_yes'); ?></button>
 						<?php else:?>
-							<button class="btn btn-sm btn-danger publish" id='<?php echo $add->id;?>'>
+							<button class="btn fixed-size-btn btn-danger publish" id='<?php echo $add->id;?>'>
 							<?php echo get_msg('btn_no'); ?></button><?php endif;?>
 					</td>
 				

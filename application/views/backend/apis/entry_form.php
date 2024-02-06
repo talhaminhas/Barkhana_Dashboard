@@ -160,8 +160,8 @@
 
 				</table>	
 			</div>
-			<div class="card-footer">
-				<button type="submit" name="save" class="btn btn-sm btn-primary">
+			<div class="modal-footer">
+				<button type="submit" name="save" class="btn std-btn-size btn-success">
 					<?php echo get_msg('btn_save')?>
 				</button>
 			</div>

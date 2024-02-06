@@ -3,8 +3,8 @@
 	echo form_open( '', $attributes);
 ?>
 	
-<section class="content animated fadeInRight">
-	<div class="col-md-6">
+<section class="animated fadeInRight">
+	<div class="content">
 	<div class="card card-info">
 	    <div class="card-header">
 	        <h3 class="card-title"><?php echo get_msg('policy_info')?></h3>
@@ -38,12 +38,12 @@
         </div>
         <!-- /.card-body -->
 
-		<div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-primary">
+		<div class="modal-footer">
+            <button type="submit" class="btn std-btn-size btn-success">
 				<?php echo get_msg('btn_save')?>
 			</button>
 
-			<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary">
+			<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary">
 				<?php echo get_msg('btn_cancel')?>
 			</a>
         </div>

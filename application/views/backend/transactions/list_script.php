@@ -22,16 +22,16 @@
 
     }
     //autorefresh sound every 2 seconds
-    var noti_time = document.getElementById("noti_time").value ;
+    /*var noti_time = document.getElementById("noti_time").value ;
     setInterval(function () {
-        refresh();
+        //refresh();
     }, noti_time);
 
     //autorefresh page every 10 seconds
     var page_time = document.getElementById("page_time").value ;
     window.setTimeout(function () {
         window.location.reload();
-    }, page_time);
+    }, page_time);*/
 
 
 </script>

@@ -25,6 +25,7 @@
 							'name' => 'name',
 							'value' => set_value( 'name', show_data( @$category->name ), false ),
 							'class' => 'form-control form-control-sm',
+							'style' => 'height:40px',
 							'placeholder' => get_msg( 'cat_name' ),
 							'id' => 'name'
 						)); ?>
@@ -99,25 +100,21 @@
 							
 							<?php endif; ?>
 								
-							<div class="col-md-4" style="height:100">
+							<div class="image-container" style="">
 
-								<div class="thumbnail ">
-									 <img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>"  > 
-									 
-
-									<br/>
-									
-									<p class="text-center">
-										
-										<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
-											image="<?php echo $img->img_path; ?>">
-											<?php echo get_msg('remove_label'); ?>
-										</a>
-									</p>
-
-								</div>
-
+							<div class="thumbnail" style="">
+								<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>" style="" alt="Image">
+								
+								<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
+									<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>" image="<?php echo $img->img_path; ?>">
+										<span class="btn btn-danger">Remove</span>
+									</a>
+								</p>
 							</div>
+
+						</div>
+
+
 
 						<?php $i++; endforeach; ?>
 
@@ -206,12 +203,12 @@
         </div>
         <!-- /.card-body -->
 
-		<div class="card-footer">
-            <button type="submit" class="btn btn-sm btn-primary">
+		<div class="modal-footer">
+            <button type="submit" class="btn std-btn-size btn-success">
 				<?php echo get_msg('btn_save')?>
 			</button>
 
-			<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary">
+			<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary">
 				<?php echo get_msg('btn_cancel')?>
 			</a>
         </div>

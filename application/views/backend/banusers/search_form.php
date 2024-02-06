@@ -1,4 +1,4 @@
-<div class='row my-3' style="padding: 10px 30px 10px 30px;">
+<div class='row my-3' >
 	<div class='col-9'>
 		<?php
 			$attributes = array('class' => 'form-inline');
@@ -10,7 +10,7 @@
 				<?php echo form_input(array(
 					'name' => 'searchterm',
 					'value' => set_value( 'searchterm' , $searchterm ),
-					'class' => 'form-control form-control-sm',
+					'class' => 'std-field',
 					'placeholder' => get_msg( 'btn_search' ),
 					'id' => ''
 				)); ?>
@@ -19,13 +19,13 @@
 
 			
 			<div class="form-group" style="padding-right: 2px;">
-			  	<button type="submit" class="btn btn-sm btn-primary" name="submit" value="submit">
+			  	<button type="submit" class="btn std-btn-size btn-primary" name="submit" value="submit">
 			  		<?php echo get_msg( 'btn_search' )?>
 			  	</button>
 		  	</div>
 		
 			<div class="form-group">
-			  	<a href='<?php echo $module_site_url .'/index';?>' class='btn btn-sm btn-primary'>
+			  	<a href='<?php echo $module_site_url .'/index';?>' class='btn std-btn-size btn-primary'>
 					<?php echo get_msg( 'btn_reset' )?>
 				</a>
 		  	</div>

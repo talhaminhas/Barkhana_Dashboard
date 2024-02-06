@@ -101,6 +101,7 @@
 		crossorigin=""></script>
 </head>
 <?php
+	//$this->set_flash_msg('error',"You don't have access to admin panel.");
 	if( $this->config->item("is_demo") == 1 ) {
 
 		?>
@@ -114,9 +115,18 @@
 	?>
 
 	</div>
-<body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse">
+<body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse" style=" padding-top: 95px; ">
 <div class="wrapper">
 	<style>
+		/* Override form-control class */
+.form-control {
+    height: 40px !important;
+}
+
+/* Override form-control-sm class */
+.form-control-sm {
+    height: 40px !important;
+}
 .table-header {
         font-weight: bold;
         background-color: #f2f2f2;
@@ -132,10 +142,22 @@
     justify-content: center;
 	border-radius: 5px;
   }
-	.navbar.fixed-top {
-		box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-		}
-	
+	.image-container{
+		width: 100%; 
+		height: 0; 
+		padding-top: 100%; 
+		position: relative;
+		 overflow: hidden;
+	}
+	.thumbnail{
+		position: absolute; 
+		top: 0; left: 0;
+		 width: 100%; 
+		 height: 100%;
+	}
+	.img-fluid{
+		width: 100%; height: 100%; object-fit: cover;
+	}
 	.main-sidebar, .main-sidebar::before {
     width: 300px; /* default 250px */
 	}
@@ -192,9 +214,31 @@
 		align-items: center; 
 		justify-content: center;
 	}
+	.xlrg-btn-size{
+		width: 200px; 
+		height: 60px;
+		display: flex; 
+		align-items: center; 
+		justify-content: center;
+	}
 	.std-field{
         width:250px;
         height: 40px;
         
     }
+	.discount-label{
+        font-weight: bold; 
+        color: red;
+    }
+	.badge{
+	width: 100%; 
+    height: 60px;
+	font-weight: bold; 
+	color: #fc3903; 
+	border: 2px solid #fc3903; 
+	padding: 5px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
 	</style>

@@ -1,24 +1,24 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<tr>
-			<th><?php echo get_msg('no'); ?></th>
-			<th><?php echo get_msg('dis_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('no'); ?></th>
+			<th class="table-header"><?php echo get_msg('dis_name'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
 			
 			<?php endif; ?>
 
@@ -32,14 +32,14 @@
 		<?php foreach($discounts->result() as $discount): ?>
 			
 			<tr>
-				<td><?php echo ++$count;?></td>
-				<td><?php echo $discount->name;?></td>
+				<td class="table-cell align-middle"><?php echo ++$count;?></td>
+				<td class="table-cell align-middle"><?php echo $discount->name;?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $discount->id; ?>'>
-							<i class='fa fa-pencil-square-o'></i>
+						<span class="btn btn-warning fixed-size-btn">Edit</span>
 						</a>
 					</td>
 				
@@ -47,9 +47,9 @@
 				
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#discountmodal" id="<?php echo "$discount->id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn btn-danger fixed-size-btn">Delete</span>
 						</a>
 					</td>
 				
@@ -57,12 +57,12 @@
 				
 				<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<?php if ( @$discount->status == 1): ?>
-							<button class="btn btn-sm btn-success unpublish" id='<?php echo $discount->id;?>'>
+							<button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $discount->id;?>'>
 							<?php echo get_msg('btn_yes'); ?></button>
 						<?php else:?>
-							<button class="btn btn-sm btn-danger publish" id='<?php echo $discount->id;?>'>
+							<button class="btn fixed-size-btn btn-danger publish" id='<?php echo $discount->id;?>'>
 							<?php echo get_msg('btn_no'); ?></button><?php endif;?>
 					</td>
 				

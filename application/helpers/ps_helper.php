@@ -188,9 +188,8 @@ if ( ! function_exists( 'flash_msg'))
 	function flash_msg()
 	{
 		// get ci instance
-		$CI =& get_instance();
-
-		$CI->load->view( 'common/flash_msg' );
+		//$CI =& get_instance();
+		//$CI->load->view( 'common/flash_msg' );
 	}
 }
 

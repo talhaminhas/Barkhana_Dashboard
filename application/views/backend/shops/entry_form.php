@@ -99,7 +99,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="form-control" name="description" placeholder="<?php echo get_msg('description_label') ?>" rows="9"><?php echo $shop->description;?></textarea>
+								<textarea class="" style="width:100%" name="description" placeholder="<?php echo get_msg('description_label') ?>" rows="9"><?php echo $shop->description;?></textarea>
 							</div>
 
 							<div class="form-group">
@@ -113,7 +113,14 @@ echo form_open( '', $attributes);
 
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('phone_label') ?>" name='about_phone1' id='about_phone1' value="<?php echo $shop->about_phone1;?>">
 							</div>
-
+							<div class="form-group">
+								<label><?php echo get_msg('address_label1')?>
+									<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('shop_address_tooltips')?>">
+										<span class='glyphicon glyphicon-info-sign menu-icon'>
+									</a>
+								</label>
+								<textarea class="form-control" name="address1" placeholder="<?php echo get_msg('address_label1')?>" rows="5"><?php echo $shop->address1;?></textarea>
+							</div>
 							<!--<div class="form-group">
 								<label>
 									<?php echo get_msg('phone_label2') ?>
@@ -148,7 +155,19 @@ echo form_open( '', $attributes);
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('contact_email_label')?>" name='email' id='email'
 								value="<?php echo $shop->email;?>">
 							</div>
-
+							<div class="form-group">
+								<label><?php echo get_msg('about_website_label')?></label>
+								<?php 
+									echo form_input( array(
+										'type' => 'text',
+										'name' => 'about_website',
+										'id' => 'about_website',
+										'class' => 'form-control',
+										'placeholder' => get_msg('about_website_label'),
+										'value' => set_value( 'about_website', show_data( @$shop->about_website ), false )
+									));
+								?>
+							</div>
 							<!--<div class="form-group">
 								<label>
 									<?php echo get_msg('price_level')?>
@@ -191,14 +210,7 @@ echo form_open( '', $attributes);
 						<div class="col-md-6">
 								<br/>
 																	
-							<div class="form-group">
-								<label><?php echo get_msg('address_label1')?>
-									<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('shop_address_tooltips')?>">
-										<span class='glyphicon glyphicon-info-sign menu-icon'>
-									</a>
-								</label>
-								<textarea class="form-control" name="address1" placeholder="<?php echo get_msg('address_label1')?>" rows="5"><?php echo $shop->address1;?></textarea>
-							</div>
+							
 
 							<!--<div class="form-group">
 								<label><?php echo get_msg('address_label2')?>
@@ -271,7 +283,7 @@ echo form_open( '', $attributes);
 									
 									<?php endif; ?>
 										
-									<div class="col-md-4" style="height:100">
+									<div class="image-container" style="">
 
 										<div class="thumbnail">
 
@@ -279,11 +291,11 @@ echo form_open( '', $attributes);
 
 											<br/>
 											
-											<p class="text-center">
+											<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 												
 												<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 													image="<?php echo $img->img_path; ?>">
-													<?php echo get_msg('Remove'); ?>
+													<span class="btn btn-danger">Remove</span>
 												</a>
 											</p>
 
@@ -350,7 +362,7 @@ echo form_open( '', $attributes);
 										
 										<?php endif; ?>
 											
-										<div class="col-md-4" style="height:100">
+										<div class="image-container" style="">
 
 											<div class="thumbnail">
 
@@ -358,11 +370,11 @@ echo form_open( '', $attributes);
 
 												<br/>
 												
-												<p class="text-center">
+												<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 													
 													<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 														image="<?php echo $img->img_path; ?>">
-														<?php echo get_msg('Remove'); ?>
+														<span class="btn btn-danger">Remove</span>
 													</a>
 												</p>
 
@@ -377,19 +389,7 @@ echo form_open( '', $attributes);
 								
 								<?php endif; ?>
 							<?php endif; ?>
-							<div class="form-group">
-								<label><?php echo get_msg('about_website_label')?></label>
-								<?php 
-									echo form_input( array(
-										'type' => 'text',
-										'name' => 'about_website',
-										'id' => 'about_website',
-										'class' => 'form-control',
-										'placeholder' => get_msg('about_website_label'),
-										'value' => set_value( 'about_website', show_data( @$shop->about_website ), false )
-									));
-								?>
-							</div>
+							
 						</div>
 
 					</div>
@@ -1360,7 +1360,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="form-control" name="refund_policy" placeholder="<?php echo get_msg('refund_policy_label') ?>" rows="5"><?php echo $shop->refund_policy;?></textarea>
+								<textarea class="" style="width:100%" name="refund_policy" placeholder="<?php echo get_msg('refund_policy_label') ?>" rows="5"><?php echo $shop->refund_policy;?></textarea>
 
 							</div>
 							
@@ -1376,7 +1376,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="form-control" name="terms" placeholder="<?php echo get_msg('terms_label') ?>" rows="5"><?php echo $shop->terms;?></textarea>
+								<textarea class="" style="width:100%" name="terms" placeholder="<?php echo get_msg('terms_label') ?>" rows="5"><?php echo $shop->terms;?></textarea>
 								
 							</div>
           				</div>
@@ -1474,12 +1474,12 @@ echo form_open( '', $attributes);
 					<hr>
 
 						<div class="row">
-								<div class="col-md-3">
+								<!--<div class="col-md-3">
 							        <label><input type="radio" name="deliRadio" value="is_area" <?php 
 							       		$is_area = $shop->is_area;
 							        if ($is_area == 1) echo "checked"; ?> >
 							          <?php echo get_msg('is_area_label'); ?> </label>
-							    </div>
+							    </div>-->
 								<div class="col-md-3">
 							        <label><input type="radio" name="deliRadio" value="deli_fee_by_distance" <?php 
 							       		$deli_fee_by_distance = $shop->deli_fee_by_distance;
@@ -1726,12 +1726,12 @@ echo form_open( '', $attributes);
         </div>
         <!-- /.card-body -->
 
-		<div class="card-footer">
-           <button type="submit" name="save" class="btn btn-primary">
+		<div class="modal-footer">
+           <button type="submit" name="save" class="btn std-btn-size btn-success">
 				<?php echo get_msg('btn_save')?>
 			</button>
 				
-			<a href="<?php echo site_url('admin/shops');?>" class="btn btn-primary"><?php echo get_msg('btn_cancel'); ?></a>
+			<a href="<?php echo site_url('admin/shops');?>" class="btn std-btn-size btn-secondary"><?php echo get_msg('btn_cancel'); ?></a>
         </div>
        
     </div>

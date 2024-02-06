@@ -30,6 +30,7 @@
 							'value' => set_value( 'name', show_data( @$product->name), false ),
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('pls_prd_name'),
+							'style' => 'height:40px',
 							'id' => 'name'
 						)); ?>
 
@@ -52,7 +53,8 @@
 								'cat_id',
 								$options,
 								set_value( 'cat_id', show_data( @$product->cat_id), false ),
-								'class="form-control form-control-sm mr-3" id="cat_id"'
+								'class="form-control form-control-sm mr-3" id="cat_id" style="height:40px"'
+								
 							);
 						?>
 					</div>
@@ -75,7 +77,7 @@
 									'sub_cat_id',
 									$options,
 									set_value( 'sub_cat_id', show_data( @$product->sub_cat_id), false ),
-									'class="form-control form-control-sm mr-3" id="sub_cat_id"'
+									'class="form-control form-control-sm mr-3" id="sub_cat_id" style="height:40px"'
 								);
 
 							} else {
@@ -87,7 +89,7 @@
 									'sub_cat_id',
 									$options,
 									set_value( 'sub_cat_id', show_data( @$product->sub_cat_id), false ),
-									'class="form-control form-control-sm mr-3" id="sub_cat_id"'
+									'class="form-control form-control-sm mr-3" id="sub_cat_id" style="height:40px"'
 								);
 							}
 							
@@ -168,6 +170,7 @@
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('pls_highlight_info'),
 							'id' => 'info',
+							'style' => 'height:40px',
 							'rows' => "3"
 						)); ?>
 
@@ -184,6 +187,7 @@
 							'value' => set_value( 'code', show_data( @$product->code), false ),
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('pls_code'),
+							'style' => 'height:40px',
 							'id' => 'code'
 						)); ?>
 
@@ -199,6 +203,7 @@
 							'value' => set_value( 'ordering', show_data( @$product->ordering), false ),
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('prd_ordering'),
+							'style' => 'height:40px',
 							'id' => 'ordering'
 						)); ?>
 
@@ -215,6 +220,7 @@
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('prd_ingredient'),
 							'id' => 'ingredient',
+							'style' => 'height:40px',
 							'rows' => "5"
 						)); ?>
 
@@ -230,6 +236,7 @@
 							'value' => set_value( 'nutrient', show_data( @$product->nutrient), false ),
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('prd_nutrient'),
+							'style' => 'height:40px',
 							'id' => 'nutrient'
 						)); ?>
 
@@ -266,6 +273,7 @@
 								'value' => set_value( 'original_price', show_data( @$original_price ), false ),
 								'class' => 'form-control form-control-sm',
 								'placeholder' => get_msg('pls_unit_price'),
+								'style' => 'height:40px',
 								'id' => 'original_price'
 							)); ?> 
 							
@@ -314,6 +322,7 @@
 							'class' => 'form-control form-control-sm',
 							'placeholder' => get_msg('pls_prd_desc'),
 							'id' => 'desc',
+							'style' => 'height:40px',
 							'rows' => "5"
 						)); ?>
 
@@ -418,7 +427,7 @@
 		                }
 		              ?>
 		                
-	                  <div class="col-md-4" style="height:100">
+	                  <div class="image-container" style="">
 
 	                    <div class="thumbnail">
 
@@ -426,11 +435,11 @@
 
 	                      <br/>
 	                      
-	                      <p class="text-center">
+	                      <p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 	                        
 	                        <a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $images[0]->img_id; ?>"   
 	                          image="<?php echo $img->img_path; ?>">
-	                          <?php echo get_msg('remove_label'); ?>
+	                          <span class="btn btn-danger">Remove</span>
 	                        </a>
 	                      </p>
 
@@ -664,8 +673,8 @@
 
 		<input type="hidden" id="is_featured_stage" name="is_featured_stage" value="<?php echo @$product->is_featured; ?>">
 		
-			<div class="card-footer">
-                <button type="submit" class="btn btn-sm btn-primary" style="margin-top: 3px;">
+			<div class="modal-footer">
+                <button type="submit" class="btn std-btn-size btn-success" style="margin-top: 3px;">
 					<?php echo get_msg('btn_save')?>
 				</button>
 
@@ -681,7 +690,7 @@
 					<?php echo get_msg('btn_cus_list')?>
 				</a>-->
 
-				<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary" style="margin-top: 3px;">
+				<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary" style="margin-top: 3px;">
 					<?php echo get_msg('btn_cancel')?>
 				</a>
             </div>

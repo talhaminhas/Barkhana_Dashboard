@@ -1,26 +1,26 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<tr>
-			<th><?php echo get_msg('no'); ?></th>
-			<th><?php echo get_msg('coupon_name'); ?></th>
-			<th><?php echo get_msg('coupon_code'); ?></th>
-			<th><?php echo get_msg('coupon_amount'); ?></th>
+			<th class="table-header"><?php echo get_msg('no'); ?></th>
+			<th class="table-header"><?php echo get_msg('coupon_name'); ?></th>
+			<th class="table-header"><?php echo get_msg('coupon_code'); ?></th>
+			<th class="table-header"><?php echo get_msg('coupon_amount'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_edit')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 			
 			<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_publish')?></span></th>
 			
 			<?php endif; ?>
 
@@ -34,16 +34,16 @@
 		<?php foreach($coupons->result() as $coupon): ?>
 			
 			<tr>
-				<td><?php echo ++$count;?></td>
-				<td><?php echo $coupon->coupon_name;?></td>
-				<td><?php echo $coupon->coupon_code ?></td>
-				<td><?php echo number_format($coupon->coupon_amount, 2); ?></td>
+				<td class="table-cell align-middle"><?php echo ++$count;?></td>
+				<td class="table-cell align-middle"><?php echo $coupon->coupon_name;?></td>
+				<td class="table-cell align-middle"><?php echo $coupon->coupon_code ?></td>
+				<td class="table-cell align-middle"><?php echo number_format($coupon->coupon_amount, 2); ?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $coupon->id; ?>'>
-							<i class='fa fa-pencil-square-o'></i>
+							<span class="btn btn-warning fixed-size-btn">Edit</span>
 						</a>
 					</td>
 				
@@ -51,9 +51,9 @@
 				
 				<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#couponmodal" id="<?php echo "$coupon->id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn btn-danger fixed-size-btn">Delete</span>
 						</a>
 					</td>
 				
@@ -61,12 +61,12 @@
 				
 				<?php if ( $this->ps_auth->has_access( PUBLISH )): ?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<?php if ( @$coupon->is_published == 1): ?>
-							<button class="btn btn-sm btn-success unpublish" id='<?php echo $coupon->id;?>'>
+							<button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $coupon->id;?>'>
 							<?php echo get_msg('btn_yes'); ?></button>
 						<?php else:?>
-							<button class="btn btn-sm btn-danger publish" id='<?php echo $coupon->id;?>'>
+							<button class="btn fixed-size-btn btn-danger publish" id='<?php echo $coupon->id;?>'>
 							<?php echo get_msg('btn_no'); ?></button><?php endif;?>
 					</td>
 				

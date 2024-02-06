@@ -10,7 +10,7 @@
 				<?php echo form_input(array(
 					'name' => 'searchterm',
 					'value' => set_value( 'searchterm' ),
-					'class' => 'form-control form-control-sm',
+					'class' => 'std-field',
 					'placeholder' => get_msg( 'btn_search' ),
 					'id' => ''
 				)); ?>
@@ -18,13 +18,13 @@
 		  	</div>
 
 			<div class="form-group" style="padding-right: 2px;">
-			  	<button type="submit" class="btn btn-sm btn-primary">
+			  	<button type="submit" class="btn std-btn-size btn-primary">
 			  		<?php echo get_msg( 'btn_search' ); ?>
 			  	</button>
 		  	</div>
 
 		  	<div class="form-group">
-			  	<a href="<?php echo $module_site_url ; ?>" class="btn btn-sm btn-primary">
+			  	<a href="<?php echo $module_site_url ; ?>" class="btn std-btn-size btn-primary">
 			  		<?php echo get_msg( 'btn_reset' ); ?>
 			  	</a>
 		  	</div>

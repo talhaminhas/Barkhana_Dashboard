@@ -1,21 +1,21 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0">
+	<table class="table m-0 table-bordered">
 
 		<tr>
-			<th><?php echo get_msg('no')?></th>
-			<th><?php echo get_msg('user_name')?></th>
-			<th><?php echo get_msg('user_email')?></th>
-			<th><?php echo get_msg('role_label')?></th>
+			<th class="table-header"><?php echo get_msg('no')?></th>
+			<th class="table-header"><?php echo get_msg('user_name')?></th>
+			<th class="table-header"><?php echo get_msg('user_email')?></th>
+			<th class="table-header"><?php echo get_msg('role_label')?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><?php echo get_msg('btn_edit')?></th>
+				<th class="table-header"><?php echo get_msg('btn_edit')?></th>
 
 			<?php endif;?>
 
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-				<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+				<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 			
 			<?php endif; ?>
 
@@ -28,16 +28,16 @@
 			<?php foreach($users->result() as $user): ?>
 				
 				<tr>
-					<td><?php echo ++$count;?></td>
-					<td><?php echo $user->user_name;?></td>
-					<td><?php echo $user->user_email;?></td>
-					<td><?php echo $this->Role->get_name( $user->role_id );?></td>
+					<td class="table-cell align-middle"><?php echo ++$count;?></td>
+					<td class="table-cell align-middle"><?php echo $user->user_name;?></td>
+					<td class="table-cell align-middle"><?php echo $user->user_email;?></td>
+					<td class="table-cell align-middle"><?php echo $this->Role->get_name( $user->role_id );?></td>
 					
 					<?php if ( $this->ps_auth->has_access( EDIT )):?>
 
-						<td>
+						<td class="table-cell align-middle">
 							<a href='<?php echo $module_site_url .'/edit/'. $user->user_id;?>'>
-								<i class='fa fa-pencil-square-o'></i>
+							<span class="btn btn-warning fixed-size-btn">Edit</span>
 							</a>
 						</td>
 
@@ -46,15 +46,15 @@
 					<?php if ($user->user_is_sys_admin != 1){ ?>
 					<?php if ( $this->ps_auth->has_access( DEL )): ?>
 					
-						<td>
+						<td class="table-cell align-middle">
 							<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo $user->user_id;?>">
-								<i style='font-size: 18px;' class='fa fa-trash-o'></i>
+								<span class="btn btn-danger fixed-size-btn">Delete</span>
 							</a>
 						</td>
 				
 					<?php endif; ?>
 					<?php } else { ?>
-						<td></td>
+						<td class="table-cell align-middle">-</td>
 					<?php } ?>
 
 

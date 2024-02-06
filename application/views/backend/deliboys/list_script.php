@@ -14,7 +14,7 @@ function runAfterJQ() {
 					if(msg == 'true')
 						btn.addClass('unban btn-danger')
 							.removeClass('btn-primary-green ban')
-							.html('User Unban');
+							.html('Unban');
 					else
 						console.log( '<?php echo get_msg('sys_err_occur'); ?>' );
 				}
@@ -30,9 +30,9 @@ function runAfterJQ() {
 				method:'GET',
 				success:function(msg){
 					if(msg == 'true')
-						btn.addClass('ban btn-primary-green')
+						btn.addClass('ban ')
 							.removeClass('btn-danger unban')
-							.html('User Ban');
+							.html('Ban');
 					else
 						console.log( '<?php echo get_msg('sys_err_occur'); ?>' );
 				}

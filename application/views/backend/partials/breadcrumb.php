@@ -1,4 +1,4 @@
-<ul class="breadcrumb " style="background-color: #ffff; padding: 10px; border-radius: 10px;">
+<ul class="breadcrumb" style="background-color: #ffffff; padding-left: 10px;  position: fixed; top: 54px; width: 100%; z-index: 1000;">
 
     <li class="breadcrumb-item">
         <a href="<?php echo site_url('/admin'); ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">

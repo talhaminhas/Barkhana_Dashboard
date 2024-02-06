@@ -1,28 +1,27 @@
 <?php $logged_in_user = $this->ps_auth->get_user_info(); ?>
 <div class="table-responsive animated fadeInRight" style="padding: 10px 30px 10px 30px;">
-	<table class="table m-0 table-striped">
+	<table class="table m-0 table-bordered">
 		<tr>
-			<th><?php echo get_msg('no')?></th>
-			<th><?php echo get_msg('user_name')?></th>
-			<th><?php echo get_msg('user_email')?></th>
-			<th><?php echo get_msg('user_status')?></th>
-			<th><?php echo get_msg('role_label')?></th>
+			<th class="table-header"><?php echo get_msg('no')?></th>
+			<th class="table-header"><?php echo get_msg('user_name')?></th>
+			<th class="table-header"><?php echo get_msg('user_email')?></th>
+			<th class="table-header"><?php echo get_msg('user_status')?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 				
-				<th><?php echo get_msg('btn_edit')?></th>
+				<th class="table-header"><?php echo get_msg('btn_edit')?></th>
 			
 			<?php endif; ?>
 
 			<?php if ( $this->ps_auth->has_access( BAN )): ?>
 				
-				<th><?php echo get_msg('user_ban')?></th>
+				<th class="table-header"><?php echo get_msg('user_ban')?></th>
 
 			<?php endif;?>
 
 			<?php if ( $this->ps_auth->has_access( DEL )): ?>
 				
-			<th><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
+			<th class="table-header"><span class="th-title"><?php echo get_msg('btn_delete')?></span></th>
 		
 			<?php endif; ?>
 		</tr>
@@ -34,37 +33,36 @@
 			<?php foreach($deliboys->result() as $deliboy): ?>
 				
 				<tr>
-					<td><?php echo ++$count;?></td>
-					<td><?php echo $deliboy->user_name;?></td>
-					<td><?php echo $deliboy->user_email;?></td>
-					<td>
+					<td class="table-cell align-middle"><?php echo ++$count;?></td>
+					<td class="table-cell align-middle"><?php echo $deliboy->user_name;?></td>
+					<td class="table-cell align-middle"><?php echo $deliboy->user_email;?></td>
+					<td class="table-cell align-middle">
 						<?php 
 						if ($deliboy->status == '1') { ?>
-			                <span class="badge badge-success">
-			                  <?php echo "Approved"; ?>
+			                <span class="badge " style="font-size:17px; color:green; border-color:green;">
+			                  <?php echo "Active"; ?>
 			                </span>
 			            <?php  }else if($deliboy->status == '2'){ ?>
-			            	<span class="badge badge-warning">
+			            	<span class="badge " style="font-size:17px; color:yellow; border-color:yellow;">
 			                  <?php echo "Pending"; ?>
 			                </span>
 			            <?php } else if($deliboy->status == '3') { ?>
-			            	<span class="badge badge-danger">
+			            	<span class="badge " style="font-size:17px; color:red; border-color:red;">
 			                  <?php echo "Rejected"; ?>
 			                </span>        
 					 	
 					 	<?php } ?>
 
 					</td>
-					<td><?php echo $this->Role->get_name( $deliboy->role_id );?></td>
 
 					<?php
 						if ($logged_in_user->user_id == $deliboy->added_user_id || $logged_in_user->user_is_sys_admin == 1) {
 						if ( $this->ps_auth->has_access( EDIT )):
 					?>
 				
-					<td>
+					<td class="table-cell align-middle">
 						<a href='<?php echo $module_site_url .'/edit/'. $deliboy->user_id; ?>'>
-							<i style='font-size: 18px;' class='fa fa-pencil-square-o'></i>
+							<span class="btn btn-warning fixed-size-btn">Edit</span>
 						</a>
 					</td>
 					
@@ -77,17 +75,17 @@
 
 					<?php if ( $this->ps_auth->has_access( BAN )):?>
 					
-						<td>
+						<td class="table-cell align-middle">
 							<?php if ( @$deliboy->is_banned == 0 ): ?>
 								
-								<button class="btn btn-sm btn-primary-green ban" userid='<?php echo @$deliboy->user_id;?>'>
-									<?php echo get_msg( 'user_ban' ); ?>
+								<button class="btn fixed-size-btn ban" userid='<?php echo @$deliboy->user_id;?>'>
+									Ban
 								</button>
 							
 							<?php else: ?>
 								
-								<button class="btn btn-sm btn-danger unban" userid='<?php echo @$deliboy->user_id;?>'>
-									<?php echo get_msg( 'user_unban' ); ?>
+								<button class="btn fixed-size-btn btn-danger unban" userid='<?php echo @$deliboy->user_id;?>'>
+									Unban
 								</button>
 							
 							<?php endif; ?>
@@ -101,9 +99,9 @@
 						if ( $this->ps_auth->has_access( DEL )): 
 					?>
 					
-					<td>
+					<td class="table-cell align-middle">
 						<a herf='#' class='btn-delete' data-toggle="modal" data-target="#myModal" id="<?php echo "$deliboy->user_id";?>">
-							<i class='fa fa-trash-o'></i>
+							<span class="btn btn-danger fixed-size-btn">Delete</span>
 						</a>
 					</td>
 				
