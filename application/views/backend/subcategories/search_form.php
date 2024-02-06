@@ -1,5 +1,5 @@
 <div class='row my-3'>
-	<div class='col-8' >
+	<div class='col-9' >
 	<?php
 		$attributes = array('class' => 'form-inline');
 		echo form_open( $module_site_url .'/search', $attributes);
@@ -54,7 +54,7 @@
 
 	</div>	
 
-	<div class='col-4' >
+	<div class='col-3' >
 		<a href='<?php echo $module_site_url .'/add';?>' class='btn lrg-btn-size btn-primary pull-right'>
 			<span class='fa fa-plus'></span> 
 			<?php echo get_msg( 'subcat_add' )?>
