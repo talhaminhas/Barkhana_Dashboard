@@ -146,9 +146,9 @@
 		</div>
 	</div>
 	
-	<div class="card-footer">
-		<button type="submit" class="btn btn-sm btn-primary"><?php echo get_msg('btn_save')?></button>
-		<a href="<?php echo $module_site_url; ?>" class="btn btn-sm btn-primary"><?php echo get_msg('btn_cancel')?></a>
+	<div class="modal-footer">
+		<button type="submit" class="btn std-btn-size btn-success"><?php echo get_msg('btn_save')?></button>
+		<a href="<?php echo $module_site_url; ?>" class="btn std-btn-size btn-secondary"><?php echo get_msg('btn_cancel')?></a>
 	</div>
 </div>
 <?php echo form_close(); ?>

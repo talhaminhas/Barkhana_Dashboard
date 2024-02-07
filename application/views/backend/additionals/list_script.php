@@ -39,7 +39,7 @@ function runAfterJQ() {
 		
 		
 		// Publish Trigger
-		$(document).delegate('.publsh','click',function(){
+		$(document).delegate('.publish','click',function(){
 			
 			// get button and id
 			var btn = $(this);

@@ -10,7 +10,7 @@
           	$shop_id = $selected_shop_id['shop_id'];
 		?>
 		<tr>
-			<th class="align-middle  table-header" style="font-size: 30px" colspan = "9">New Orders</th>
+			<th class="align-middle  table-header" style="font-size: 20px" colspan = "9">New Orders</th>
 		</tr>
 		<tr >
 			<th class="align-middle  table-header"><?php echo get_msg('no'); ?></th>
@@ -142,14 +142,14 @@
 	<!-- Ongoing Orders  -->
 
 	
-			
+	<div class="table-responsive" style="height: 100%; ">
 		<table class="table table-bordered m-0  text-center align-middle" >
 			<?php 
 				$selected_shop_id = $this->session->userdata('selected_shop_id');
 	          	$shop_id = $selected_shop_id['shop_id'];
 			?>
 			<tr>
-				<th class="align-middle table-header" style="font-size: 30px" colspan = "9">Ongoing Orders</th>
+				<th class="align-middle table-header" style="font-size: 20px" colspan = "9">Ongoing Orders</th>
 			</tr>
 			<tr>
 				<th class="align-middle table-header"><?php echo get_msg('no'); ?></th>
@@ -230,7 +230,7 @@
 									): ?>
 										<div class='d-flex align-items-center justify-content-center'>
 											<a href='#' class='btn fixed-size-btn btn-warning btn-assign' data-toggle="modal" data-target="#assignDeliboyModal" id="<?php echo $ongoing->id; ?>">
-												<span>Assign<br>Delivery Boy</span>
+												<span>Assign Delivery Boy</span>
 											</a>
 										</div>
 									<?php elseif ($ongoing->pick_at_shop == "1"): ?>
@@ -248,14 +248,14 @@
 									<?php if ($this->Transactionstatus->get_one($ongoing->trans_status_id)->ordering == "2"): ?>
 										<div class='d-flex align-items-center justify-content-center'>
 											<a class="btn btn-secondary fixed-size-btn" href="<?php echo $module_site_url . "/order_ready/" . $ongoing->id; ?>">
-												<span>Mark as<br>Ready</span>
+												<span>Mark as Ready</span>
 											</a>
 										</div>
 								
 									<?php elseif ($this->Transactionstatus->get_one($ongoing->trans_status_id)->ordering == "3" && $ongoing->pick_at_shop == "1"): ?>
 										<div class='d-flex align-items-center justify-content-center'>
 											<a class="btn btn-success fixed-size-btn" href="<?php echo $module_site_url . "/order_completed/" . $ongoing->id; ?>">
-												<span>Mark as<br>Collected</span>
+												<span>Mark as Collected</span>
 											</a>
 										<div>
 									<?php elseif ($this->Transactionstatus->get_one($ongoing->trans_status_id)->ordering == "3" && $ongoing->pick_at_shop == "0"): ?>
@@ -293,6 +293,7 @@
 				<?php endif; ?>		
 
 		</table>
+	</div>
 		<legend class="ml-3 mt-3 mb-5 font-weight-bold text-center"></legend>
 </div>	
 <script>
@@ -353,36 +354,10 @@
 	});
 </script>
 <style>
-  .fixed-size-btn {
-    width: 100%; 
-    height: 60px; 
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  
   .rounded-corners{
   }
-  .order-collection{
-	width: 100%; 
-    height: 60px;
-	font-weight: bold; 
-	color: #fc3903; 
-	border: 2px solid #fc3903; 
-	padding: 5px;
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .order-delivery{
-	width: 100%; 
-    height: 60px;
-	font-weight: bold; 
-	color: #9003fc;
-	border: 2px solid #9003fc; 
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+  
   .table-header {
         font-weight: bold;
         background-color: #f2f2f2;

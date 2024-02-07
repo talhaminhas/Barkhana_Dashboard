@@ -46,23 +46,21 @@
 				</div>	
 
 				<div class="col-md-6" style="margin-top: 20px;">
-					<div class="form-group">
-						<div class="form-check">
 
-							<label>
+							<label class="form-unchecked-label" id="statusLabel">
 							
 								<?php echo form_checkbox( array(
 									'name' => 'status',
 									'id' => 'status',
 									'value' => 'accept',
 									'checked' => set_checkbox('status', 1, ( @$discount->status == 1 )? true: false ),
-									'class' => 'form-check-input'
+									'class' => 'form-check-input',
+									'onchange' => 'toggleCheckbox(this.id)',
+									'style' => 'display:none'
 								));	?>
 								
-								<?php echo get_msg( 'status' ); ?>
+								Pulished
 							</label>
-						</div>
-					</div>
 
 					
 

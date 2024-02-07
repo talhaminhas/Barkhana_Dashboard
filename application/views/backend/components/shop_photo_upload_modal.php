@@ -30,14 +30,14 @@
 					
 					<label><?php echo get_msg('photo_desc_label')?></label>
 		
-					<textarea class="form-control" name="image_desc" rows="9"></textarea>
+					<textarea style="border: 2px solid grey; border-radius: 10px; width: 100%; padding: 10px;" name="image_desc" rows="9"></textarea>
 				</div>
 			</div>
 
 			<div class="modal-footer">
-				<input type="submit" value="<?php echo get_msg('upload_button')?>" class="btn btn-primary"/>
+				<input type="submit" value="<?php echo get_msg('upload_button')?>" class="btn btn-success fixed-size-btn"/>
 		
-				<a type="button" class="btn btn-default" data-dismiss="modal"><?php echo get_msg('btn_cancel')?></a>
+				<a type="button" style="color:white" class="btn fixed-size-btn btn-secondary" data-dismiss="modal"><?php echo get_msg('btn_cancel')?></a>
 			</div>
 			
 			<?php echo form_close(); ?>

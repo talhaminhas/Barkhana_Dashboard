@@ -241,7 +241,52 @@
 						)); ?>
 
 					</div>
+							<label class="form-unchecked-label" id="is_featuredLabel">
+							
+							<?php echo form_checkbox( array(
+								'name' => 'is_featured',
+								'id' => 'is_featured',
+								'value' => 'accept',
+								'checked' => set_checkbox('is_featured', 1, ( @$product->is_featured == 1 )? true: false ),
+								'class' => 'form-check-input',
+								'onchange' => 'toggleCheckbox(this.id)',
+								'style' => 'display:none'
+								
+							));	?>
 
+							Featured
+
+							</label>
+
+							<label class="form-unchecked-label" id="is_availableLabel">
+							
+							<?php echo form_checkbox( array(
+								'name' => 'is_available',
+								'id' => 'is_available',
+								'value' => 'accept',
+								'checked' => set_checkbox('is_available', 1, ( @$product->is_available == 1 )? true: false ),
+								'class' => 'form-check-input',
+								'onchange' => 'toggleCheckbox(this.id)',
+								'style' => 'display:none'
+							));	?>
+
+							Available
+
+							</label>
+							<label class="form-unchecked-label" id="statusLabel">
+							
+								<?php echo form_checkbox( array(
+									'name' => 'status',
+									'id' => 'status',
+									'value' => 'accept',
+									'checked' => set_checkbox('status', 1, ( @$product->status == 1 )? true: false ),
+									'class' => 'form-check-input',
+									'onchange' => 'toggleCheckbox(this.id)',
+									'style' => 'display:none'
+								));	?>
+
+								Published
+							</label>
 					<!--<br><br>
 
 					<div class="form-group">
@@ -404,18 +449,7 @@
 
 		              <?php else: ?>
 		              
-		              <label>
-						<?php echo get_msg('prd_image')?>
-		                <a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
-		                  <span class='glyphicon glyphicon-info-sign menu-icon'>
-		                </a>
-		              </label> 
 		              
-		              <div class="btn btn-sm btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-		                <?php echo get_msg('btn_replace_photo')?>
-		              </div>
-		              
-		              <hr/>
 		            
 		              <?php
 		                $conds = array( 'img_type' => 'product', 'img_parent_id' => $product->id );
@@ -449,60 +483,9 @@
 
 		            <?php endif; ?> 
 		            <!-- End Item default photo -->
-                    <br><br>
-					<div class="form-group">
-						<div class="form-check">
-							<label>
-							
-							<?php echo form_checkbox( array(
-								'name' => 'is_featured',
-								'id' => 'is_featured',
-								'value' => 'accept',
-								'checked' => set_checkbox('is_featured', 1, ( @$product->is_featured == 1 )? true: false ),
-								'class' => 'form-check-input'
-							));	?>
-
-							<?php echo get_msg( 'is_featured' ); ?>
-
-							</label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="form-check">
-							<label>
-							
-							<?php echo form_checkbox( array(
-								'name' => 'is_available',
-								'id' => 'is_available',
-								'value' => 'accept',
-								'checked' => set_checkbox('is_available', 1, ( @$product->is_available == 1 )? true: false ),
-								'class' => 'form-check-input'
-							));	?>
-
-							<?php echo get_msg( 'is_available' ); ?>
-
-							</label>
-						</div>
-					</div>
-
-					<div class="form-group">
-						<div class="form-check">
-
-							<label>
-							
-								<?php echo form_checkbox( array(
-									'name' => 'status',
-									'id' => 'status',
-									'value' => 'accept',
-									'checked' => set_checkbox('status', 1, ( @$product->status == 1 )? true: false ),
-									'class' => 'form-check-input'
-								));	?>
-
-								<?php echo get_msg( 'status' ); ?>
-							</label>
-						</div>
-					</div>
+                    <div class="btn fixed-size-btn btn-primary btn-upload" style="margin-top:10px;" data-toggle="modal" data-target="#uploadImage">
+		                Upload Food Image
+		              </div>
 
 				</div>
             </div>

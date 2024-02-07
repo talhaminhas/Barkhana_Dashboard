@@ -99,7 +99,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="" style="width:100%" name="description" placeholder="<?php echo get_msg('description_label') ?>" rows="9"><?php echo $shop->description;?></textarea>
+								<textarea style="border: 2px solid grey; border-radius: 10px; width: 100%; padding: 10px;" name="description" placeholder="<?php echo get_msg('description_label') ?>" rows="9"><?php echo $shop->description; ?></textarea>
 							</div>
 
 							<div class="form-group">
@@ -248,21 +248,7 @@ echo form_open( '', $attributes);
 
 						<?php else: ?>
 
-							<label><?php echo get_msg('shop_cover_photo_label')?>
-								<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('shop_photo_tooltips')?>">
-									<span class='glyphicon glyphicon-info-sign menu-icon'>
-								</a>
-							</label>
-
-							<br>
-
-							<?php echo get_msg('shop_image_recommended_size')?>
-
-							<a class="btn btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-								<?php echo get_msg('btn_replace_photo')?> 
-							</a>
-
-							<hr/>	
+								
 							<?php
 								$conds = array( 'img_type' => 'shop', 'img_parent_id' => $shop->id );
 		
@@ -309,6 +295,9 @@ echo form_open( '', $attributes);
 
 							
 							<?php endif; ?>
+							<a class="btn fixed-size-btn btn-primary btn-upload " style="color:white; margin-top:10px; margin-bottom:10px;" data-toggle="modal" data-target="#uploadImage">
+								Upload Shop Image
+							</a>
 						<?php endif; ?>
 						<!-- Icon  -->
 						<?php if ( !isset( $shop )): ?>
@@ -319,31 +308,12 @@ echo form_open( '', $attributes);
 										<span class='glyphicon glyphicon-info-sign menu-icon'>
 									</a>
 								</label>
-
-								<br>
-
-								<?php echo get_msg('shop_image_recommended_size_icon')?>
-
 								<input class="btn btn-sm" type="file" name="icon" id="icon">
 							</div>
 
 							<?php else: ?>
 
-								<label><?php echo get_msg('shop_icon_photo_label')?>
-									<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('shop_photo_tooltips')?>">
-										<span class='glyphicon glyphicon-info-sign menu-icon'>
-									</a>
-								</label>
-
-								<br>
-
-								<?php echo get_msg('shop_image_recommended_size_icon')?>
-
-								<a class="btn btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadIcon">
-									<?php echo get_msg('btn_replace_icon')?> 
-								</a>
-
-								<hr/>	
+								
 								<?php
 									$conds = array( 'img_type' => 'shop-icon', 'img_parent_id' => $shop->id );
 			
@@ -388,6 +358,9 @@ echo form_open( '', $attributes);
 
 								
 								<?php endif; ?>
+								<a class="btn fixed-size-btn btn-upload btn-primary" style=" color:white; margin-top:10px" data-toggle="modal" data-target="#uploadIcon">
+									Upload Icon
+								</a>
 							<?php endif; ?>
 							
 						</div>
@@ -1360,7 +1333,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="" style="width:100%" name="refund_policy" placeholder="<?php echo get_msg('refund_policy_label') ?>" rows="5"><?php echo $shop->refund_policy;?></textarea>
+								<textarea style="border: 2px solid grey; border-radius: 10px; width: 100%; padding: 10px;" name="refund_policy" placeholder="<?php echo get_msg('refund_policy_label') ?>" rows="5"><?php echo $shop->refund_policy;?></textarea>
 
 							</div>
 							
@@ -1376,7 +1349,7 @@ echo form_open( '', $attributes);
 									</a>
 								</label>
 
-								<textarea class="" style="width:100%" name="terms" placeholder="<?php echo get_msg('terms_label') ?>" rows="5"><?php echo $shop->terms;?></textarea>
+								<textarea style="border: 2px solid grey; border-radius: 10px; width: 100%; padding: 10px;" name="terms" placeholder="<?php echo get_msg('terms_label') ?>" rows="5"><?php echo $shop->terms;?></textarea>
 								
 							</div>
           				</div>

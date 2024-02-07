@@ -31,24 +31,20 @@
 						)); ?>
 
 					</div>
-
-					<div class="form-group" style="padding-top: 50px;">
-						<div class="form-check">
-
-							<label>
+							<label class="form-unchecked-label" id="is_publishedLabel">
 							
 								<?php echo form_checkbox( array(
 									'name' => 'is_published',
 									'id' => 'is_published',
 									'value' => 'accept',
 									'checked' => set_checkbox('is_published', 1, ( @$coupon->is_published == 1 )? true: false ),
-									'class' => 'form-check-input'
+									'class' => 'form-check-input',
+									'onchange' => 'toggleCheckbox(this.id)',
+									'style' => 'display:none'
 								));	?>
 								
-								<?php echo get_msg( 'status' ); ?>
+								Published
 							</label>
-						</div>
-					</div>
 
 				</div>
 

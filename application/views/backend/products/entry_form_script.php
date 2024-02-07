@@ -1,4 +1,7 @@
 <script>
+	toggleCheckbox("is_available");
+	toggleCheckbox("is_featured");
+	toggleCheckbox("status");
 	<?php if ( $this->config->item( 'client_side_validation' ) == true ): ?>
 
 	function jqvalidate() {

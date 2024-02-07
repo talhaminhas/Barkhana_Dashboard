@@ -1,12 +1,15 @@
 <div class="table-responsive animated fadeInRight">
 	<div class="card-header">
-	  <h3 class="card-title">
-	  	<?php echo get_msg('contact_info_label')?>
-	  </h3>
+	  
 	</div>
 
 	<div class="card-body p-0">
-		<table class="table m-0 table-striped">
+		<table class="table m-0 table-bordered">
+			<tr>
+				<th class="table-header"colspan="2">
+	  				<?php echo get_msg('contact_info_label')?>
+				</th>
+			</tr>
 			<tr>
 				<th><?php echo get_msg('contact_name')?></th>
 				<td><?php echo $contact->name;?></td>
@@ -26,7 +29,7 @@
 		</table>
 	</div>
 
-	<div class="card-footer text-center">
-		<a class="btn btn-primary" href="<?php echo $module_site_url ?>" class="btn"><?php echo get_msg('back_button')?></a>
+	<div class="modal-footer text-center">
+		<a class="btn std-btn-size btn-primary" href="<?php echo $module_site_url ?>" class="btn"><?php echo get_msg('back_button')?></a>
 	</div>
 </div>

@@ -129,7 +129,8 @@ $('.btn-assign').click(function(){
 
     <div class="col-sm-4 invoice-col">
         <div style="height: 100%; padding-bottom: 15px;">
-                <table class="table table-bordered" style="height: 100%;">
+            <div class="table-responsive" style="height: 100%; ">
+                <table class="table-bordered" style="height: 100%; width:100%;">
                     <tr>
                         <td class="cust-info-cell" colspan="2">
                             <b><?php echo get_msg('cust_info'); ?></b>
@@ -137,22 +138,22 @@ $('.btn-assign').click(function(){
                     </tr>
                     <tr>
                         <td class="label-column text-center align-middle"><?php echo get_msg('name_label'); ?></td>
-                        <td class="align-middle"><?php echo $transaction->contact_name; ?></td>
+                        <td class="align-middle text-center"><?php echo $transaction->contact_name; ?></td>
                     </tr>
                     <tr>
                         <td class="label-column text-center align-middle"><?php echo get_msg('email_label'); ?></td>
-                        <td class="align-middle"><?php echo $transaction->contact_email; ?></td>
+                        <td class="align-middle text-center"><?php echo $transaction->contact_email; ?></td>
                     </tr>
                     <tr>
                         <td class="label-column text-center align-middle"><?php echo get_msg('phone_label'); ?></td>
-                        <td class="align-middle"><?php echo $transaction->contact_phone; ?></td>
+                        <td class="align-middle text-center"><?php echo $transaction->contact_phone; ?></td>
                     </tr>
                     <tr>
                         <td class="label-column text-center align-middle"><?php echo get_msg('address_label'); ?></td>
-                        <td class="align-middle"><?php echo $transaction->contact_address; ?></td>
+                        <td class="align-middle text-center"><?php echo $transaction->contact_address; ?></td>
                     </tr>
                 </table>
-
+            </div>
                 <?php if ($transaction->user_id == '-1'): ?>
                     <span class="text-danger"><?php echo get_msg("deleted_user"); ?></span>
                 <?php endif; ?>

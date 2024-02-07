@@ -40,7 +40,7 @@
 			<tr>
 				<td class="table-cell align-middle" ><?php echo  $i++;?></td>
 				<td class="table-cell align-middle"><?php echo $add->name;?></td>
-				<td class="table-cell align-middle"><?php echo number_format($add->price,2);?></td>
+				<td class="table-cell align-middle"><?php echo '£'. number_format($add->price,2);?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 			

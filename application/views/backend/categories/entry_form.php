@@ -30,24 +30,20 @@
 							'id' => 'name'
 						)); ?>
               		</div>
-
-              		<div class="form-group" style="padding-top: 30px;">
-						<div class="form-check">
-
-							<label>
+							<label class="form-unchecked-label" id="statusLabel">
 							
 								<?php echo form_checkbox( array(
 									'name' => 'status',
 									'id' => 'status',
 									'value' => 'accept',
 									'checked' => set_checkbox('status', 1, ( @$category->status == 1 )? true: false ),
-									'class' => 'form-check-input'
+									'class' => 'form-check-input',
+									'onchange' => 'toggleCheckbox(this.id)',
+									'style' => 'display:none'
 								));	?>
 
-								<?php echo get_msg( 'status' ); ?>
+								Published
 							</label>
-						</div>
-					</div>
               	</div>
 
               	<div class="col-md-6">
@@ -70,18 +66,7 @@
 
 					<?php else: ?>
 
-					<label> <span style="font-size: 17px; color: red;">*</span>
-						<?php echo get_msg('cat_img')?>
-						<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
-							<span class='glyphicon glyphicon-info-sign menu-icon'>
-						</a>
-					</label> 
 					
-					<div class="btn btn-sm btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-						<?php echo get_msg('btn_replace_photo')?>
-					</div>
-					
-					<hr/>
 				
 					<?php
 						$conds = array( 'img_type' => 'category', 'img_parent_id' => $category->id );
@@ -103,7 +88,8 @@
 							<div class="image-container" style="">
 
 							<div class="thumbnail" style="">
-								<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>" style="" alt="Image">
+								<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>" style=""
+								 alt="Image">
 								
 								<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 									<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>" image="<?php echo $img->img_path; ?>">
@@ -121,7 +107,9 @@
 						</div>
 					
 					<?php endif; ?>
-
+						<div class="btn fixed-size-btn btn-primary btn-upload " style="margin-top:10px;" data-toggle="modal" data-target="#uploadImage">
+							Upload Category Image
+						</div>
 				<?php endif; ?>	
 				<!-- End Category cover photo -->
 				<!--<?php if ( !isset( $category )): ?>

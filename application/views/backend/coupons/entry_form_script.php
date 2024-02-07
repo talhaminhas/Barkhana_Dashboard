@@ -1,5 +1,5 @@
 <script>
-
+toggleCheckbox("is_published");
 	<?php if ( $this->config->item( 'client_side_validation' ) == true ): ?>
 
 	function jqvalidate() {

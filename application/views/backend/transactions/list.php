@@ -1,45 +1,6 @@
 <style>
     
 
-    .table-header {
-        font-weight: bold;
-        background-color: #f2f2f2;
-        text-align: center;
-		vertical-align: middle;
-    }
-	.table-cell {
-        text-align: center;
-		vertical-align: middle;
-    }
-    .fixed-size-btn {
-    width: 100%; 
-    height: 60px; 
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .order-collection{
-	width: 100%; 
-    height: 60px;
-	font-weight: bold; 
-	color: #fc3903; 
-	border: 2px solid #fc3903; 
-	padding: 5px;
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .order-delivery{
-	width: 100%; 
-    height: 60px;
-	font-weight: bold; 
-	color: #9003fc;
-	border: 2px solid #9003fc; 
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
 </style>
 <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" class="table-responsive animated fadeInRight">
 
@@ -50,7 +11,7 @@
   	<table class="table  table-bordered ">
 		<?php $count = $this->uri->segment(4) or $count = 0; ?>
 			<tr>
-				<th class="align-middle table-header" style="font-size: 30px" colspan = "9">Completed Orders</th>
+				<th class="align-middle table-header" style="font-size: 20px" colspan = "9">Completed Orders</th>
 			</tr>
 			<tr>
 				<th class="align-middle table-header"><?php echo get_msg('no'); ?></th>

@@ -7,11 +7,6 @@
 	<div class="col-14">
 		<div class='form-inline'>
 			
-
-		  	
-
-	  		
-
 		  <!-- 	<div class="form-group" style="padding-top: 3px;">
 			
 				<?php echo get_msg( 'from_price' ); ?>
@@ -44,7 +39,7 @@
 <div class="" >	
 	<!-- end form-inline -->
 	<div class="row">
-	<table class=" col-9" style="width:100%">
+	<table class=" col-9 " style="width:100%">
 		<tr>
 			<td class="table-cell align-middle" colspan="3">
 					<?php echo form_input(array(
@@ -113,52 +108,59 @@
 	</tr>
 	<tr>
 		<!-- First three columns spanning two columns collectively -->
-		<td class="table-cell align-middle" colspan="2" >
-				<div class="form-check">
-					<label class="form-check-label">
-						<?php 
-							echo form_checkbox(array(
-								'name' => 'is_featured',
-								'id' => 'is_featured',
-								'value' => 'is_featured',
-								'checked' => ($is_featured == 1) ? true : false,
-								'class' => 'form-check-input'
-							));	
-						?>
-						<?php echo get_msg('is_featured'); ?>
-					</label>
-				</div>
+		<td class="table-cell align-middle" colspan="2">
+			<div class="form-check">
+				<label class="form-unchecked-label" id="is_featuredLabel">
+					<?php 
+						echo form_checkbox(array(
+							'name' => 'is_featured',
+							'id' => 'is_featured',
+							'value' => 'is_featured',
+							'checked' => ($is_featured == 1) ? true : false,
+							'class' => 'form-check-input',
+							'onchange' => 'toggleCheckbox(this.id)',
+							'style' => 'display:none'
+						));    
+					?>
+					Featured Products
+				</label>
+			</div>
 		</td>
 		<!-- Remaining two columns individually -->
 		<td class="table-cell align-middle" colspan="2">
 				<div class="form-check">
-					<label class="form-check-label">
+					<label class="form-unchecked-label" id="is_availableLabel">
 						<?php 
 							echo form_checkbox(array(
 								'name' => 'is_available',
 								'id' => 'is_available',
 								'value' => 'is_available',
 								'checked' => ($is_available == 1) ? true : false,
-								'class' => 'form-check-input'
+								'class' => 'form-check-input',
+								'onchange' => 'toggleCheckbox(this.id)',
+								'style' => 'display:none'
+
 							));	
 						?>
-						<?php echo get_msg('is_available'); ?>
+						Available Products
 					</label>
 				</div>
 		</td>
 		<td class="table-cell align-middle" colspan="2">
 				<div class="form-check">
-					<label class="form-check-label">
+					<label class="form-unchecked-label" id="is_discountLabel">
 						<?php 
 							echo form_checkbox(array(
 								'name' => 'is_discount',
 								'id' => 'is_discount',
 								'value' => 'is_discount',
 								'checked' => ($is_discount == 1) ? true : false,
-								'class' => 'form-check-input'
+								'class' => 'form-check-input',
+								'onchange' => 'toggleCheckbox(this.id)',
+								'style' => 'display:none'
 							));	
 						?>
-						<?php echo get_msg('is_discount'); ?>
+						Discounted Products
 					</label>
 				</div>
 		</td>
@@ -273,6 +275,9 @@
 
 	
 
+<style>
+   
+</style>
 <script>
 	
 <?php if ( $this->config->item( 'client_side_validation' ) == true ): ?>
@@ -299,4 +304,9 @@
 		});
 }
 	<?php endif; ?>
+
+
+toggleCheckbox("is_discount");
+toggleCheckbox("is_featured");
+toggleCheckbox("is_available");
 </script>

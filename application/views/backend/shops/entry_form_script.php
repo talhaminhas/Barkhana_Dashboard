@@ -25,6 +25,7 @@ $(document).ready(function(){
     });
 });
 
+toggleCheckbox("deli_assign_settingLabel");
 
 function jqvalidate() {
 

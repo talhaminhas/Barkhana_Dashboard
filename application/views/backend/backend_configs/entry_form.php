@@ -288,7 +288,7 @@ echo form_open( '', $attributes);
 								
 								<?php endif; ?>
 									
-								<div class="col-md-4" style="height:100">
+								<div class="image-container">
 
 									<div class="thumbnail">
 
@@ -296,11 +296,11 @@ echo form_open( '', $attributes);
 
 										<br/>
 										
-										<p class="text-center">
+										<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 											
 											<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 												image="<?php echo $img->img_path; ?>">
-												<?php echo get_msg('remove_label'); ?>
+												<span class="btn btn-danger">Remove</span>
 											</a>
 										</p>
 
@@ -367,7 +367,7 @@ echo form_open( '', $attributes);
 								
 								<?php endif; ?>
 									
-								<div class="col-md-4" style="height:100">
+								<div class="image-container">
 
 									<div class="thumbnail">
 
@@ -375,11 +375,11 @@ echo form_open( '', $attributes);
 
 										<br/>
 										
-										<p class="text-center">
+										<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 											
 											<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 												image="<?php echo $img->img_path; ?>">
-												<?php echo get_msg('remove_label'); ?>
+												<span class="btn btn-danger">Remove</span>
 											</a>
 										</p>
 
@@ -441,7 +441,7 @@ echo form_open( '', $attributes);
 								
 								<?php endif; ?>
 									
-								<div class="col-md-4" style="height:100">
+								<div class="image-container">
 
 									<div class="thumbnail">
 
@@ -449,11 +449,11 @@ echo form_open( '', $attributes);
 
 										<br/>
 
-										<p class="text-center">
+										<p style="position: absolute; bottom: 10px; left: 10px; width: 100%; margin: 0;">
 											
 											<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
 												image="<?php echo $img->img_path; ?>">
-												<?php echo get_msg('remove_label'); ?>
+												<span class="btn btn-danger">Remove</span>
 											</a>
 										</p>
 

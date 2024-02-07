@@ -13,7 +13,7 @@
 			<form role="form">
         		<div class="card-body">
 					<div class="row">
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<div class="form-group">
 								<label> <span style="font-size: 17px; color: red;">*</span>
 									<?php echo get_msg('Prd_search_cat')?>
@@ -52,11 +52,7 @@
 								)); ?>
 
 							</div>
-
-							<div class="form-group" style="padding-top: 30px;">
-							<div class="form-check">
-
-								<label>
+								<label class="form-unchecked-label" id="statusLabel">
 								
 									<?php echo form_checkbox( array(
 										'name' => 'status',
@@ -64,17 +60,17 @@
 										'value' => 'accept',
 										'checked' => set_checkbox('status', 1, ( @$subcategory->status == 1 )? true: false ),
 										'class' => 'form-check-input',
+										'onchange' => 'toggleCheckbox(this.id)',
+										'style' => 'display:none'
 										
 									));	?>
 
-									<?php echo get_msg( 'status' ); ?>
+									Published
 								</label>
-							</div>
-						</div>
 
 						</div>
 
-						<div class="col-md-5">
+						<div class="col-md-6">
 							<?php if ( !isset( $subcategory )): ?>
 
 							<div class="form-group">
@@ -90,16 +86,8 @@
 							</div>
 
 							<?php else: ?>
-
-								<label> <span style="font-size: 17px; color: red;">*</span>
-									<?php echo get_msg('subcat_img')?>
-								</label> 
 								
-								<div class="btn btn-sm btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-									<?php echo get_msg('btn_replace_photo')?>
-								</div>
 								
-								<hr/>
 								
 								<?php
 									$conds = array( 'img_type' => 'sub_category', 'img_parent_id' => $subcategory->id );
@@ -119,7 +107,7 @@
 										
 										<?php endif; ?>
 											
-										<div class="image-container" style="background:red">
+										<div class="image-container" style="">
 
 											<div class="thumbnail">
 
@@ -141,7 +129,9 @@
 									</div>
 								
 								<?php endif; ?>
-
+								<div class="btn fixed-size-btn btn-primary btn-upload" style="margin-top:10px;" data-toggle="modal" data-target="#uploadImage">
+									Upload Subcategory Image
+								</div>
 							<?php endif; ?>	
 
 

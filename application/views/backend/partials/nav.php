@@ -3,7 +3,7 @@
     <?php $be_url = $this->config->item('be_url'); ?>
     
     <!-- Left navbar links -->
-    <ul class="navbar-nav " style="width:100%; display: flex; align-items: center;">
+    <ul class="navbar-nav " style="width:200%; display: flex; align-items: center; ">
       
     <li class="nav-item icon-btn" style="margin-left: 20px;">
       <a class="nav-link" data-widget="pushmenu" href="#">
@@ -13,7 +13,7 @@
 
       <!-- Brand Logo -->
       
-        <span class="brand-text  " style="margin-left: 20px; font-size: 23px;">
+        <span class="brand-text  " style="margin-left: 50px; width:100%; font-size: 27px; " >
           <?php 
               
 
@@ -33,7 +33,7 @@
           ?></span>
       
       </ul>
-      <ul class="navbar-nav " style="width: 100%; display: flex; align-items: center; justify-content: flex-end;">
+      <ul class="navbar-nav " style=" display: flex; align-items: center; justify-content: flex-end;">
 
 
        <li >

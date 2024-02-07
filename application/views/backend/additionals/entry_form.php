@@ -30,99 +30,7 @@
 							'id' => 'name'
 						)); ?>
               		</div>
-
-              		<!--<div class="form-group">
-						<label><span style="font-size: 17px; color: red;">*</span>
-							<?php echo get_msg('food_add_description')?>
-							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('food_add_description')?>">
-								<span class='glyphicon glyphicon-info-sign menu-icon'>
-							</a>
-						</label>
-						<textarea class="form-control" name="description" placeholder="<?php echo get_msg('food_add_description')?>" rows="5"><?php echo $add->description; ?></textarea>
-					</div>-->
-
-              		<?php if ( !isset( $add )): ?>
-
-					<div class="form-group">
-					
-						<label> <span style="font-size: 17px; color: red;">*</span>
-							<?php echo get_msg('food_add_img')?>
-							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
-								<span class='glyphicon glyphicon-info-sign menu-icon'>
-							</a>
-						</label>
-
-						<br/>
-
-						<input class="btn btn-sm" type="file" name="cover" id="cover" accept="image/*">
-
-					</div>
-
-					<?php else: ?>
-
-					<label> <span style="font-size: 17px; color: red;">*</span>
-						<?php echo get_msg('food_add_img')?>
-						<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
-							<span class='glyphicon glyphicon-info-sign menu-icon'>
-						</a>
-					</label> 
-					
-					<div class="btn btn-sm btn-primary btn-upload pull-right" data-toggle="modal" data-target="#uploadImage">
-						<?php echo get_msg('btn_replace_photo')?>
-					</div>
-					
-					<hr/>
-				
-					<?php
-						$conds = array( 'img_type' => 'food-additional', 'img_parent_id' => $add->id );
-						$images = $this->Image->get_all_by( $conds )->result();
-					?>
-						
-					<?php if ( count($images) > 0 ): ?>
-						
-						<div class="row">
-
-						<?php $i = 0; foreach ( $images as $img ) :?>
-
-							<?php if ($i>0 && $i%3==0): ?>
-									
-							</div><div class='row'>
-							
-							<?php endif; ?>
-								
-							<div class="image-container" style="">
-
-								<div class="thumbnail">
-
-									<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>">
-
-									<br/>
-									
-									<!--<p class="text-center">
-										
-										<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
-											image="<?php echo $img->img_path; ?>">
-											<?php echo get_msg('remove_label'); ?>
-										</a>
-									</p>-->
-
-								</div>
-
-							</div>
-
-						<?php $i++; endforeach; ?>
-
-						</div>
-					
-					<?php endif; ?>
-
-				<?php endif; ?>	
-				<!-- End Category cover photo -->
-
-              	</div>
-
-              	<div class="col-md-6">
-              		<div class="form-group">
+					  <div class="form-group">
                    		<label> <span style="font-size: 17px; color: red;">*</span>
 							<?php echo get_msg('food_add_price')?>
 							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('name_tooltips')?>">
@@ -138,24 +46,104 @@
 							'id' => 'price'
 						)); ?>
               		</div>
-
-              		<div class="form-group" style="padding-top: 30px;">
-						<div class="form-check">
-
-							<label>
+							<label class="form-unchecked-label" id="statusLabel">
 							
 								<?php echo form_checkbox( array(
 									'name' => 'status',
 									'id' => 'status',
 									'value' => 'accept',
 									'checked' => set_checkbox('status', 1, ( @$add->status == 1 )? true: false ),
-									'class' => 'form-check-input'
+									'class' => 'form-check-input',
+									'onchange' => 'toggleCheckbox(this.id)',
+									'style' => 'display:none'
 								));	?>
 
-								<?php echo get_msg( 'status' ); ?>
+								Published
 							</label>
-						</div>
-					</div>
+              		<!--<div class="form-group">
+						<label><span style="font-size: 17px; color: red;">*</span>
+							<?php echo get_msg('food_add_description')?>
+							<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('food_add_description')?>">
+								<span class='glyphicon glyphicon-info-sign menu-icon'>
+							</a>
+						</label>
+						<textarea class="form-control" name="description" placeholder="<?php echo get_msg('food_add_description')?>" rows="5"><?php echo $add->description; ?></textarea>
+					</div>-->
+
+              		
+
+              	</div>
+
+              	<div class="col-md-6">
+				  <?php if ( !isset( $add )): ?>
+
+<div class="form-group">
+
+	<label> <span style="font-size: 17px; color: red;">*</span>
+		<?php echo get_msg('food_add_img')?>
+		<a href="#" class="tooltip-ps" data-toggle="tooltip" title="<?php echo get_msg('cat_photo_tooltips')?>">
+			<span class='glyphicon glyphicon-info-sign menu-icon'>
+		</a>
+	</label>
+
+	<br/>
+
+	<input class="btn btn-sm" type="file" name="cover" id="cover" accept="image/*">
+
+</div>
+
+<?php else: ?>
+
+
+
+
+<?php
+	$conds = array( 'img_type' => 'food-additional', 'img_parent_id' => $add->id );
+	$images = $this->Image->get_all_by( $conds )->result();
+?>
+	
+<?php if ( count($images) > 0 ): ?>
+	
+	<div class="row">
+
+	<?php $i = 0; foreach ( $images as $img ) :?>
+
+		<?php if ($i>0 && $i%3==0): ?>
+				
+		</div><div class='row'>
+		
+		<?php endif; ?>
+			
+		<div class="image-container" style="">
+
+			<div class="thumbnail">
+
+				<img class="img-rounded img-fluid" src="<?php echo $this->ps_image->upload_url . $img->img_path; ?>">
+
+				<br/>
+				
+				<!--<p class="text-center">
+					
+					<a data-toggle="modal" data-target="#deletePhoto" class="delete-img" id="<?php echo $img->img_id; ?>"   
+						image="<?php echo $img->img_path; ?>">
+						<?php echo get_msg('remove_label'); ?>
+					</a>
+				</p>-->
+
+			</div>
+
+		</div>
+
+	<?php $i++; endforeach; ?>
+
+	</div>
+
+<?php endif; ?>
+<div class="btn fixed-size-btn btn-primary btn-upload " style="margin-top:10px;" data-toggle="modal" data-target="#uploadImage">
+	Upload Image
+</div>
+<?php endif; ?>	
+<!-- End Category cover photo -->
 		
               	</div>
               	<!--  col-md-6  -->

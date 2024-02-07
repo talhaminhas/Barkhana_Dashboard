@@ -121,11 +121,23 @@
 		/* Override form-control class */
 .form-control {
     height: 40px !important;
+	border: 2px solid;
+	border-color: grey;
+	border-radius: 20px;
+	font-weight:bold;
+	color:grey;
+	padding-left:10px;
 }
 
 /* Override form-control-sm class */
 .form-control-sm {
     height: 40px !important;
+	border: 2px solid;
+	border-color: grey;
+	border-radius: 20px;
+	font-weight:bold;
+	color:grey;
+	padding-left:10px;
 }
 .table-header {
         font-weight: bold;
@@ -145,9 +157,10 @@
 	.image-container{
 		width: 100%; 
 		height: 0; 
-		padding-top: 100%; 
+		padding-top: 250px; 
 		position: relative;
 		 overflow: hidden;
+		 text-align:center;
 	}
 	.thumbnail{
 		position: absolute; 
@@ -156,7 +169,7 @@
 		 height: 100%;
 	}
 	.img-fluid{
-		width: 100%; height: 100%; object-fit: cover;
+		width: 97%; height: 250px; object-fit: cover;
 	}
 	.main-sidebar, .main-sidebar::before {
     width: 300px; /* default 250px */
@@ -195,28 +208,28 @@
     }
 	.fixed-size-btn {
     width: 100%; 
-    height: 60px; 
+    height: 40px; 
 	display: flex;
     align-items: center;
     justify-content: center;
   }
   	.std-btn-size{
 		width: 100px; 
-		height: 60px;
+		height: 40px;
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
 	}
 	.lrg-btn-size{
 		width: 150px; 
-		height: 60px;
+		height: 40px;
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
 	}
 	.xlrg-btn-size{
 		width: 200px; 
-		height: 60px;
+		height: 40px;
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
@@ -224,7 +237,12 @@
 	.std-field{
         width:250px;
         height: 40px;
-        
+        border: 2px solid;
+		border-color: grey;
+		border-radius: 20px;
+		font-weight:bold;
+		color:grey;
+		padding-left:10px;
     }
 	.discount-label{
         font-weight: bold; 
@@ -232,7 +250,7 @@
     }
 	.badge{
 	width: 100%; 
-    height: 60px;
+    height: 40px;
 	font-weight: bold; 
 	color: #fc3903; 
 	border: 2px solid #fc3903; 
@@ -241,4 +259,58 @@
     align-items: center;
     justify-content: center;
   }
+  .order-collection{
+	width: 100%; 
+    height: 40px;
+	font-weight: bold; 
+	color: #fc3903; 
+	border: 2px solid #fc3903; 
+	padding: 5px;
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .order-delivery{
+	width: 100%; 
+    height: 40px;
+	font-weight: bold; 
+	color: #9003fc;
+	border: 2px solid #9003fc; 
+	display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  /* Add this CSS to your stylesheet or in the head of your HTML document */
+ .form-checked-label {
+        font-weight:bold;
+		color: white;
+		background:#0275d8;
+		border: 2px solid ;
+		border-color: #0275d8;
+		padding: 8px;
+		border-radius: 20px; 
+    }
+	.form-unchecked-label {
+		font-weight:bold;
+		color:grey;
+		border: 2px solid ;
+		padding: 8px;
+		border-radius: 20px;
+	}
 	</style>
+	<script>
+		
+	function toggleCheckbox(idCheckbox) {
+    var checkbox = document.getElementById(idCheckbox);
+    var label = document.getElementById(idCheckbox + "Label");
+
+    if (checkbox.checked) {
+        label.classList.add('form-checked-label');
+        label.classList.remove('form-unchecked-label');
+    } else {
+        label.classList.remove('form-checked-label');
+        label.classList.add('form-unchecked-label');
+    }
+}
+ 
+		</script>
