@@ -3,139 +3,139 @@
     <input type="hidden" name="page_time" id="page_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_page_refresh_time ?>">
   		
 	<!-- New Orders  -->
-			
-	<table class="table table-bordered m-0  text-center">
-		<?php 
-			$selected_shop_id = $this->session->userdata('selected_shop_id');
-          	$shop_id = $selected_shop_id['shop_id'];
-		?>
-		<tr>
-			<th class="align-middle  table-header" style="font-size: 20px" colspan = "9">New Orders</th>
-		</tr>
-		<tr >
-			<th class="align-middle  table-header"><?php echo get_msg('no'); ?></th>
-			<th class="align-middle table-header">Order Number</th>
-			<th class="align-middle table-header"><?php echo get_msg('total_amount_label') ?></th>
-			<th class="align-middle table-header">Time</th>
-			<th class="align-middle table-header"><span class="th-title">Customer Details</span></th>
-			<th class="align-middle table-header">Order Type</th>
+	<div class="table-responsive" style="height: 100%;">	
+		<table class="table table-bordered m-0 text-center align-middle" >
+			<?php 
+				$selected_shop_id = $this->session->userdata('selected_shop_id');
+				$shop_id = $selected_shop_id['shop_id'];
+			?>
+			<tr>
+				<th class="align-middle  table-header" style="font-size: 20px" colspan = "9">New Orders</th>
+			</tr>
+			<tr >
+				<th class="align-middle  table-header"><?php echo get_msg('no'); ?></th>
+				<th class="align-middle table-header">Order Number</th>
+				<th class="align-middle table-header"><?php echo get_msg('total_amount_label') ?></th>
+				<th class="align-middle table-header">Time</th>
+				<th class="align-middle table-header"><span class="th-title">Customer Details</span></th>
+				<th class="align-middle table-header">Order Type</th>
 
-			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-				
-				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('accept_order_label')?></span></th>
-			
-			<?php endif; ?>
-
-
-			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-				
-				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('reject_order_label')?></span></th>
-			
-			<?php endif; ?>
-			
-			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-				
-				<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
-			
-			<?php endif; ?>
-
-		</tr>
-
-		<?php $count = 0; ?>
-
-		<?php 
-			$conds['shop_id'] = $shop_id;
-          	$conds['trans_status_id'] = 'trans_sts29a4b0cd2fa6ae0449e47e9568320f3a';
-
-          	$new_orders = $this->Transactionheader->get_all_by($conds)->result();
-
-			if ( !empty( $new_orders ) && count( $new_orders ) > 0 ): ?>
-
-				<?php foreach($new_orders as $new_order): ?>
+				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 					
-					<tr>
-						<td class="align-middle"><?php echo ++$count;?></td>
-						<td class="align-middle"><?php echo $new_order->trans_code;?></td>
-						<td class="align-middle">
-							<?php
-								$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($new_order->total_item_amount, 2);
-								echo $total_amount;
-							?>
-						</td>
-						<td class="align-middle">
-							<?php
-								$added_date = new DateTime($new_order->added_date);
-								echo $added_date->format('H:i'); 
-							?>
-						</td>
-						<td class="align-middle">
-							<?php echo $this->User->get_one($new_order->user_id)->user_name; ?>
-							<br>
-							<?php echo $this->User->get_one($new_order->user_id)->user_phone; ?>
-						</td>
-						<td class="align-middle">
-							<?php
-								$pick_at_shop = $new_order->pick_at_shop;
-								if ($pick_at_shop == "0") {
-									echo '<span class="order-delivery">Delivery</span>';
-								} else {
-									echo '<span class="order-collection">Collection</span>';
-								}
-							?>
-						</td>
+					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('accept_order_label')?></span></th>
+				
+				<?php endif; ?>
 
-						<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+
+				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 					
-							<td class="align-middle">
-								<div class='d-flex align-items-center justify-content-center'>
-									<a class="btn btn-sm btn-success fixed-size-btn" href="<?php echo $module_site_url . "/accept_order/" . $new_order->id;?>">
-										<?php echo get_msg('btn_accept') ?>
+					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('reject_order_label')?></span></th>
+				
+				<?php endif; ?>
+				
+				<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+					
+					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
+				
+				<?php endif; ?>
 
-									</a>
-								</div>
-							</td>
+			</tr>
+
+			<?php $count = 0; ?>
+
+			<?php 
+				$conds['shop_id'] = $shop_id;
+				$conds['trans_status_id'] = 'trans_sts29a4b0cd2fa6ae0449e47e9568320f3a';
+
+				$new_orders = $this->Transactionheader->get_all_by($conds)->result();
+
+				if ( !empty( $new_orders ) && count( $new_orders ) > 0 ): ?>
+
+					<?php foreach($new_orders as $new_order): ?>
 						
-						<?php endif; ?>
-
-						<?php if ( $this->ps_auth->has_access( EDIT )): ?>
-					
+						<tr>
+							<td class="align-middle"><?php echo ++$count;?></td>
+							<td class="align-middle"><?php echo $new_order->trans_code;?></td>
 							<td class="align-middle">
-								<div class='d-flex align-items-center justify-content-center'>
-									<a class="btn btn-sm btn-danger fixed-size-btn" href="<?php echo $module_site_url . "/reject_order/" . $new_order->id;?>">
-										<?php echo get_msg('btn_reject') ?>
-
-									</a>
-								</div>
+								<?php
+									$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($new_order->total_item_amount, 2);
+									echo $total_amount;
+								?>
 							</td>
-						
-						<?php endif; ?>
+							<td class="align-middle">
+								<?php
+									$added_date = new DateTime($new_order->added_date);
+									echo $added_date->format('H:i'); 
+								?>
+							</td>
+							<td class="align-middle">
+								<?php echo $this->User->get_one($new_order->user_id)->user_name; ?>
+								<br>
+								<?php echo $this->User->get_one($new_order->user_id)->user_phone; ?>
+							</td>
+							<td class="align-middle">
+								<?php
+									$pick_at_shop = $new_order->pick_at_shop;
+									if ($pick_at_shop == "0") {
+										echo '<span class="order-delivery">Delivery</span>';
+									} else {
+										echo '<span class="order-collection">Collection</span>';
+									}
+								?>
+							</td>
 
-						<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+							<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+						
+								<td class="align-middle">
+									<div class='d-flex align-items-center justify-content-center'>
+										<a class="btn btn-sm btn-success fixed-size-btn" href="<?php echo $module_site_url . "/accept_order/" . $new_order->id;?>">
+											<?php echo get_msg('btn_accept') ?>
+
+										</a>
+									</div>
+								</td>
 							
-							<td class="align-middle">
-								<div class='d-flex align-items-center justify-content-center'>
-									<a class="btn btn-sm btn-primary fixed-size-btn" href="<?php echo $module_site_url . "/detail/" . $new_order->id;?>">
-										<?php echo get_msg('btn_detail') ?>
+							<?php endif; ?>
 
-									</a>
-								</div>
-							</td>
+							<?php if ( $this->ps_auth->has_access( EDIT )): ?>
 						
+								<td class="align-middle">
+									<div class='d-flex align-items-center justify-content-center'>
+										<a class="btn btn-sm btn-danger fixed-size-btn" href="<?php echo $module_site_url . "/reject_order/" . $new_order->id;?>">
+											<?php echo get_msg('btn_reject') ?>
+
+										</a>
+									</div>
+								</td>
+							
+							<?php endif; ?>
+
+							<?php if ( $this->ps_auth->has_access( EDIT )): ?>
+								
+								<td class="align-middle">
+									<div class='d-flex align-items-center justify-content-center'>
+										<a class="btn btn-sm btn-primary fixed-size-btn" href="<?php echo $module_site_url . "/detail/" . $new_order->id;?>">
+											<?php echo get_msg('btn_detail') ?>
+
+										</a>
+									</div>
+								</td>
+							
+							
+							<?php endif; ?>
+
+						</tr>
+
+					<?php endforeach; ?>
+
+				<?php else: ?>
 						
-						<?php endif; ?>
+					<?php $this->load->view( $template_path .'/partials/no_data' ); ?>
 
-					</tr>
+				<?php endif; ?>		
 
-				<?php endforeach; ?>
-
-			<?php else: ?>
-					
-				<?php $this->load->view( $template_path .'/partials/no_data' ); ?>
-
-			<?php endif; ?>		
-
-	</table>
-
+		</table>
+	</div>
 	<br>
 	
 

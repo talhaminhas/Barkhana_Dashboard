@@ -39,7 +39,7 @@
 <div class="" >	
 	<!-- end form-inline -->
 	<div class="row">
-	<table class="  col-9  table-responsive" >
+	<table class="  col-10  table-responsive" >
 		<tr>
 			<td class=" align-middle" colspan="3">
 					<?php echo form_input(array(
@@ -50,11 +50,10 @@
 					)); ?>
 			</td>
 			<td rowspan="4" colspan="3">
-				<table >
+				<table class=" table-responsive">
 					<tr>
-						<td class=" align-middle" >
-							<div class="form-check">
-								<label class="form-unchecked-label" id="is_featuredLabel">
+						<td class=" table-cell align-middle" >
+								<label class="form-unchecked-label" style="margin-bottom:0px; width:100%;" id="is_featuredLabel">
 									<?php 
 										echo form_checkbox(array(
 											'name' => 'is_featured',
@@ -68,13 +67,11 @@
 									?>
 									Featured Products
 								</label>
-							</div>
 						</td>
 					</tr>
 					<tr>
-						<td class=" align-middle" colspan="2">
-							<div class="form-check">
-								<label class="form-unchecked-label" id="is_availableLabel">
+						<td class="table-cell align-middle" >
+								<label class="form-unchecked-label" style="margin-bottom:0px; width:100%;" id="is_availableLabel">
 									<?php 
 										echo form_checkbox(array(
 											'name' => 'is_available',
@@ -89,13 +86,11 @@
 									?>
 									Available Products
 								</label>
-							</div>
 						</td>
 					</tr>
 					<tr>
-						<td class=" align-middle" colspan="2">
-							<div class="form-check">
-								<label class="form-unchecked-label" id="is_discountLabel">
+						<td class="table-cell align-middle">
+								<label class="form-unchecked-label" style="margin-bottom:0px; width:100%;"  id="is_discountLabel">
 									<?php 
 										echo form_checkbox(array(
 											'name' => 'is_discount',
@@ -109,7 +104,6 @@
 									?>
 									Discounted Products
 								</label>
-							</div>
 						</td>
 					</tr>
 				</table>
@@ -204,9 +198,9 @@
 			</td>
 		</tr>
 	</table>
-	<table class="col-3 ">
+	<table class="col-2 ">
 		<tr>
-			<td class="" colspan="3">
+			<td class="">
 				<button type="submit" class="btn fixed-size-btn btn-success" value="submit" name="submit" style=" " >
 					<?php echo get_msg('btn_search') ?>
 				</button>	
