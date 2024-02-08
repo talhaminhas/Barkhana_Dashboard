@@ -1,5 +1,6 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-bordered">
+	<table id="coupon-table"class="table m-0 ">
+		<thead>
 		<tr>
 			<th class="table-header"><?php echo get_msg('no'); ?></th>
 			<th class="table-header"><?php echo get_msg('coupon_name'); ?></th>
@@ -25,7 +26,7 @@
 			<?php endif; ?>
 
 		</tr>
-		
+			</thead>
 	
 	<?php $count = $this->uri->segment(4) or $count = 0; ?>
 

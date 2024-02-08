@@ -1,8 +1,9 @@
-<div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-bordered">
+<div class="table-responsive animated fadeInRight" >
+	<table id="subcategory-table" class="table m-0 " >
+		<thead>
 		<tr>
 			<th class="table-header"><?php echo get_msg('no'); ?></th>
-			<th class="table-header"><?php echo get_msg('subcat_name'); ?></th>
+			<th class="table-header text-left"><?php echo get_msg('subcat_name'); ?></th>
 			<th class="table-header"><?php echo get_msg('cat_name'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
@@ -24,7 +25,7 @@
 			<?php endif; ?>
 
 		</tr>
-
+			</thead>
 	<?php $count = $this->uri->segment(4) or $count = 0; ?>
 
 	<?php if ( !empty( $subcategories ) && count( $subcategories->result()) > 0 ): ?>
@@ -33,7 +34,7 @@
 			
 			<tr>
 				<td class="table-cell align-middle"><?php echo ++$count;?></td>
-				<td class="table-cell align-middle"><?php echo $subcategory->name;?></td>
+				<td class=" align-middle"><?php echo $subcategory->name;?></td>
 				<td class="table-cell align-middle"><?php echo $this->Category->get_one( $subcategory->cat_id )->name; ?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>

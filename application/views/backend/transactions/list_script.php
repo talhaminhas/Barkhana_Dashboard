@@ -33,5 +33,12 @@
         window.location.reload();
     }, page_time);*/
 
-
+    $(document).ready(function () {
+  	$('#completed-orders-table').DataTable({
+			"pageLength": 25,
+            "columnDefs": [
+                { "orderable": false, "targets": [5, 6, 7] } 
+            ]
+        });
+	})
 </script>

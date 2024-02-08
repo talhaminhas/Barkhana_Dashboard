@@ -1,7 +1,7 @@
 <div class='row my-3'>
 
 	<div class='col-9'>
-	<?php
+	<!--<?php
 		$attributes = array('class' => 'form-inline');
 		echo form_open( $module_site_url .'/search', $attributes);
 	?>
@@ -29,7 +29,7 @@
 		</a>
 	  	</div>
 
-	<?php echo form_close(); ?>
+	<?php echo form_close(); ?>-->
 
 	</div>	
 

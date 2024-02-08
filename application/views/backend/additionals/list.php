@@ -2,10 +2,11 @@
 
 
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-bordered">
+	<table id="extras-table" class="table m-0 ">
+		<thead>
 		<tr>
 			<th class="table-header"><?php echo get_msg('no'); ?></th>
-			<th class="sortable table-header"   data-column="Extras Name"><?php echo get_msg('food_add_name'); ?></th>
+			<th class="text-left table-header"   data-column="Extras Name"><?php echo get_msg('food_add_name'); ?></th>
 			<th class="table-header"><?php echo get_msg('food_add_price'); ?></th>
 			
 			<?php if ( $this->ps_auth->has_access( EDIT )): ?>
@@ -27,7 +28,7 @@
 			<?php endif; ?>
 
 		</tr>
-		
+			</thead>
 	
 	<?php $count = $this->uri->segment(4) or $count = 0; ?>
 
@@ -39,7 +40,7 @@
 			
 			<tr>
 				<td class="table-cell align-middle" ><?php echo  $i++;?></td>
-				<td class="table-cell align-middle"><?php echo $add->name;?></td>
+				<td class="align-middle"><?php echo $add->name;?></td>
 				<td class="table-cell align-middle"><?php echo '£'. number_format($add->price,2);?></td>
 
 				<?php if ( $this->ps_auth->has_access( EDIT )): ?>

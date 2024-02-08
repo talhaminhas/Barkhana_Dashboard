@@ -1,6 +1,24 @@
 <script>
 function runAfterJQ() {
+	$(document).ready(function () {
+		$('#category-table').DataTable({
+				"columnDefs": [
+					{ "orderable": false, "targets": [2, 3, 4] } 
+				],
+			"pageLength": 15,
+        	"lengthChange": false,
+			"drawCallback": function (settings) {
+            var api = this.api();
+            var pageInfo = api.page.info();
 
+            if (pageInfo.pages <= 1) {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+            } else {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+            }
+        }
+			});
+		})
 	$(document).ready(function(){
 		
 		// Publish Trigger

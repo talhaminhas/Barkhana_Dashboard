@@ -4,14 +4,16 @@
   		
 	<!-- New Orders  -->
 	<div class="table-responsive" style="height: 100%;">	
-		<table class="table table-bordered m-0 text-center align-middle" >
+		<table id="new-orders-table" class="table  m-0 text-center align-middle" >
 			<?php 
 				$selected_shop_id = $this->session->userdata('selected_shop_id');
 				$shop_id = $selected_shop_id['shop_id'];
 			?>
+			<thead>
 			<tr>
 				<th class="align-middle  table-header" style="font-size: 20px" colspan = "9">New Orders</th>
 			</tr>
+			
 			<tr >
 				<th class="align-middle  table-header"><?php echo get_msg('no'); ?></th>
 				<th class="align-middle table-header">Order Number</th>
@@ -40,7 +42,7 @@
 				<?php endif; ?>
 
 			</tr>
-
+				</thead>
 			<?php $count = 0; ?>
 
 			<?php 
@@ -143,11 +145,12 @@
 
 	
 	<div class="table-responsive" style="height: 100%; ">
-		<table class="table table-bordered m-0  text-center align-middle" >
+		<table id="ongoing-orders-table" class="table  m-0  text-center align-middle" >
 			<?php 
 				$selected_shop_id = $this->session->userdata('selected_shop_id');
 	          	$shop_id = $selected_shop_id['shop_id'];
 			?>
+			<thead>
 			<tr>
 				<th class="align-middle table-header" style="font-size: 20px" colspan = "9">Ongoing Orders</th>
 			</tr>
@@ -166,7 +169,7 @@
 					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
 				<?php endif; ?>
 			</tr>
-
+				</thead>
 			<?php $count = 0; ?>
 
 			<?php 
@@ -352,6 +355,44 @@
 		// Reset refresh timer to 0
 		//resetRefreshTimer();
 	});
+    $(document).ready(function () {
+  	$('#new-orders-table').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [6, 7, 8] } 
+            ],
+			"pageLength": 15,
+        	"lengthChange": false,
+			"drawCallback": function (settings) {
+				var api = this.api();
+				var pageInfo = api.page.info();
+
+				if (pageInfo.pages <= 1) {
+					$(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+				} else {
+					$(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+				}
+        	}
+        });
+	})
+	$(document).ready(function () {
+  	$('#ongoing-orders-table').DataTable({
+            "columnDefs": [
+                { "orderable": false, "targets": [ 8] } 
+            ],
+			"pageLength": 15,
+        	"lengthChange": false,
+			"drawCallback": function (settings) {
+            var api = this.api();
+            var pageInfo = api.page.info();
+
+            if (pageInfo.pages <= 1) {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+            } else {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+            }
+        }
+        });
+	})
 </script>
 <style>
   

@@ -1,5 +1,5 @@
 <div class="table-responsive animated fadeInRight">
-	<table class="table m-0 table-bordered">
+	<table class="table m-0 " id="food-table" style="">
 		<?php
 
 			$shop_obj = $this->Shop->get_all()->result();
@@ -8,9 +8,10 @@
 
 			$currency_symbol = $this->Shop->get_one( $shop_id )->currency_symbol;
 		?>
+		<thead>
 		<tr>
 			<th class="table-header"><?php echo get_msg('no'); ?></th>
-			<th class="table-header"><?php echo get_msg('product_name'); ?></th>
+			<th class="table-header text-left"><?php echo get_msg('product_name'); ?></th>
 			<th class="table-header"><?php echo get_msg('cat_name'); ?></th>
 			<th class="table-header"><?php echo get_msg('subcat_name'); ?></th>
 			<th class="table-header"><?php echo get_msg('unit_price') ; ?></th>
@@ -34,7 +35,7 @@
 			<?php endif; ?>
 
 		</tr>
-		
+		</thead>
 	
 	<?php $count = $this->uri->segment(4) or $count = 0; ?>
 
@@ -45,9 +46,9 @@
 			<tr>
 				<td class="table-cell align-middle"><?php echo ++$count;?></td>
 				<?php if($product->is_featured == 1 ) { ?>
-				<td class="table-cell align-middle"><span class="fa fa-diamond" style="color:red;"></span>&nbsp;<?php echo $product->name;?></td>
+				<td class="table-cell text-left align-middle"><span class="fa fa-diamond" style="color:red;"></span>&nbsp;<?php echo $product->name;?></td>
 				<?php } else { ?>
-				<td class="table-cell align-middle">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product->name;?></td>
+				<td class="table-cell text-left align-middle">&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $product->name;?></td>
 				<?php } ?>
 				<td class="table-cell align-middle"><?php echo $this->Category->get_one( $product->cat_id )->name; ?></td>
 				<td class="table-cell align-middle"><?php echo $this->Subcategory->get_one( $product->sub_cat_id )->name; ?></td>
@@ -113,3 +114,17 @@
 </table>
 </div>
 
+<style>
+	table.dataTable thead .sorting:after,
+table.dataTable thead .sorting:before,
+table.dataTable thead .sorting_asc:after,
+table.dataTable thead .sorting_asc:before,
+table.dataTable thead .sorting_asc_disabled:after,
+table.dataTable thead .sorting_asc_disabled:before,
+table.dataTable thead .sorting_desc:after,
+table.dataTable thead .sorting_desc:before,
+table.dataTable thead .sorting_desc_disabled:after,
+table.dataTable thead .sorting_desc_disabled:before {
+  bottom: .5em;
+}
+	</style>

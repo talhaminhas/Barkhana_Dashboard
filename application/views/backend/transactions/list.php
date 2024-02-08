@@ -8,8 +8,9 @@
 	
     <input type="hidden" name="noti_time" id="noti_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_noti_sound_refresh_time ?>">
     <input type="hidden" name="page_time" id="page_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_page_refresh_time ?>">
-  	<table class="table  table-bordered ">
+  	<table class="table  " id="completed-orders-table">
 		<?php $count = $this->uri->segment(4) or $count = 0; ?>
+		<thead>
 			<tr>
 				<th class="align-middle table-header" style="font-size: 20px" colspan = "9">Completed Orders</th>
 			</tr>
@@ -28,6 +29,7 @@
 					<th class="align-middle table-header"><span class="th-title"><?php echo get_msg('order_detail_label')?></span></th>
 				<?php endif; ?>
 			</tr>
+		</thead>
 		<?php if ( !empty( $transactions ) && count( $transactions->result()) > 0 ): ?>
 			
 			<?php $count = 0; ?>

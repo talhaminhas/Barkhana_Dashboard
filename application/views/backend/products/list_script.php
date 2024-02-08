@@ -1,4 +1,25 @@
 <script>
+
+$(document).ready(function () {
+    $('#food-table').DataTable({
+        "pageLength": 20,
+        "lengthChange": false,
+        "columnDefs": [
+            { "orderable": false, "targets": [5,6,7] }
+        ],
+        "drawCallback": function (settings) {
+            var api = this.api();
+            var pageInfo = api.page.info();
+
+            if (pageInfo.pages <= 1) {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').hide();
+            } else {
+                $(this).closest('.dataTables_wrapper').find('.dataTables_paginate').show();
+            }
+        }
+    });
+});
+
 function runAfterJQ() {
 		
 		// Publish Trigger

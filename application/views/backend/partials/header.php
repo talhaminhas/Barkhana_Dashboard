@@ -99,6 +99,12 @@
 	<script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
 		integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
 		crossorigin=""></script>
+		<!-- DataTables CSS -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.11.5/css/jquery.dataTables.min.css">
+
+	<!-- DataTables JavaScript -->
+	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
+
 </head>
 <?php
 	//$this->set_flash_msg('error',"You don't have access to admin panel.");
@@ -143,6 +149,7 @@
         font-weight: bold;
         background-color: #f2f2f2;
         text-align: center;
+		border-top: 2px solid #ddd;
     }
 	.icon-btn{
 	width: 40px;
@@ -221,7 +228,7 @@
 		justify-content: center;
 	}
 	.lrg-btn-size{
-		width: 150px; 
+		width: 163px; 
 		height: 40px;
 		display: flex; 
 		align-items: center; 
@@ -299,6 +306,40 @@
 		padding: 8px;
 		border-radius: 20px;
 	}
+	 
+	.dataTables_paginate {
+        padding-bottom: 10px;
+		margin-top: 10px;
+        text-align: center;
+		border-bottom: 1px solid;
+    }
+
+    .dataTables_paginate .paginate_button {
+        padding: 5px 10px;
+        margin: 0 2px;
+        border: 1px solid #ddd;
+        background-color: #ccc;
+        color: #333;
+        cursor: pointer;
+        border-radius: 4px;
+		border-color:green;
+    }
+
+	.dataTables_wrapper .dataTables_paginate .paginate_button.current {
+		background-color: #ccc;
+    }
+
+   .dataTables_paginate .paginate_button:hover {
+        background-color: #ddd;
+    }
+	thead {
+		background-color: #f2f2f2; /* Background color */
+		color: #333; /* Text color */
+		font-weight: bold; /* Bold text */
+		border-bottom: 2px solid #ddd; 
+		border-top:2px solid #ddd; 
+	}
+
 	</style>
 	<script>
 		
