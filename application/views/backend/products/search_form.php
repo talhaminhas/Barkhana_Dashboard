@@ -39,9 +39,9 @@
 <div class="" >	
 	<!-- end form-inline -->
 	<div class="row">
-	<table class=" col-9 " style="width:100%">
+	<table class="  col-9  table-responsive" >
 		<tr>
-			<td class="table-cell align-middle" colspan="3">
+			<td class=" align-middle" colspan="3">
 					<?php echo form_input(array(
 						'name' => 'searchterm',
 						'value' => set_value( 'searchterm', $searchterm ),
@@ -49,7 +49,77 @@
 						'placeholder' => get_msg( 'btn_search' )
 					)); ?>
 			</td>
-			<td class="table-cell align-middle" colspan="3">
+			<td rowspan="4" colspan="3">
+				<table >
+					<tr>
+						<td class=" align-middle" >
+							<div class="form-check">
+								<label class="form-unchecked-label" id="is_featuredLabel">
+									<?php 
+										echo form_checkbox(array(
+											'name' => 'is_featured',
+											'id' => 'is_featured',
+											'value' => 'is_featured',
+											'checked' => ($is_featured == 1) ? true : false,
+											'class' => 'form-check-input',
+											'onchange' => 'toggleCheckbox(this.id)',
+											'style' => 'display:none'
+										));    
+									?>
+									Featured Products
+								</label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class=" align-middle" colspan="2">
+							<div class="form-check">
+								<label class="form-unchecked-label" id="is_availableLabel">
+									<?php 
+										echo form_checkbox(array(
+											'name' => 'is_available',
+											'id' => 'is_available',
+											'value' => 'is_available',
+											'checked' => ($is_available == 1) ? true : false,
+											'class' => 'form-check-input',
+											'onchange' => 'toggleCheckbox(this.id)',
+											'style' => 'display:none'
+
+										));	
+									?>
+									Available Products
+								</label>
+							</div>
+						</td>
+					</tr>
+					<tr>
+						<td class=" align-middle" colspan="2">
+							<div class="form-check">
+								<label class="form-unchecked-label" id="is_discountLabel">
+									<?php 
+										echo form_checkbox(array(
+											'name' => 'is_discount',
+											'id' => 'is_discount',
+											'value' => 'is_discount',
+											'checked' => ($is_discount == 1) ? true : false,
+											'class' => 'form-check-input',
+											'onchange' => 'toggleCheckbox(this.id)',
+											'style' => 'display:none'
+										));	
+									?>
+									Discounted Products
+								</label>
+							</div>
+						</td>
+					</tr>
+				</table>
+			</td>
+			
+			
+	</tr>
+	<tr>
+		
+	<td class=" align-middle" colspan="3">
 					<?php
 						$options=array();
 						$options[0]=get_msg('Prd_search_cat');
@@ -64,108 +134,60 @@
 							'cat_id',
 							$options,
 							set_value( 'cat_id', show_data( $cat_id ), false ),
-							'class="std-field mr-3" id="cat_id"'
+							'class="std-field mr-3 " id="cat_id"'
 						);
 					?> 
 
 					<input type="hidden"  id="addonselect" name="addonselect">
 			</td>
-			<td class="table-cell align-middle" colspan="3">
-
-				<?php
-					if($selected_cat_id != "") {
-
-						$options=array();
-						$options[0]=get_msg('Prd_search_subcat');
-						$conds['cat_id'] = $selected_cat_id;
-						$sub_cat = $this->Subcategory->get_all_by($conds);
-						foreach($sub_cat->result() as $subcat) {
-							$options[$subcat->id]=$subcat->name;
-						}
-						echo form_dropdown(
-							'sub_cat_id',
-							$options,
-							set_value( 'sub_cat_id', show_data( $sub_cat_id ), false ),
-							'class="std-field mr-3" id="sub_cat_id"'
-						);
-
-					} else {
-
-						$conds['cat_id'] = $selected_cat_id;
-						$options=array();
-						$options[0]=get_msg('Prd_search_subcat');
-
-						echo form_dropdown(
-							'sub_cat_id',
-							$options,
-							set_value( 'sub_cat_id', show_data( $sub_cat_id ), false ),
-							'class="std-field mr-3" id="sub_cat_id"'
-						);
-					}
-				?>
-			</td>
 			
-	</tr>
-	<tr>
 		<!-- First three columns spanning two columns collectively -->
-		<td class="table-cell align-middle" colspan="2">
-			<div class="form-check">
-				<label class="form-unchecked-label" id="is_featuredLabel">
-					<?php 
-						echo form_checkbox(array(
-							'name' => 'is_featured',
-							'id' => 'is_featured',
-							'value' => 'is_featured',
-							'checked' => ($is_featured == 1) ? true : false,
-							'class' => 'form-check-input',
-							'onchange' => 'toggleCheckbox(this.id)',
-							'style' => 'display:none'
-						));    
-					?>
-					Featured Products
-				</label>
-			</div>
-		</td>
+		
 		<!-- Remaining two columns individually -->
-		<td class="table-cell align-middle" colspan="2">
-				<div class="form-check">
-					<label class="form-unchecked-label" id="is_availableLabel">
-						<?php 
-							echo form_checkbox(array(
-								'name' => 'is_available',
-								'id' => 'is_available',
-								'value' => 'is_available',
-								'checked' => ($is_available == 1) ? true : false,
-								'class' => 'form-check-input',
-								'onchange' => 'toggleCheckbox(this.id)',
-								'style' => 'display:none'
+		
+		
 
-							));	
-						?>
-						Available Products
-					</label>
-				</div>
-		</td>
-		<td class="table-cell align-middle" colspan="2">
-				<div class="form-check">
-					<label class="form-unchecked-label" id="is_discountLabel">
-						<?php 
-							echo form_checkbox(array(
-								'name' => 'is_discount',
-								'id' => 'is_discount',
-								'value' => 'is_discount',
-								'checked' => ($is_discount == 1) ? true : false,
-								'class' => 'form-check-input',
-								'onchange' => 'toggleCheckbox(this.id)',
-								'style' => 'display:none'
-							));	
-						?>
-						Discounted Products
-					</label>
-				</div>
-		</td>
+		
+		
+		</tr>
+		<tr>
+		<td class=" align-middle" colspan="3">
 
-		<td class="table-cell align-middle" colspan="3">
+		<?php
+			if($selected_cat_id != "") {
+
+				$options=array();
+				$options[0]=get_msg('Prd_search_subcat');
+				$conds['cat_id'] = $selected_cat_id;
+				$sub_cat = $this->Subcategory->get_all_by($conds);
+				foreach($sub_cat->result() as $subcat) {
+					$options[$subcat->id]=$subcat->name;
+				}
+				echo form_dropdown(
+					'sub_cat_id',
+					$options,
+					set_value( 'sub_cat_id', show_data( $sub_cat_id ), false ),
+					'class="std-field mr-3" id="sub_cat_id"'
+				);
+
+			} else {
+
+				$conds['cat_id'] = $selected_cat_id;
+				$options=array();
+				$options[0]=get_msg('Prd_search_subcat');
+
+				echo form_dropdown(
+					'sub_cat_id',
+					$options,
+					set_value( 'sub_cat_id', show_data( $sub_cat_id ), false ),
+					'class="std-field mr-3" id="sub_cat_id"'
+				);
+			}
+		?>
+		</td>
+		</tr>
+		<tr>
+		<td class=" align-middle" colspan="3">
 				<?php
 					$options = array();
 					$options[0] = get_msg('select_order');
@@ -176,15 +198,13 @@
 						'order_by',
 						$options,
 						set_value('order_by', show_data($order_by), false),
-						'class="mr-3 ml-2 std-field" id="order_by"'
+						'class="mr-3  std-field" id="order_by"'
 					);
 				?>
 			</td>
-		
 		</tr>
-
 	</table>
-	<table class="col-2 table-bordered">
+	<table class="col-3 ">
 		<tr>
 			<td class="" colspan="3">
 				<button type="submit" class="btn fixed-size-btn btn-success" value="submit" name="submit" style=" " >
@@ -193,14 +213,14 @@
 			</td>
 		</tr>
 		<tr>
-			<td class="table-cell align-middle" >
+			<td class=" align-middle" >
 				<a href='<?php echo $module_site_url . '/index'; ?>' class="btn fixed-size-btn btn-primary" style="">
 					<?php echo get_msg('btn_reset') ?>
 				</a>
 			</td>
 		</tr>
 		<tr>
-			<td class="table-cell align-middle" >
+			<td class=" align-middle" >
 				<a href='<?php echo $module_site_url .'/add';?>' class='btn fixed-size-btn btn-warning' >
 					<i class='fa fa-plus'> </i> 
 					<span> Add Food</span>

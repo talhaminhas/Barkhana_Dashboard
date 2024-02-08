@@ -269,6 +269,7 @@
 	display: flex;
     align-items: center;
     justify-content: center;
+	border-radius: 5px;
   }
   .order-delivery{
 	width: 100%; 
@@ -279,6 +280,7 @@
 	display: flex;
     align-items: center;
     justify-content: center;
+	border-radius: 5px;
   }
   /* Add this CSS to your stylesheet or in the head of your HTML document */
  .form-checked-label {
