@@ -36,8 +36,6 @@
 			<?php foreach($transactions->result() as $transaction): 
 				if($transaction->trans_status_id == 'trans_sts159cbfb84410ebea91919234532885ec'){?>
 					
-					<tr>
-						
 						<tr >
 								<td class="align-middle table-cell"><?php echo ++$count; ?></td>
 								<td class="align-middle table-cell"><?php echo $transaction->trans_code; ?></td>

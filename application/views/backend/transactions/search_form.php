@@ -2,12 +2,10 @@
 	$attributes = array('id' => 'search-form', 'enctype' => 'multipart/form-data');
 	echo form_open( $module_site_url .'/search', $attributes);
 ?>
-<div class="col-sm-6 ">
-		<table class="table  table-bordered ">
-			<tr>
-				<th class="align-middle table-header" style="font-size: 20px" colspan = "3">Search</th>
-			</tr>
-			<tr>
+<div class="col-12 ">
+		<table class="table text-right table-responsive " style="border-collapse: collapse; border:none;">
+			
+			<!--<tr>
 				<td class="align-middle table-cell" style="font-weight: bold; ">Order Number</td>
 				<td class="align-middle table-cell">
 					<div class="form-group">
@@ -21,14 +19,10 @@
 					</div>
 				</td>
 
-				<td class="align-middle table-cell "  >
-					<a href="<?php echo $module_site_url; ?>" class="btn fixed-size-btn btn-danger" style = "">
-								<?php echo get_msg( 'btn_reset' ); ?>
-					</a>
-				</td>
-			</tr>
+				
+			</tr>-->
 			<tr>
-				<td class="align-middle table-cell" style="font-weight: bold; ">Date</td>
+				<td class="align-middle table-cell" style="font-weight: bold; ">Date Range</td>
 				<td class="align-middle table-cell" >
 					<div class="input-group" >
 						<div class="input-group-prepend">
@@ -50,9 +44,14 @@
 					</div>
 				</td>
 				<td class="align-middle table-cell "  >
-					<button type="submit" value="submit" name="submit" class="btn fixed-size-btn btn-success" style = "">
-						<?php echo get_msg( 'btn_search' )?>
+					<button type="submit" value="submit" name="submit" class="btn lrg-btn-size btn-primary" style = "">
+						Apply Filter
 					</button>
+				</td>
+				<td class="align-middle table-cell "  >
+					<a href="<?php echo $module_site_url; ?>" class="btn lrg-btn-size btn-primary" style = "">
+								<?php echo get_msg( 'btn_reset' ); ?>
+					</a>
 				</td>
 			</tr>
 		</table>

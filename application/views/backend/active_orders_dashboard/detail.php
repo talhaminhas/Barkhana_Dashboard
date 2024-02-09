@@ -195,14 +195,22 @@ $('.btn-assign').click(function(){
                                             <?php
                                             $conds['is_optional'] = 0;
                                             $status = $this->Transactionstatus->get_all_by($conds);
+                                            $add_status = false;
                                             foreach ($status->result() as $status)
                                             {
-                                                echo "<option value='".$status->id."'";
-                                                if($transaction->trans_status_id == $status->id)
-                                                {
-                                                    echo " selected ";
+                                                if($add_status == false && $transaction->trans_status_id == $status->id)
+                                                {   
+                                                    $add_status = true;
                                                 }
-                                                echo ">".$status->title."</option>";
+                                                if($add_status)
+                                                {
+                                                    echo "<option value='".$status->id."'";
+                                                    if($transaction->trans_status_id == $status->id)
+                                                    {
+                                                        echo " selected ";
+                                                    }
+                                                    echo ">".$status->title."</option>";
+                                                }
                                             }
                                             ?>
                                         </select>
@@ -283,14 +291,23 @@ $('.btn-assign').click(function(){
                                             <?php
                                             $conds['is_optional'] = 0;
                                             $status = $this->Transactionstatus->get_all_by($conds);
+                                            $add_status = false;
                                             foreach ($status->result() as $status)
                                             {
-                                                echo "<option value='".$status->id."'";
-                                                if($transaction->trans_status_id == $status->id)
-                                                {
-                                                    echo " selected ";
+                                                if($add_status == false && $transaction->trans_status_id == $status->id)
+                                                {   
+                                                    $add_status = true;
                                                 }
-                                                echo ">".$status->title."</option>";
+                                                if($add_status && ($transaction->pick_at_shop != "1" || $status->ordering != "4"))
+                                                {
+                                                   
+                                                    echo "<option class='option' value='".$status->id."'";
+                                                    if($transaction->trans_status_id == $status->id)
+                                                    {
+                                                        echo " selected ";
+                                                    }
+                                                    echo ">".$status->title."</option>";
+                                                }
                                             }
                                             ?>
                                         </select>

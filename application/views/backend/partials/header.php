@@ -122,7 +122,7 @@
 
 	</div>
 <body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse" style=" padding-top: 95px; ">
-<div class="wrapper">
+<div class="wrapper" style="allign-middle">
 	<style>
 		/* Override form-control class */
 .form-control {
@@ -228,7 +228,7 @@
 		justify-content: center;
 	}
 	.lrg-btn-size{
-		width: 163px; 
+		width: 164px; 
 		height: 40px;
 		display: flex; 
 		align-items: center; 
@@ -339,7 +339,15 @@
 		border-bottom: 2px solid #ddd; 
 		border-top:2px solid #ddd; 
 	}
-
+	.invisible-input{
+    border: none;
+    color: grey;
+    font-weight: bold;
+	}
+	.invisible-input:focus {
+		outline: none; 
+		border: 0px solid #ccc; 
+	}
 	</style>
 	<script>
 		

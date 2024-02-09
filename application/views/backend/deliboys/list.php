@@ -43,7 +43,7 @@
 			                  <?php echo "Active"; ?>
 			                </span>
 			            <?php  }else if($deliboy->status == '2'){ ?>
-			            	<span class="badge " style="font-size:17px; color:yellow; border-color:yellow;">
+			            	<span class="badge " style="font-size:17px; color:red; border-color:red;">
 			                  <?php echo "Pending"; ?>
 			                </span>
 			            <?php } else if($deliboy->status == '3') { ?>

@@ -105,7 +105,7 @@
 							</a>
 						</label>
 						<div class="dropdown-sin-2">
-			                <select class="form-control" multiple="multiple" placeholder="<?php echo get_msg('select_label')?>" name="foodaddon" id="foodaddon">
+			                <select class="form-control" style="" multiple="multiple" placeholder="<?php echo get_msg('select_label')?>" name="foodaddon" id="foodaddon">
 		                       	<?php
 									//$options=array();
 									$addons = $this->Additional->get_all()->result();

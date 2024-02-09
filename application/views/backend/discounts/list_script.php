@@ -2,7 +2,7 @@
 	$(document).ready(function () {
   	$('#discount-table').DataTable({
             "columnDefs": [
-                { "orderable": false, "targets": [3,4,5] } 
+                { "orderable": false, "targets": [2,3,4] } 
             ],
 			"pageLength": 15,
         	"lengthChange": false,

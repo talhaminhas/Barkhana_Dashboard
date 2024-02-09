@@ -1492,7 +1492,7 @@ echo form_open( '', $attributes);
 							    	}
 							    ?>
 
-							    <div class="deli_fee_by_distance box col-md-3 offset-md-3" style="display: <?php echo $display; ?> "> 
+							    <!--<div class="deli_fee_by_distance box col-md-3 col d-md-none" style="display: <?php echo $display; ?> "> 
 							    	<?php echo get_msg('you_selected')?> <b> <?php echo get_msg('deli_fee_by_distance_label'); ?> </b> <br> <br>
 
 									<label>
@@ -1500,7 +1500,7 @@ echo form_open( '', $attributes);
 									 <?php echo get_msg('deli_fee_formula'); ?>
 
 									<label>
-							    </div>
+							    </div>-->
 							    
 							    <?php 
 							    	if($shop->fixed_delivery == 1) {
@@ -1510,13 +1510,13 @@ echo form_open( '', $attributes);
 							    	}
 							    ?>
 
-							    <div class="fixed_delivery box col-md-3 offset-md-6" style="display: <?php echo $display; ?> ">
+							    <!--<div class="fixed_delivery box col-md-3 offset-md-3" style="display: <?php echo $display; ?> ">
 							    	<?php echo get_msg('you_selected')?> <b> <?php echo get_msg('fixed_delivery_label'); ?> </b> <br> <br>
 
 							    	<label>
 										<?php echo get_msg('fixed_delivery_fee') . ' ' . $shop->fixed_deli_fee; ?>
 									</label> 
-								</div>	
+								</div>	-->
 
 							    
 								<?php 
@@ -1527,15 +1527,15 @@ echo form_open( '', $attributes);
 							    	}
 							    ?>
 
-							    <div class="free_delivery box col-md-3 offset-md-9" style="display: <?php echo $display; ?> ">
+							    <!--<div class="free_delivery box col-md-3 offset-md-6" style="display: <?php echo $display; ?> ">
 
 							    	<?php echo get_msg('you_selected')?> <b> <?php echo get_msg('free_delivery_label'); ?> </b> <br> <br>
 
-								</div>
+								</div>-->
 							
 							</div>
 
-							<hr class="bg-dark my-4">
+							<!--<hr class="bg-dark my-4">
 							<h4 class="font-weight-bold mb-3"><?php echo get_msg('deliboy_ass_setting')?></h4>
 							<div class="row">
 								<div class="col-md-6">
@@ -1591,7 +1591,7 @@ echo form_open( '', $attributes);
 									</div>
           						</div>
 
-							</div>
+							</div>-->
 
           		</div>
 

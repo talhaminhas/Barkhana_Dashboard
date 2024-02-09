@@ -19,7 +19,6 @@
             </tr>
         </thead>
 
-        <tbody>
             <?php $count = $this->uri->segment(4) or $count = 0; ?>
             <?php if (!empty($discounts) && count($discounts->result()) > 0): ?>
                 <?php foreach ($discounts->result() as $discount): ?>
@@ -45,7 +44,7 @@
 
                         <?php if ($this->ps_auth->has_access(PUBLISH)): ?>
                             <td class="table-cell align-middle">
-                                <?php if (@$discount->status == 1): ?>
+                                <?php if ($discount->status == 1): ?>
                                     <button class="btn fixed-size-btn btn-success unpublish" id='<?php echo $discount->id; ?>'>
                                         <?php echo get_msg('btn_yes'); ?>
                                     </button>
@@ -60,9 +59,8 @@
                 <?php endforeach; ?>
             <?php else: ?>
                 <tr>
-                    <td colspan="4" class="text-center"><?php $this->load->view($template_path . '/partials/no_data'); ?></td>
+                    <td  class="text-center"><?php $this->load->view($template_path . '/partials/no_data'); ?></td>
                 </tr>
             <?php endif; ?>
-        </tbody>
     </table>
 </div>

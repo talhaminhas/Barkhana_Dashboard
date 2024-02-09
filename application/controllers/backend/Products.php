@@ -288,6 +288,8 @@ class Products extends BE_Controller {
 	function search() {
 		
 
+		
+
 		// breadcrumb urls
 		$this->data['action_title'] = get_msg( 'prd_search' );
 		
