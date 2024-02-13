@@ -153,8 +153,10 @@ class Active_orders_dashboard extends BE_Controller {
 
 		//if auto, send noti to deliboy
 		$deli_auto_assign = $this->Shop->get_one($shop_id)->deli_auto_assign;
-
-		if ($deli_auto_assign == 1) {
+		$delivery_boy_id = $this->Transactionheader->get_one( $id )->delivery_boy_id;
+		$status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
+		$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+		/*if ($deli_auto_assign == 1) {
 			
 			//shop lat,lng
 
@@ -183,12 +185,13 @@ class Active_orders_dashboard extends BE_Controller {
 
 			$limit = $this->Shop->get_one($shop_id)->how_many_deli_to_broadcast;
 			
-			$conds['current_distance'] = 1 ;
+			//$conds['current_distance'] = 1 ;
 
 			$usr_data = $this->User->get_all_by($conds,$limit)->result();
 
 			for ($i=0; $i <count($usr_data) ; $i++) { 
 				
+				die;
 				$user_id = $usr_data[$i]->user_id;
 
 				// save log send noti for nearest deliboy
@@ -225,10 +228,65 @@ class Active_orders_dashboard extends BE_Controller {
 				//// End - Send Noti /////
 			}
 
+		}*/
+
+		$title = $this->Transactionstatus->get_one("trans_sts3e03079b68d8c052480c22d91ca2a0b9")->title;
+						
+		$message = get_msg('order_status_changed') . " " . $title.".";
+		//$message = "Customer a" . $title;
+		$data['title'] = "Order No. ".$trans_code;
+		$data['message'] = $message;
+		$data['flag'] = 'transaction';
+		$data['trans_header_id'] = $id;
+
+		$devices = $this->Notitoken->get_all_device_in($user_id)->result();
+
+		$device_ids = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $device ) {
+				$device_ids[] = $device->device_id;
+			}
 		}
 
-		// update trans status to accept
+		$platform_names = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $platform ) {
+				$platform_names[] = $platform->platform_name;
+			}
+		}
 
+		$status = send_android_fcm( $device_ids, $data, $platform_names );					
+
+
+		if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
+
+
+		if( $delivery_boy_id != '0' ) {
+
+			if( $delivery_boy_id != "" ){
+
+				$devices = $this->Notitoken->get_all_device_in($delivery_boy_id)->result();
+
+				$device_ids = array();
+				if ( count( $devices ) > 0 ) {
+					foreach ( $devices as $device ) {
+						$device_ids[] = $device->device_id;
+					}
+				}
+
+				$platform_names = array();
+				if ( count( $devices ) > 0 ) {
+					foreach ( $devices as $platform ) {
+						$platform_names[] = $platform->platform_name;
+					}
+				}
+				
+				$status = send_android_deli_fcm( $device_ids, $data, $platform_names );				
+				if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
+
+			}
+
+		}
 		$data1['trans_status_id'] = "trans_sts3e03079b68d8c052480c22d91ca2a0b9";
 
 		$this->Transactionheader->save($data1,$id);
@@ -492,12 +550,14 @@ class Active_orders_dashboard extends BE_Controller {
 			$delivery_boy_id = $this->get_data( 'delivery_boy_id' );
 			$user_id = $this->Transactionheader->get_one( $id )->user_id;
 			
+			
 			//start PPP @ 24/Aug/2020
 	
 			$existing_status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
 			$existing_payment_id = $this->Transactionheader->get_one( $id )->payment_status_id;
 			$existing_deli_boy = $this->Transactionheader->get_one( $id )->delivery_boy_id;
-	
+			$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+			//echo($trans_code);die;
 			//for transaction status
 			if ($status_id != '0' ) {
 				if ($status_id != "") {
@@ -505,8 +565,10 @@ class Active_orders_dashboard extends BE_Controller {
 					if ($status_id != $existing_status_id) {
 	
 						$title = $this->Transactionstatus->get_one($status_id)->title;
-						$message = get_msg('order_status_changed') . " " . $title;
+						
+						$message = get_msg('order_status_changed') . " " . $title.".";
 						//$message = "Customer a" . $title;
+						$data['title'] = "Order No. ".$trans_code;
 						$data['message'] = $message;
 						$data['flag'] = 'transaction';
 						$data['trans_header_id'] = $id;
@@ -538,8 +600,9 @@ class Active_orders_dashboard extends BE_Controller {
 							if( $delivery_boy_id != "" ){
 	
 								$title = $this->Transactionstatus->get_one($status_id)->title;
-								$message = get_msg('order_status_changed') . " " . $title;
+								$message = get_msg('order_status_changed') . " " . $title.".";
 								//$message = "delivery boy a " . $title;
+								$data['title'] = "Order No. ".$trans_code;
 								$data['message'] = $message;
 								$data['flag'] = 'transaction';
 								$data['trans_header_id'] = $id;
@@ -581,7 +644,7 @@ class Active_orders_dashboard extends BE_Controller {
 					if ($payment_id != $existing_payment_id) {
 	
 					$title = $this->Paymentstatus->get_one($payment_id)->title;
-					$message = "Your order payment status is " . $title;
+					$message = "Your order payment status is " . $title.".";
 	
 					$data['message'] = $message;
 					$data['flag'] = 'transaction';
@@ -621,11 +684,11 @@ class Active_orders_dashboard extends BE_Controller {
 			//for deli boy
 			if( $delivery_boy_id != '0' ) {
 				
-				if( $delivery_boy_id != "" ){
+				//if( $delivery_boy_id != "" ){
 					if ($delivery_boy_id != $existing_deli_boy) {
-						
-						$message = "You have the order to deliver.";
-	
+						//die;
+						$message = "You Have A New Order To Deliver.";
+						$data['title'] = "Order No. ".$trans_code;
 						$data['message'] = $message;
 						$data['flag'] = 'transaction';
 						$data['trans_header_id'] = $id;
@@ -655,7 +718,7 @@ class Active_orders_dashboard extends BE_Controller {
 						
 						$this->Transactionheader->save($trans_data,$id);
 					}	
-				}	
+				//}	
 			}
 			
 			
@@ -812,11 +875,14 @@ class Active_orders_dashboard extends BE_Controller {
 				
 				return;
 		}
-		
+		$trans_code = $this->Transactionheader->get_one( $trans_header_id )->trans_code;
 		//// Start - Send Noti /////
-		$data['message'] = get_msg('new_order_to_deliver');
+		$message = "You Have A New Order To Deliver.";
+		$data['title'] = "Order No. ".$trans_code;
+		$data['message'] = $message;
 		$data['flag'] = 'transaction';
-		$data['trans_header_id'] = $id;
+		$data['trans_header_id'] = $trans_header_id;
+		
 
 		$devices = $this->Notitoken->get_all_device_in($this->get_data( 'delivery_boy_id' ))->result();
 
@@ -834,7 +900,7 @@ class Active_orders_dashboard extends BE_Controller {
 			}
 		}
 
-		$status = send_android_fcm( $device_ids, $data, $platform_names );
+		$status = send_android_deli_fcm( $device_ids, $data, $platform_names );
 
 		//// End - Send Noti /////
 		
