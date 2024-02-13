@@ -1,6 +1,6 @@
 <!--<p class="pull-right " style="font-size: 14px;padding-right: 10px;font-weight: bold;"><?php echo get_msg( 'ver_no_label' ); ?> : <?php echo $this->config->item('version_no');?></p>
 -->
-<div class="login-page " style="margin-left:45.5%; margin-top:15%;" >
+<div class="login-page " style="margin-left:45.5%; margin-bottom:15%;" >
   <div class="form1 " >
     	<?php
     		$attributes = array('id' => 'login-form','method' => 'POST');

@@ -144,7 +144,7 @@
 	<!-- Ongoing Orders  -->
 
 	
-	<div class="table-responsive" style="height: 100%; ">
+	<div class="table-responsive" style="height: 100%;">
 		<table id="ongoing-orders-table" class="table  m-0  text-center align-middle" >
 			<?php 
 				$selected_shop_id = $this->session->userdata('selected_shop_id');
