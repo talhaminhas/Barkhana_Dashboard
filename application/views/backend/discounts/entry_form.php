@@ -32,16 +32,22 @@
 					
 					<div class="form-group">
 						<label><span style="font-size: 17px; color: red;">*</span>
-							<?php echo get_msg('dis_percent') ?>
+							<?php echo 'Discount Percent (%)' ?>
 						</label>
-									
-						<?php echo form_input( array (
-							'name' => 'percent',
-							'value' => set_value( 'percent', show_data(@$discount->percent*100),false),
-							'class' => 'form-control form-control-sm',
+						<?php
+						echo form_input(array(
+							'name'        => 'percent',
+							'value'       => set_value('percent', show_data(@$discount->percent * 100), false),
+							'type'        => 'number', // Change the input type to 'number'
+							'class'       => 'form-control form-control-sm',
 							'placeholder' => get_msg('pls_dis_percent'),
-							'id' => 'percent'
-						)); ?>
+							'id'          => 'percent',
+							'min'         => 1, 
+							'max'         => 99, 
+							'step'        => 1,  
+						));
+						?>
+
 					</div>
 				</div>	
 

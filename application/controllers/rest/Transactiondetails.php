@@ -39,6 +39,8 @@ class Transactiondetails extends API_Controller
      */
     function convert_object( &$obj )
     {
+		
+		
         // call parent convert object
         parent::convert_object( $obj );
 

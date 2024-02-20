@@ -34,14 +34,17 @@
 			
 			<?php $count = 0; ?>
 			<?php foreach($transactions->result() as $transaction): 
-				if($transaction->trans_status_id == 'trans_sts159cbfb84410ebea91919234532885ec'){?>
+				$transaction_status = $this->Transactionstatus->get_one($transaction->trans_status_id);
+				if($transaction_status->final_stage == "1"){?>
 					
-						<tr >
+						<tr style="
+						<?php echo $transaction_status->ordering == "0" ? 'background-color: rgba(255, 0, 0, 0.15);' : ''; ?>
+						">
 								<td class="align-middle table-cell"><?php echo ++$count; ?></td>
 								<td class="align-middle table-cell"><?php echo $transaction->trans_code; ?></td>
 								<td class="align-middle table-cell">
 									<?php
-										$total_amount = '£' . number_format($transaction->total_item_amount, 2);
+										$total_amount = '£' . number_format($transaction->balance_amount, 2);
 										echo $total_amount;
 									?>
 								</td>
@@ -72,9 +75,9 @@
 									<?php if ($this->ps_auth->has_access(EDIT)): ?>
 										<td class="align-middle  table-cell">
 									<?php if (
-										($transaction->delivery_boy_id == "" || $transaction->delivery_boy_id == "0") &&
-										$this->Shop->get_one($shop_id)->deli_manual_assign == 1 &&
-										$transaction->pick_at_shop == "0"
+										($transaction->delivery_boy_id == "" || $transaction->delivery_boy_id == "0") 
+										//&& $this->Shop->get_one($shop_id)->deli_manual_assign == 1 
+										//&& $transaction->pick_at_shop == "0"
 									): ?>
 										-
 									<?php elseif ($transaction->pick_at_shop == "1"): ?>

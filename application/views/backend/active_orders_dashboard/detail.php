@@ -102,13 +102,13 @@ $('.btn-assign').click(function(){
 		//resetRefreshTimer();
 	});
 </script>
-<div class="invoice p-3 mb-3 shadow-sm rounded">
+<div class="invoice p-3 mb-3 shadow-sm rounded  elevated-box">
   	<!-- title row -->
-  	<div class="row">
+  	<div class="row ">
       <div class="col-12">
-    <table class="table table-bordered">
+    <table class="table table-bordered elevated-box">
         <tr>
-            <td class="table-header" colspan="6">
+            <td class="table-header" colspan="8">
                 <h4><b>Order Detail</b></h4>
             </td>
         </tr>
@@ -117,8 +117,10 @@ $('.btn-assign').click(function(){
             <td class="text-center align-middle"><?php echo $transaction->trans_code; ?></td>
             <td class="label-column text-center align-middle">Date</td>
             <td class="text-center align-middle"><?php echo date('Y-m-d', strtotime($transaction->added_date)); ?></td>
-            <td class="label-column text-center align-middle">Time</td>
+            <td class="label-column text-center align-middle">Recieving Time</td>
             <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->added_date)); ?></td>
+            <td class="label-column text-center align-middle">Pickup Time</td>
+            <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->delivery_pickup_time)); ?></td>
         </tr>
     </table>
 </div>
@@ -129,7 +131,7 @@ $('.btn-assign').click(function(){
 
     <div class="col-sm-4 invoice-col">
         <div style="height: 100%; padding-bottom: 15px;">
-            <div class="table-responsive" style="height: 100%; ">
+            <div class="table-responsive  elevated-box" style="height: 100%; ">
                 <table class="table-bordered" style="height: 100%; width:100%;">
                     <tr>
                         <td class="cust-info-cell" colspan="2">
@@ -163,7 +165,7 @@ $('.btn-assign').click(function(){
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
             <div style="height: 100%; padding-bottom: 15px;">
-                <table class="table table-bordered" style="height: 100%;">
+                <table class="table table-bordered elevated-box" style="height: 100%;">
                     <tr>
                         <td class="table-header" >
                             <?php echo get_msg('cust_loc'); ?>
@@ -185,8 +187,8 @@ $('.btn-assign').click(function(){
 				
 				?>
                     <?php if ($transaction->trans_status_id == 'trans_sts47fe98346e0f80d844d307981eaef7ec') { ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                        <div class="table-responsive ">
+                            <table class="table table-bordered ">
                                 <tr>
                                     <th>Order Status</th>
                                     <td><select  name="trans_status_id" id="trans_status_id" disabled>
@@ -268,8 +270,8 @@ $('.btn-assign').click(function(){
 
                     <?php } else { ?>
 
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                        <div class="table-responsive elevated-box" style=" margin-bottom: 15px;">
+                            <table class="table table-bordered" style="margin-bottom:0px; table-layout: fixed;">
                             <tr>
                                     <th class="text-center align-middle">Order Type</th>
                                     <td>
@@ -284,35 +286,65 @@ $('.btn-assign').click(function(){
                                         ?>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <th class="text-center align-middle">Order Status</th>
-                                    <td><select class="select" name="trans_status_id" id="trans_status_id">
-                                            <!--<option value="0"><?php echo get_msg('select_status'); ?></option>-->
-                                            <?php
-                                            $conds['is_optional'] = 0;
-                                            $status = $this->Transactionstatus->get_all_by($conds);
-                                            $add_status = false;
-                                            foreach ($status->result() as $status)
-                                            {
-                                                if($add_status == false && $transaction->trans_status_id == $status->id)
-                                                {   
+                                <?php 
+                                    $transaction_status = $this->Transactionstatus->get_one($transaction->trans_status_id);
+                                    if( $transaction_status->ordering == "1")
+                                    {?>
+                                        <tr>
+                                        <?php if ( $this->ps_auth->has_access( EDIT )): ?>
+                                            <td class="align-middle">
+                                                <div class='d-flex align-items-center justify-content-center'>
+                                                    <a class="btn btn-sm btn-success fixed-size-btn" href="<?php echo $module_site_url . "/accept_order/" . $transaction->id;?>">
+                                                        <?php echo get_msg('btn_accept') ?>
+
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        <?php endif; ?>
+                                        <?php if ( $this->ps_auth->has_access( EDIT )): ?>
+                                            <td class="align-middle">
+                                                <div class='d-flex align-items-center justify-content-center'>
+                                                    <a class="btn btn-sm btn-danger fixed-size-btn" href="<?php echo $module_site_url . "/reject_order/" . $transaction->id;?>">
+                                                        <?php echo get_msg('btn_reject') ?>
+
+                                                    </a>
+                                                </div>
+                                            </td>
+                                        <?php endif; ?>
+                                        </tr>
+                                    <?php }
+                                    else
+                                    { ?>
+                                        <tr>
+                                            <th class="text-center align-middle">Order Status</th>
+                                            <td><select class="select" name="trans_status_id" id="trans_status_id">
+                                                    <!--<option value="0"><?php echo get_msg('select_status'); ?></option>-->
+                                                    <?php
+                                                    $conds['is_optional'] = 0;
+                                                    $status = $this->Transactionstatus->get_all_by($conds);
                                                     $add_status = true;
-                                                }
-                                                if($add_status && ($transaction->pick_at_shop != "1" || $status->ordering != "4"))
-                                                {
-                                                   
-                                                    echo "<option class='option' value='".$status->id."'";
-                                                    if($transaction->trans_status_id == $status->id)
+                                                    foreach ($status->result() as $status)
                                                     {
-                                                        echo " selected ";
+                                                        if($add_status == false && $transaction->trans_status_id == $status->id)
+                                                        {   
+                                                            $add_status = true;
+                                                        }
+                                                        if($add_status && ($transaction->pick_at_shop != "1" || $status->ordering != "4"))
+                                                        {
+                                                        
+                                                            echo "<option class='option' value='".$status->id."'";
+                                                            if($transaction->trans_status_id == $status->id)
+                                                            {
+                                                                echo " selected ";
+                                                            }
+                                                            echo ">".$status->title."</option>";
+                                                        }
                                                     }
-                                                    echo ">".$status->title."</option>";
-                                                }
-                                            }
-                                            ?>
-                                        </select>
-                                    </td>
-                                </tr>
+                                                    ?>
+                                                </select>
+                                            </td>
+                                        </tr>
+                                        
                                 <!--<tr>
                                     <th><?php echo get_msg('payment_status_label'); ?>:</th>
                                     <td><select  name="payment_status_id" id="payment_status_id">
@@ -358,7 +390,9 @@ $('.btn-assign').click(function(){
     										<?php endif; ?>
                                         </td>
                                     </tr>
-                                <?php } ?>
+                                <?php } 
+                                ?>
+
                                 <tr >
                                     <td colspan="2">
                                         <input type="hidden" name="trans_header_id" value=<?php  echo $transaction->id;  ?>>
@@ -366,6 +400,7 @@ $('.btn-assign').click(function(){
                                         <?php echo form_close(); ?>
                                     </td>
                                 </tr>
+                                <?php } ?>
                             </table>
                             
                         </div>
@@ -378,7 +413,7 @@ $('.btn-assign').click(function(){
 
 	<div class="row">
 		<div class="col-12 table-responsive">
-		  <table class="table table-bordered">
+		  <table class="table table-bordered  elevated-box">
             <?php $count = 0; ?>
             <tr>
                 <td class="cust-info-cell" colspan="6">
@@ -398,7 +433,7 @@ $('.btn-assign').click(function(){
 		    	<?php 
 					$conds['transactions_header_id'] = $transaction->id;
 					$all_detail =  $this->Transactiondetail->get_all_by( $conds );
-					
+					$item_subtotal = 0;
 					foreach($all_detail->result() as $transaction_detail):
 
 				?>
@@ -515,8 +550,9 @@ $('.btn-assign').click(function(){
                     
 					<td class="text-center align-middle">
 						<?php 
-
-							echo $transaction->currency_symbol. number_format($transaction_detail->qty * ($transaction_detail->original_price - $transaction_detail->discount_amount), 2)  ; 
+                            $amount = $transaction_detail->qty * ($transaction_detail->original_price - $transaction_detail->discount_amount);
+                            $item_subtotal += $amount;
+							echo $transaction->currency_symbol. number_format($amount, 2)  ; 
 						?>
 					</td>
 				</tr>
@@ -531,16 +567,13 @@ $('.btn-assign').click(function(){
         <!-- accepted payments column -->
        
         <div class="col-12">
-        <div class="table-responsive">
-            <table class="table table-bordered">
+        <div class="table-responsive elevated-box" >
+            <table class="table table-bordered" style="margin-bottom: 0px;">
 
               <tr>
-                <th class="text-center">Coupon Discount</th>
-                <?php if($transaction->coupon_discount_amount == 0)
-                    echo('<td class="text-center">-</td>');
-                else 
-                    echo('<td class="text-center">-'.$transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2).'</td>');
-                ?>
+              <th class="text-center" style="width:50%">Item Sub total</th>
+                <td class="text-center"><?php echo $transaction->currency_symbol. number_format($item_subtotal/*$transaction->sub_total_amount*/, 2); ?></td>
+                
                 <th class = "text-center align-middle" rowspan = "3">
                     <span class = "">Sub Total</span>
                 </th>
@@ -559,8 +592,12 @@ $('.btn-assign').click(function(){
               </tr>	
 
               <tr>
-                <th class="text-center" style="width:50%">Item Sub total</th>
-                <td class="text-center"><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
+              <th class="text-center">Coupon Discount</th>
+                <?php if($transaction->coupon_discount_amount == 0)
+                    echo('<td class="text-center">-</td>');
+                else 
+                    echo('<td class="text-center">-'.$transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2).'</td>');
+                ?>
               </tr>
 
               

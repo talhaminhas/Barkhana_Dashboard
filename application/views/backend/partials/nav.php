@@ -1,5 +1,5 @@
   <!-- Navbar -->
-  <nav class=" navbar navbar-expand border-bottom table-header align-middle fixed-top"  style="padding-left:300px;">
+  <nav class="elevated-box navbar navbar-expand border-bottom table-header align-middle fixed-top"  style="padding-left:300px;">
     <?php $be_url = $this->config->item('be_url'); ?>
     
     <!-- Left navbar links -->

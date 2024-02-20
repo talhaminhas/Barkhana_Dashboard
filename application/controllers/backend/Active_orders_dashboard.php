@@ -51,11 +51,44 @@ class Active_orders_dashboard extends BE_Controller {
 	 */
 	function accept_order($id)
 	{
-		//shop id
 
-		$selected_shop_id = $this->session->userdata('selected_shop_id');
-		$shop_id = $selected_shop_id['shop_id'];
+		$status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
+		$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+		$currentDateTime = new DateTime('now', new DateTimeZone('UTC'));
+		$currentDateTime->setTimezone(new DateTimeZone('Europe/London'));
+		$data1['updated_date'] = $currentDateTime->format('Y-m-d H:i:s');
+		$data1['trans_status_id'] = "trans_stsabda7751186eb039c98f7602553a0ba0";
+		$this->Transactionheader->save($data1,$id);
 
+		$title = $this->Transactionstatus->get_one("trans_stsabda7751186eb039c98f7602553a0ba0")->title;
+		$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
+		//$message = "Your Order No. ".$trans_code . " Is " . $title.".";
+		//$message = "Customer a" . $title;
+		//$data['title'] = "Order No. ".$trans_code;
+		$data['message'] = $message;
+		$data['flag'] = 'transaction';
+		$data['trans_header_id'] = $id;
+
+		$devices = $this->Notitoken->get_all_device_in($user_id)->result();
+
+		$device_ids = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $device ) {
+				$device_ids[] = $device->device_id;
+			}
+		}
+
+		$platform_names = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $platform ) {
+				$platform_names[] = $platform->platform_name;
+			}
+		}
+
+		$status = send_android_fcm( $device_ids, $data, $platform_names );					
+
+
+		if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
 		//check manual or auto assign deliboy
 
 		//if auto, send noti to deliboy
@@ -127,18 +160,14 @@ class Active_orders_dashboard extends BE_Controller {
 					}
 				}
 				
-				$status = send_android_fcm( $device_ids, $data, $platform_names );
+				$status = send_android_deli_fcm( $device_ids, $data, $platform_names );
 				
 				//// End - Send Noti /////
 			}
 
 		}
 
-		// update trans status to accept
-
-		$data1['trans_status_id'] = "trans_stsabda7751186eb039c98f7602553a0ba0";
-
-		$this->Transactionheader->save($data1,$id);
+		
 
 		redirect( site_url('/admin/active_orders_dashboard/index/'.$shop_id) );
 	}
@@ -148,7 +177,12 @@ class Active_orders_dashboard extends BE_Controller {
 
 		$selected_shop_id = $this->session->userdata('selected_shop_id');
 		$shop_id = $selected_shop_id['shop_id'];
+		$currentDateTime = new DateTime('now', new DateTimeZone('UTC'));
+		$currentDateTime->setTimezone(new DateTimeZone('Europe/London'));
+		$data1['updated_date'] = $currentDateTime->format('Y-m-d H:i:s');
+		$data1['trans_status_id'] = "trans_sts3e03079b68d8c052480c22d91ca2a0b9";
 
+		$this->Transactionheader->save($data1,$id);
 		//check manual or auto assign deliboy
 
 		//if auto, send noti to deliboy
@@ -232,9 +266,10 @@ class Active_orders_dashboard extends BE_Controller {
 
 		$title = $this->Transactionstatus->get_one("trans_sts3e03079b68d8c052480c22d91ca2a0b9")->title;
 						
-		$message = get_msg('order_status_changed') . " " . $title.".";
+		$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
+		//$message = "Your Order No. ".$trans_code . " Is " . $title.".";
 		//$message = "Customer a" . $title;
-		$data['title'] = "Order No. ".$trans_code;
+		//$data['title'] = "Order No. ".$trans_code;
 		$data['message'] = $message;
 		$data['flag'] = 'transaction';
 		$data['trans_header_id'] = $id;
@@ -287,19 +322,56 @@ class Active_orders_dashboard extends BE_Controller {
 			}
 
 		}
-		$data1['trans_status_id'] = "trans_sts3e03079b68d8c052480c22d91ca2a0b9";
 
-		$this->Transactionheader->save($data1,$id);
 
 		redirect( site_url('/admin/active_orders_dashboard/index/'.$shop_id) );
 	}
+	
 	function order_completed($id)
 	{
 		//shop id
 
 		$selected_shop_id = $this->session->userdata('selected_shop_id');
 		$shop_id = $selected_shop_id['shop_id'];
+		$currentDateTime = new DateTime('now', new DateTimeZone('UTC'));
+		$currentDateTime->setTimezone(new DateTimeZone('Europe/London'));
+		$data1['updated_date'] = $currentDateTime->format('Y-m-d H:i:s');
+		$data1['trans_status_id'] = "trans_sts159cbfb84410ebea91919234532885ec";
+		$this->Transactionheader->save($data1,$id);
 
+		$status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
+		$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+		
+		$title = $this->Transactionstatus->get_one( "trans_sts159cbfb84410ebea91919234532885ec")->title;
+						
+		$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
+		//$message = "Your Order No. ".$trans_code . " Is " . $title.".";
+		//$message = "Customer a" . $title;
+		//$data['title'] = "Order No. ".$trans_code;
+		$data['message'] = $message;
+		$data['flag'] = 'transaction';
+		$data['trans_header_id'] = $id;
+
+		$devices = $this->Notitoken->get_all_device_in($user_id)->result();
+
+		$device_ids = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $device ) {
+				$device_ids[] = $device->device_id;
+			}
+		}
+
+		$platform_names = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $platform ) {
+				$platform_names[] = $platform->platform_name;
+			}
+		}
+
+		$status = send_android_fcm( $device_ids, $data, $platform_names );					
+
+
+		if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
 		//check manual or auto assign deliboy
 
 		//if auto, send noti to deliboy
@@ -378,12 +450,6 @@ class Active_orders_dashboard extends BE_Controller {
 
 		}
 
-		// update trans status to accept
-
-		$data1['trans_status_id'] = "trans_sts159cbfb84410ebea91919234532885ec";
-
-		$this->Transactionheader->save($data1,$id);
-
 		redirect( site_url('/admin/active_orders_dashboard/index/'.$shop_id) );
 	}
 
@@ -396,17 +462,43 @@ class Active_orders_dashboard extends BE_Controller {
 
 		$selected_shop_id = $this->session->userdata('selected_shop_id');
 		$shop_id = $selected_shop_id['shop_id'];
+		$status_id = $this->Transactionheader->get_one( $id )->trans_status_id;
+		$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+		
+		$title = $this->Transactionstatus->get_one("trans_stsef071eefcc46df677fe52e7afe414199")->title;
+						
+		$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
+		//$message = "Your Order No. ".$trans_code . " Is " . $title.".";
+		//$message = "Customer a" . $title;
+		//$data['title'] = "Order No. ".$trans_code;
+		$data['message'] = $message;
+		$data['flag'] = 'transaction';
+		$data['trans_header_id'] = $id;
 
-		//check manual or auto assign deliboy
+		$devices = $this->Notitoken->get_all_device_in($user_id)->result();
 
-		//if auto, send noti to deliboy
+		$device_ids = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $device ) {
+				$device_ids[] = $device->device_id;
+			}
+		}
+
+		$platform_names = array();
+		if ( count( $devices ) > 0 ) {
+			foreach ( $devices as $platform ) {
+				$platform_names[] = $platform->platform_name;
+			}
+		}
+		$status = send_android_fcm( $device_ids, $data, $platform_names );					
 
 
+		if ( !$status ) $error_msg .= get_msg('fail_push_noti') . "<br/>";
 		// update trans status to reject
 
-		$data['trans_status_id'] = "trans_stsef071eefcc46df677fe52e7afe414199";
+		$trans_data['trans_status_id'] = "trans_stsef071eefcc46df677fe52e7afe414199";
 
-		$this->Transactionheader->save($data,$id);
+		$this->Transactionheader->save($trans_data,$id);
 
 		redirect( site_url('/admin/active_orders_dashboard/index/'.$shop_id) );
 	}
@@ -557,6 +649,14 @@ class Active_orders_dashboard extends BE_Controller {
 			$existing_payment_id = $this->Transactionheader->get_one( $id )->payment_status_id;
 			$existing_deli_boy = $this->Transactionheader->get_one( $id )->delivery_boy_id;
 			$trans_code = $this->Transactionheader->get_one( $id )->trans_code;
+
+			$currentDateTime = new DateTime('now', new DateTimeZone('UTC'));
+			$currentDateTime->setTimezone(new DateTimeZone('Europe/London'));
+			$trans_data['updated_date'] = $currentDateTime->format('Y-m-d H:i:s');
+			$trans_data['trans_status_id'] = $status_id;
+			$trans_data['delivery_boy_id'] = $delivery_boy_id;
+			$this->Transactionheader->save($trans_data,$id);
+
 			//echo($trans_code);die;
 			//for transaction status
 			if ($status_id != '0' ) {
@@ -566,9 +666,9 @@ class Active_orders_dashboard extends BE_Controller {
 	
 						$title = $this->Transactionstatus->get_one($status_id)->title;
 						
-						$message = get_msg('order_status_changed') . " " . $title.".";
+						$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
 						//$message = "Customer a" . $title;
-						$data['title'] = "Order No. ".$trans_code;
+						//$data['title'] = "Order No. ".$trans_code;
 						$data['message'] = $message;
 						$data['flag'] = 'transaction';
 						$data['trans_header_id'] = $id;
@@ -600,9 +700,9 @@ class Active_orders_dashboard extends BE_Controller {
 							if( $delivery_boy_id != "" ){
 	
 								$title = $this->Transactionstatus->get_one($status_id)->title;
-								$message = get_msg('order_status_changed') . " " . $title.".";
+								$message = "Order No. ".$trans_code. "\n".get_msg('order_status_changed') . " " . $title.".";
 								//$message = "delivery boy a " . $title;
-								$data['title'] = "Order No. ".$trans_code;
+								//$data['title'] = "Order No. ".$trans_code;
 								$data['message'] = $message;
 								$data['flag'] = 'transaction';
 								$data['trans_header_id'] = $id;
@@ -630,9 +730,7 @@ class Active_orders_dashboard extends BE_Controller {
 	
 						}
 						//update status save at trans header
-						$trans_data['trans_status_id'] = $status_id;
-	
-						$this->Transactionheader->save($trans_data,$id);
+						
 					}
 				}
 				
@@ -713,16 +811,12 @@ class Active_orders_dashboard extends BE_Controller {
 						
 						if ( !$status ) $error_msg .= get_msg('fail_push_all_devices') . "<br/>";
 	
-						//update deli boy save at trans header
-						$trans_data['delivery_boy_id'] = $delivery_boy_id;
 						
-						$this->Transactionheader->save($trans_data,$id);
 					}	
 				//}	
 			}
+
 			
-			
-			//End -
 			// load user
 			$this->data['transaction'] = $this->Transactionheader->get_one( $id );
 			redirect( $module_site_url.'/'.$shop_id);
@@ -742,11 +836,12 @@ class Active_orders_dashboard extends BE_Controller {
 	function save( $id  = false, $status_id = 0, $payment_id = 0, $delivery_boy_id = 0 ) {
 		// save Transaction
 
+		
 		$data['trans_status_id'] = $status_id;
 		$data['payment_status_id'] = $payment_id;
 		$data['delivery_boy_id'] = $delivery_boy_id;
 		$data['updated_date'] = date("Y-m-d H:i:s");
-
+		
 		if ( ! $this->Transactionheader->save( $data, $id )) {
 			// if there is an error in inserting user data,	
 				

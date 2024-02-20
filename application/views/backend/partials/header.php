@@ -121,7 +121,7 @@
 	?>
 
 	</div>
-<body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse" style=" padding-top: 95px; ">
+<body id="<?php echo strtolower( $module_name ); ?>" class = "sidebar-collapse" style=" padding-top: 120px; ">
 <div class="wrapper" style="allign-middle">
 	<style>
 		/* Override form-control class */
@@ -348,6 +348,10 @@
 		outline: none; 
 		border: 0px solid #ccc; 
 	}
+	.elevated-box {
+	box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.1);
+	}
+
 	</style>
 	<script>
 		

@@ -32,11 +32,10 @@
     window.setTimeout(function () {
         window.location.reload();
     }, page_time);*/
-
     $(document).ready(function () {
   	$('#completed-orders-table').DataTable({
             "columnDefs": [
-                { "orderable": false, "targets": [5, 6, 7] } 
+                { "orderable": false, "targets": [3, 5, 6, 7] } 
             ],
 			"pageLength": 15,
         	"lengthChange": false,

@@ -1,4 +1,4 @@
-<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" class="table-responsive rounded-table animated fadeInRight " style="padding-top: 10px; margin-bottom 10px;">
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true" class="table-responsive rounded-table animated fadeInRight " style=" margin-bottom 10px;">
 	<input type="hidden" name="noti_time" id="noti_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_noti_sound_refresh_time ?>">
     <input type="hidden" name="page_time" id="page_time" value="<?php echo $this->Backend_config->get_one('be1')->transaction_page_refresh_time ?>">
   		
@@ -60,7 +60,7 @@
 							<td class="align-middle"><?php echo $new_order->trans_code;?></td>
 							<td class="align-middle">
 								<?php
-									$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($new_order->total_item_amount, 2);
+									$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($new_order->balance_amount, 2);
 									echo $total_amount;
 								?>
 							</td>
@@ -196,7 +196,7 @@
 								<td class="align-middle"><?php echo $ongoing->trans_code; ?></td>
 								<td class="align-middle">
 									<?php
-										$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($ongoing->total_item_amount, 2);
+										$total_amount = $this->Shop->get_one($shop_id)->currency_symbol . number_format($ongoing->balance_amount, 2);
 										echo $total_amount;
 									?>
 								</td>
@@ -358,7 +358,7 @@
     $(document).ready(function () {
   	$('#new-orders-table').DataTable({
             "columnDefs": [
-                { "orderable": false, "targets": [6, 7, 8] } 
+                { "orderable": false, "targets": [3, 6, 7, 8] } 
             ],
 			"pageLength": 15,
         	"lengthChange": false,
@@ -377,7 +377,7 @@
 	$(document).ready(function () {
   	$('#ongoing-orders-table').DataTable({
             "columnDefs": [
-                { "orderable": false, "targets": [ 8] } 
+                { "orderable": false, "targets": [ 3, 8] } 
             ],
 			"pageLength": 15,
         	"lengthChange": false,

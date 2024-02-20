@@ -102,13 +102,13 @@ $('.btn-assign').click(function(){
 		//resetRefreshTimer();
 	});
 </script>
-<div class="invoice p-3 mb-3 shadow-sm rounded">
+<div class="invoice p-3 mb-3 shadow-sm rounded elevated-box">
   	<!-- title row -->
   	<div class="row">
       <div class="col-12">
-    <table class="table table-bordered">
+    <table class="table table-bordered elevated-box">
         <tr>
-            <td class="table-header" colspan="6">
+            <td class="table-header" colspan="8">
                 <h4><b>Order Detail</b></h4>
             </td>
         </tr>
@@ -119,18 +119,20 @@ $('.btn-assign').click(function(){
             <td class="text-center align-middle"><?php echo date('Y-m-d', strtotime($transaction->added_date)); ?></td>
             <td class="label-column text-center align-middle">Time</td>
             <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->added_date)); ?></td>
+            <td class="label-column text-center align-middle">Pickup Time</td>
+            <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->delivery_pickup_time)); ?></td>
         </tr>
     </table>
 </div>
     <!-- /.col -->
   	</div>
   <!-- info row -->
-	<div class="row invoice-info">
+	<div class="row invoice-info ">
 
     <div class="col-sm-4 invoice-col">
         <div style="height: 100%;  padding-bottom: 15px;">
-            <div class="table-responsive" style="height: 100%; ">
-                <table class=" table-bordered" style="width:100%; height: 100%;">
+            <div class="table-responsive elevated-box" style="height: 100%; ">
+                <table class=" table-bordered " style="width:100%; height: 100%;">
                     <tr>
                         <td class="cust-info-cell" colspan="2">
                             <b><?php echo get_msg('cust_info'); ?></b>
@@ -165,7 +167,7 @@ $('.btn-assign').click(function(){
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
             <div style="height: 100%; padding-bottom: 15px;">
-                <table class="table table-bordered" style="height: 100%;">
+                <table class="table table-bordered elevated-box" style="height: 100%;">
                     <tr>
                         <td class="table-header" >
                             <?php echo get_msg('cust_loc'); ?>
@@ -179,7 +181,7 @@ $('.btn-assign').click(function(){
                 </table>
             </div>
         </div>
-		<div class="col-sm-4 invoice-col">
+		<div class="col-sm-4 invoice-col " >
 		  	
 				<?php
 					$attributes = array('class' => 'form-inline');
@@ -187,8 +189,8 @@ $('.btn-assign').click(function(){
 				
 				?>
                     <?php if ($transaction->trans_status_id == 'trans_sts47fe98346e0f80d844d307981eaef7ec') { ?>
-                        <div class="table-responsive">
-                            <table class="table table-bordered">
+                        <div class="table-responsive" >
+                            <table class="table table-bordered"  >
                                 <tr>
                                     <th>Order Status</th>
                                     <td><select  name="trans_status_id" id="trans_status_id" disabled>
@@ -260,10 +262,15 @@ $('.btn-assign').click(function(){
 
                         </div>
 
-                    <?php } else { ?>
-
-                        <div class="table-responsive" style=" ">
-                            <table class="table table-bordered" style="height=100%">
+                    <?php } else { 
+                        $transaction_status = $this->Transactionstatus->get_one($transaction->trans_status_id);
+                        ?>
+                        <div class="table-responsive elevated-box" style=" margin-bottom: 15px;
+						<?php echo $transaction_status->ordering == "0" ? 
+                        'background-color: rgba(255, 0, 0, 0.15);' : 
+                        'background-color: rgba(0, 255, 0, 0.15);' ?>
+						">
+                            <table class="table table-bordered" style="height=100% ; margin-bottom:0px;">
                             <tr>
                                     <th class="text-center align-middle">Order Type</th>
                                     <td>
@@ -281,22 +288,21 @@ $('.btn-assign').click(function(){
                                 <tr>
                                     <th class="text-center align-middle">Order Status</th>
                                     <td>
-                                        <span class="order-collection" style="color: green; border-color: green;">
+                                        <span class="order-collection" 
                                                 <?php
-                                                    $conds['is_optional'] = 0;
-                                                    $status = $this->Transactionstatus->get_all_by($conds);
-                                                    foreach ($status->result() as $status)
-                                                    {
-                                                        if($transaction->trans_status_id == $status->id)
-                                                        {
-                                                            echo $status->title;
-                                                        }
+                                                    
+                                                    if($transaction_status->ordering == "0"){
+                                                        echo "style = 'color: red; border-color: red;'";
                                                     }
-                                                ?>
+                                                    else{
+                                                        echo "style = 'color: green; border-color: green;'";
+                                                    }
+                                                    ?>
+                                                    > <?php echo $transaction_status->title; ?>
                                             </span>
                                     </td>
                                 </tr>
-                                <?php if($transaction->pick_at_shop != 1) { ?>
+                                <?php if($transaction->pick_at_shop != 1 && $transaction_status->ordering != 0) { ?>
                                     <tr>
                                         <th class="text-center align-middle"><?php echo get_msg('deliboy_label'); ?></th>
                                         <td>
@@ -318,9 +324,9 @@ $('.btn-assign').click(function(){
                                     </tr>
                                 <?php } ?>
                                 <tr>
-                                    <th class="text-center align-middle">Completed At</th>
+                                    <th class="text-center align-middle">Order Finished At</th>
                                     <td>
-                                    <span class="order-collection" style="color: red; border-color: red;">
+                                    <span class="order-collection" style="color: grey; border-color: grey;">
                                             <?php echo date('H:i', strtotime($transaction->updated_date)); ?>
                                         </span>
                                     </td>
@@ -337,7 +343,7 @@ $('.btn-assign').click(function(){
 
 	<div class="row">
 		<div class="col-12 table-responsive">
-		  <table class="table table-bordered">
+		  <table class="table table-bordered elevated-box">
             <?php $count = 0; ?>
             <tr>
                 <td class="cust-info-cell" colspan="6">
@@ -357,7 +363,7 @@ $('.btn-assign').click(function(){
 		    	<?php 
 					$conds['transactions_header_id'] = $transaction->id;
 					$all_detail =  $this->Transactiondetail->get_all_by( $conds );
-					
+					$item_subtotal = 0;
 					foreach($all_detail->result() as $transaction_detail):
 
 				?>
@@ -474,9 +480,10 @@ $('.btn-assign').click(function(){
                     
 					<td class="text-center align-middle">
 						<?php 
-
-							echo $transaction->currency_symbol. number_format($transaction_detail->qty * ($transaction_detail->original_price - $transaction_detail->discount_amount), 2)  ; 
-						?>
+                            $amount = $transaction_detail->qty * ($transaction_detail->original_price - $transaction_detail->discount_amount);
+                            $item_subtotal += $amount;
+                            echo $transaction->currency_symbol. number_format($amount, 2)  ; 
+                        ?>
 					</td>
 				</tr>
 
@@ -490,40 +497,41 @@ $('.btn-assign').click(function(){
         <!-- accepted payments column -->
        
         <div class="col-12">
-        <div class="table-responsive">
-            <table class="table table-bordered">
+        <div class="table-responsive elevated-box" >
+        <table class="table table-bordered" style="margin-bottom: 0px;">
 
-              <tr>
-                <th class="text-center">Coupon Discount</th>
-                <?php if($transaction->coupon_discount_amount == 0)
-                    echo('<td class="text-center">-</td>');
-                else 
-                    echo('<td class="text-center">-'.$transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2).'</td>');
+            <tr>
+            <th class="text-center" style="width:50%">Item Sub total</th>
+            <td class="text-center"><?php echo $transaction->currency_symbol. number_format($item_subtotal/*$transaction->sub_total_amount*/, 2); ?></td>
+            
+            <th class = "text-center align-middle" rowspan = "3">
+                <span class = "">Sub Total</span>
+            </th>
+            <th class = "text-center align-middle subtotal" rowspan = "3">
+                
+                <?php 
+
+                //balance_amount = total_item_amount - coupon_discont + (overall_tax + shipping_cost + shipping_tax (based on shipping cost)) 
+
+                echo  $transaction->currency_symbol.
+                number_format(($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + 
+                ($transaction->shipping_amount * $transaction->shipping_tax_percent))),2 );  
+                
                 ?>
-                <th class = "text-center align-middle" rowspan = "3">
-                    <span class = "">Sub Total</span>
-                </th>
-                <th class = "text-center align-middle subtotal" rowspan = "3">
-                	
-                	<?php 
+            </th>
+            </tr>	
 
-                	//balance_amount = total_item_amount - coupon_discont + (overall_tax + shipping_cost + shipping_tax (based on shipping cost)) 
+            <tr>
+            <th class="text-center">Coupon Discount</th>
+            <?php if($transaction->coupon_discount_amount == 0)
+                echo('<td class="text-center">-</td>');
+            else 
+                echo('<td class="text-center">-'.$transaction->currency_symbol. number_format($transaction->coupon_discount_amount, 2).'</td>');
+            ?>
+                </tr>
 
-                	echo  $transaction->currency_symbol.
-                    number_format(($transaction->sub_total_amount + ($transaction->tax_amount + $transaction->shipping_amount + 
-                    ($transaction->shipping_amount * $transaction->shipping_tax_percent))),2);  
-                	
-                	?>
-                </th>
-              </tr>	
 
-              <tr>
-                <th class="text-center" style="width:50%">Item Sub total</th>
-                <td class="text-center"><?php echo $transaction->currency_symbol. number_format($transaction->sub_total_amount, 2); ?></td>
-              </tr>
-
-              
-              <tr>
+                <tr>
                 <th class="text-center">Delivery Cost</th>
                 
                 <?php if($transaction->shipping_amount == 0)
@@ -531,8 +539,8 @@ $('.btn-assign').click(function(){
                 else 
                     echo('<td class="text-center">+'.$transaction->currency_symbol.number_format($transaction->shipping_amount, 2).'</td>');
                 ?>
-              </tr>
-            </table>
+                </tr>
+        </table>
           </div>
         <!-- /.col -->
         <div class="col-5">

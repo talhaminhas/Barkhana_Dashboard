@@ -468,6 +468,7 @@ class API_Controller extends REST_Controller
 
             //rating_status
             $delivery_boy_id = $this->Transactionheader->get_one( $transaction_header_id )->delivery_boy_id;
+			$customer_id = $this->Transactionheader->get_one( $transaction_header_id )->user_id;
             $final_stage = $this->Transactionstatus->get_one( $trans_status_id )->final_stage;
 
 
@@ -494,7 +495,15 @@ class API_Controller extends REST_Controller
 
 		// return shop id and shop object
 		$obj->shop_id = $this->Shop->get_one( 'shop0b69bc5dbd68bbd57ea13dfc5488e20a' )->id;
-
+		if ( isset( $customer_id )) {
+			$customer = $this->User->get_one( $customer_id );
+			$obj->customer_photo = $customer->user_profile_photo;
+		}
+		if ( isset( $delivery_boy_id )) {
+			$deli_boy = $this->User->get_one( $delivery_boy_id );
+			$obj->delivery_boy = $deli_boy;
+		}
+		
         if ( isset( $trans_status_id )) {
 			$trans_status = $this->Transactionstatus->get_one( $trans_status_id );
 
@@ -502,8 +511,14 @@ class API_Controller extends REST_Controller
 
 			$obj->transaction_status = $trans_status;
 		}
+		if ( isset( $transaction_header_id )) {
+			$trans_header = $this->Transactionheader->get_one( $transaction_header_id );
 
+			$obj->transaction_header = $trans_header;
+		}
+		
 		if ( isset( $obj->shop_id )) {
+			
 			$trans_shop = $this->Shop->get_one( $obj->shop_id );
 
 			$this->ps_adapter->convert_shop( $trans_shop );
