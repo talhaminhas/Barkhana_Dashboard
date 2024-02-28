@@ -35,7 +35,7 @@
 			<?php $count = 0; ?>
 			<?php foreach($transactions->result() as $transaction): 
 				$transaction_status = $this->Transactionstatus->get_one($transaction->trans_status_id);
-				if($transaction_status->final_stage == "1"){?>
+				if($transaction_status->ordering == "0" || $transaction_status->ordering == "5"){?>
 					
 						<tr style="
 						<?php echo $transaction_status->ordering == "0" ? 'background-color: rgba(255, 0, 0, 0.15);' : ''; ?>

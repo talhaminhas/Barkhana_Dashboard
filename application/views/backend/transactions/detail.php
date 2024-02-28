@@ -39,11 +39,6 @@
         text-align: left;
     }
 
-    .table-header {
-        font-weight: bold;
-        background-color: #f2f2f2;
-        text-align: center;
-    }
 
     .select{
         width:100%;
@@ -134,7 +129,7 @@ $('.btn-assign').click(function(){
             <div class="table-responsive elevated-box" style="height: 100%; ">
                 <table class=" table-bordered " style="width:100%; height: 100%;">
                     <tr>
-                        <td class="cust-info-cell" colspan="2">
+                        <td class="table-header" colspan="2">
                             <b><?php echo get_msg('cust_info'); ?></b>
                         </td>
                     </tr>
@@ -166,13 +161,9 @@ $('.btn-assign').click(function(){
 
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
-            <div style="height: 100%; padding-bottom: 15px;">
+            <div style="height: 258px; padding-bottom: 15px;">
                 <table class="table table-bordered elevated-box" style="height: 100%;">
-                    <tr>
-                        <td class="table-header" >
-                            <?php echo get_msg('cust_loc'); ?>
-                        </td>
-                    </tr>
+                   
                     <tr style="width: 100%; height: 100%">
                         <td class="label-column">
                             <div id="transaction_map" style="width: 100%; height: 100%"></div>
@@ -346,7 +337,7 @@ $('.btn-assign').click(function(){
 		  <table class="table table-bordered elevated-box">
             <?php $count = 0; ?>
             <tr>
-                <td class="cust-info-cell" colspan="6">
+                <td class="table-header" colspan="6">
                     <b>Items Detail</b>
                 </td>
             </tr>

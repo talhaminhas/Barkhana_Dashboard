@@ -199,7 +199,7 @@ class API_Controller extends REST_Controller
 	function get_delete_history_post()
 	{
 	  	
-
+		//die;
 		$start = $this->post('start_date');
 		$end   = $this->post('end_date');
 		$user_id = $this->post('user_id');

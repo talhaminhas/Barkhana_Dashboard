@@ -1,5 +1,5 @@
   <!-- Navbar -->
-  <nav class="elevated-box navbar navbar-expand border-bottom table-header align-middle fixed-top"  style="padding-left:300px;">
+  <nav class=" navbar navbar-expand  table-header align-middle fixed-top"  style="background-color: rgba(0, 0, 255, 0.3); padding-left:300px;">
     <?php $be_url = $this->config->item('be_url'); ?>
     
     <!-- Left navbar links -->
@@ -7,7 +7,7 @@
       
     <li class="nav-item icon-btn" style="margin-left: 20px;">
       <a class="nav-link" data-widget="pushmenu" href="#">
-          <i class="fa fa-bars" style=" font-size: 20px; color: black;"></i>
+          <i class="fa fa-bars" style=" font-size: 20px; "></i>
       </a>
     </li>
 
@@ -59,9 +59,9 @@
             
       </li>
 
-      <li class="messages-menu open icon-btn"  style="margin-left: 10px; margin-right:20px; ">
+      <li class=" messages-menu open icon-btn"  style="margin-left: 10px; margin-right:20px; ">
         <a href="<?php echo site_url('logout');?>" aria-expanded="true">
-          <i class="fa fa-sign-out" style="font-size: 23px; color: #000;"></i>
+          <i class="fa nav-link fa-sign-out" style="font-size: 23px; "></i>
         </a>
         
       </li>

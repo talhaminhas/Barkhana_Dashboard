@@ -125,6 +125,9 @@
 <div class="wrapper" style="allign-middle">
 	<style>
 		/* Override form-control class */
+		body{
+			
+		}
 .form-control {
     height: 40px !important;
 	border: 2px solid;
@@ -147,19 +150,24 @@
 }
 .table-header {
         font-weight: bold;
-        background-color: #f2f2f2;
+        //background-color: rgba(0, 0, 255, 0.2);
         text-align: center;
-		border-top: 2px solid #ddd;
+		//border-top: 2px solid #ddd;
+		
     }
 	.icon-btn{
 	width: 40px;
 	height: 40px;
 	font-weight: bold; 
-	border: 1px solid ; 
+	border: 3px solid  rgba(0, 0, 255, 0.4);
 	display: flex;
     align-items: center;
     justify-content: center;
 	border-radius: 5px;
+	color: rgba(0, 0, 255, 0.4);
+  }
+  .nav-link{
+	color: rgba(0, 0, 255, 0.6);
   }
 	.image-container{
 		width: 100%; 
@@ -174,6 +182,7 @@
 		top: 0; left: 0;
 		 width: 100%; 
 		 height: 100%;
+		 color: rgba(0, 0, 255, 0.4);
 	}
 	.img-fluid{
 		width: 97%; height: 250px; object-fit: cover;
@@ -219,6 +228,7 @@
 	display: flex;
     align-items: center;
     justify-content: center;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); height: 40px;
   }
   	.std-btn-size{
 		width: 100px; 
@@ -226,6 +236,7 @@
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); height: 40px;
 	}
 	.lrg-btn-size{
 		width: 164px; 
@@ -233,6 +244,7 @@
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); height: 40px;
 	}
 	.xlrg-btn-size{
 		width: 200px; 
@@ -240,6 +252,7 @@
 		display: flex; 
 		align-items: center; 
 		justify-content: center;
+		box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5); height: 40px;
 	}
 	.std-field{
         width:250px;
@@ -313,7 +326,13 @@
         text-align: center;
 		border-bottom: 1px solid;
     }
+	.dataTables tr {
+		border: 10px;
+		background: red;
+		text-align: center;
+		vertical-align: middle;
 
+	}
     .dataTables_paginate .paginate_button {
         padding: 5px 10px;
         margin: 0 2px;
@@ -333,11 +352,7 @@
         background-color: #ddd;
     }
 	thead {
-		background-color: #f2f2f2; /* Background color */
-		color: #333; /* Text color */
-		font-weight: bold; /* Bold text */
-		border-bottom: 2px solid #ddd; 
-		border-top:2px solid #ddd; 
+		//background-color:  rgba(0, 0, 255, 0.2);
 	}
 	.invisible-input{
     border: none;

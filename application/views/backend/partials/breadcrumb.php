@@ -2,16 +2,18 @@
     .breadcrumb{
         border-bottom-left-radius: 10px; 
         border-bottom-right-radius: 10px; 
-        border: 1px solid; 
-        background-color: #ffffff; 
+        border-bottom: 1px solid; 
+        border-left: 1px solid;
+        border-right: 1px solid;
+        background-color: rgba(0, 0, 255, 0.3);
         padding-left: 10px;  
         position: fixed;  
-        top: 54px;  
+        top: 53px;  
         z-index: 1000;
-        border-color: #f2f2f2;
+        border-color: rgba(0, 0, 255, 0.3);
     }
     </style>
-<ul class="elevated-box breadcrumb" style="">
+<ul class="breadcrumb" style="">
 
     <li class="breadcrumb-item">
         <a href="<?php echo site_url('/admin'); ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">

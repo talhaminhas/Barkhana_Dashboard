@@ -106,13 +106,13 @@
     </script>
 
    <!-- time picker -->
-    <script src="/path/to/cdn/jquery.min.js"></script>
+    <!--<script src="/path/to/cdn/jquery.min.js"></script>-->
         
-    <script src="/path/to/dist/qcTimepicker.min.js"></script>
+    <!--<script src="/path/to/dist/qcTimepicker.min.js"></script>-->
 
     <script>
             $(document).ready(function() {
-          $('.timepicker').qcTimepicker();
+          //$('.timepicker').qcTimepicker();
     });
     </script>
 

@@ -4,15 +4,6 @@
         border-collapse: collapse;
         margin-top: 20px;
     }
-    
-    .fixed-size-btn {
-    width: 100%; 
-    height: 60px; 
-	display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
     .invoice-table td {
         border: 1px solid #ddd;
         padding: 8px;
@@ -37,12 +28,6 @@
         border: 1px solid #ddd;
         padding: 8px;
         text-align: left;
-    }
-
-    .table-header {
-        font-weight: bold;
-        background-color: #f2f2f2;
-        text-align: center;
     }
 
     .select{
@@ -134,7 +119,7 @@ $('.btn-assign').click(function(){
             <div class="table-responsive  elevated-box" style="height: 100%; ">
                 <table class="table-bordered" style="height: 100%; width:100%;">
                     <tr>
-                        <td class="cust-info-cell" colspan="2">
+                        <td class="table-header" colspan="2">
                             <b><?php echo get_msg('cust_info'); ?></b>
                         </td>
                     </tr>
@@ -164,13 +149,13 @@ $('.btn-assign').click(function(){
 
 		<!-- /.col -->
 		<div class="col-sm-4 invoice-col">
-            <div style="height: 100%; padding-bottom: 15px;">
+            <div style="height: 258px; padding-bottom: 15px;">
                 <table class="table table-bordered elevated-box" style="height: 100%;">
-                    <tr>
+                    <!--<tr>
                         <td class="table-header" >
                             <?php echo get_msg('cust_loc'); ?>
                         </td>
-                    </tr>
+                    </tr>-->
                     <tr style="width: 100%; height: 100%;">
                         <td class="label-column">
                             <div id="transaction_map" style="width: 100%; height: 100%"></div>
@@ -268,9 +253,16 @@ $('.btn-assign').click(function(){
 
                         </div>
 
-                    <?php } else { ?>
-
-                        <div class="table-responsive elevated-box" style=" margin-bottom: 15px;">
+                    <?php } else { 
+                        $transaction_status = $this->Transactionstatus->get_one($transaction->trans_status_id);
+                        ?>
+                        <div class="table-responsive elevated-box" style=" margin-bottom: 15px; 
+                        <?php echo ($transaction_status->ordering == "0" ? 
+                            'background-color: rgba(255, 0, 0, 0.15);' : 
+                            ($transaction_status->ordering == "5" ? 
+                                'background-color: rgba(0, 255, 0, 0.15);' : 
+                                '')); ?>
+                                ">
                             <table class="table table-bordered" style="margin-bottom:0px; table-layout: fixed;">
                             <tr>
                                     <th class="text-center align-middle">Order Type</th>
@@ -317,32 +309,91 @@ $('.btn-assign').click(function(){
                                     { ?>
                                         <tr>
                                             <th class="text-center align-middle">Order Status</th>
-                                            <td><select class="select" name="trans_status_id" id="trans_status_id">
-                                                    <!--<option value="0"><?php echo get_msg('select_status'); ?></option>-->
-                                                    <?php
-                                                    $conds['is_optional'] = 0;
-                                                    $status = $this->Transactionstatus->get_all_by($conds);
-                                                    $add_status = true;
-                                                    foreach ($status->result() as $status)
-                                                    {
-                                                        if($add_status == false && $transaction->trans_status_id == $status->id)
-                                                        {   
+                                            <?php 
+                                            $app_config = $this->Mobile_setting->get_one('mb1');
+                                            date_default_timezone_set('Europe/London');
+                                            $currentDateTime = time();
+                                            $orderTimestamp = strtotime($transaction->delivery_pickup_date.' '.$transaction->delivery_pickup_time);?>
+                                            <select style="display: ;" class="select" name="trans_status_id" id="trans_status_id">
+                                                            
+                                                            <?php
+                                                            $conds['is_optional'] = 0;
+                                                            $status = $this->Transactionstatus->get_all_by($conds);
                                                             $add_status = true;
-                                                        }
-                                                        if($add_status && ($transaction->pick_at_shop != "1" || $status->ordering != "4"))
+                                                            foreach ($status->result() as $status)
+                                                            {
+                                                                if($add_status == false && $transaction->trans_status_id == $status->id)
+                                                                {   
+                                                                    $add_status = true;
+                                                                }
+                                                                if($add_status && ($transaction->pick_at_shop != "1" || $status->ordering != "4"))
+                                                                {
+                                                                
+                                                                    echo "<option class='option' value='".$status->id."'";
+                                                                    if($transaction->trans_status_id == $status->id)
+                                                                    {
+                                                                        echo " selected ";
+                                                                    }
+                                                                    echo ">".$status->title."</option>";
+                                                                }
+                                                            }
+                                                            ?>
+                                                    </select>
+                                                    <select class="select" name="delivery_boy_id" id="delivery_boy_id">
+                                                        <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
+                                                        <?php
+                                                        $conds['role_id'] = 5;
+                                                        $conds['status']= 1;
+                                                        $deli_boys = $this->User->get_all_by($conds);
+                                                        foreach ($deli_boys->result() as $boy)
                                                         {
-                                                        
-                                                            echo "<option class='option' value='".$status->id."'";
-                                                            if($transaction->trans_status_id == $status->id)
+                                                            echo "<option value='".$boy->user_id."'";
+                                                            if($transaction->delivery_boy_id == $boy->user_id)
                                                             {
                                                                 echo " selected ";
                                                             }
-                                                            echo ">".$status->title."</option>";
+                                                            echo ">".$boy->user_name."</option>";
                                                         }
+                                                        ?>
+                                                    </select>
+                                            <?php if ($orderTimestamp <= ($currentDateTime + $app_config->default_order_time*60)) {
+                                            ?>
+                                                <td class="align-middle text-center">
+                                                    
+                                                    <?php
+                                                    $transaction_status =  $this->Transactionstatus->get_one($transaction->trans_status_id);
+                                                    if ($transaction_status->ordering == "2"): ?>
+                                                        <div class='d-flex align-items-center justify-content-center'>
+                                                            <a class="btn btn-secondary fixed-size-btn" href="<?php echo $module_site_url . "/order_ready/" . $transaction->id; ?>">
+                                                                <span>Mark as Ready</span>
+                                                            </a>
+                                                        </div>
+                                                
+                                                    <?php elseif ($transaction_status->ordering == "3" && $transaction->pick_at_shop == "1"): ?>
+                                                        <div class='d-flex align-items-center justify-content-center'>
+                                                            <a class="btn btn-success fixed-size-btn" href="<?php echo $module_site_url . "/order_completed/" . $transaction->id; ?>">
+                                                                <span>Mark as Collected</span>
+                                                            </a>
+                                                        <div>
+                                                    <?php elseif ($transaction_status->ordering == "3" && $transaction->pick_at_shop == "0"): ?>
+                                                        <span class="order-collection" style = "color: orange; border-color: orange;"> Waiting For Driver</span>
+                                                    <?php elseif ($transaction_status->ordering == "5" ):?>
+                                                            <span class="order-collection" style = "color: green; border-color: green;"> <?= $transaction_status->title ?> </span>
+                                                    <?php elseif ($transaction_status->ordering == "0" ):?>
+                                                        <span class="order-collection" style = "color: red; border-color: red;"> <?= $transaction_status->title ?> </span>
+                                                    <?php else: ?>
+                                                        <span class="order-collection" style = "color: orange; border-color: orange;"><?= $transaction_status->title ?></span>
+                                                    <?php endif; ?>
+                                                </td>
+                                                    <?php
                                                     }
+                                                    else {
                                                     ?>
-                                                </select>
-                                            </td>
+                                                        <td>
+                                                            <span class="order-collection" style = "color: orange; border-color: orange;"> Upcoming Order</span>
+                                                        </td>
+                                                        <?php } ?>
+                                               
                                         </tr>
                                         
                                 <!--<tr>
@@ -364,9 +415,11 @@ $('.btn-assign').click(function(){
                                         </select>
                                     </td>
                                 </tr>-->
-                                <?php if($transaction->pick_at_shop != 1) { ?>
+                                <?php if($transaction->pick_at_shop != 1 && $this->Transactionstatus->get_one($transaction->trans_status_id)->ordering != 0) { 
+                                    ?>
                                     <tr>
                                         <th class="text-center align-middle"><?php echo get_msg('deliboy_label'); ?></th>
+                                        <?php if($this->Transactionstatus->get_one($transaction->trans_status_id)->ordering < "4"){?>
                                         <td><select class="select" name="delivery_boy_id" id="delivery_boy_id">
                                                 <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
                                                 <?php
@@ -389,17 +442,51 @@ $('.btn-assign').click(function(){
     										<span class="text-danger"><?php echo get_msg("deliboy_trans_deleted"); ?></span>
     										<?php endif; ?>
                                         </td>
+                                        <?php } else {?>
+                                            <td>
+                                                <span class="order-collection" style = "color: blue; border-color: blue;"> 
+                                                    <?php
+                                                    $conds['role_id'] = 5;
+                                                    $conds['status']= 1;
+                                                    $deli_boys = $this->User->get_all_by($conds);
+                                                    foreach ($deli_boys->result() as $boy)
+                                                    {
+                                                        if($transaction->delivery_boy_id == $boy->user_id)
+                                                        {
+                                                            echo $boy->user_name;
+                                                        }
+                                                    }
+                                                    ?>
+                                                </span>
+                                            </td>
+                                            <?php } ?>
                                     </tr>
                                 <?php } 
                                 ?>
+                                <?php
+                                    $status = $this->Transactionstatus->get_one($transaction->trans_status_id);
+                                    $orderFinished = $status->ordering == "0" || $status->ordering == "5";
+                                    ?>
 
-                                <tr >
-                                    <td colspan="2">
-                                        <input type="hidden" name="trans_header_id" value=<?php  echo $transaction->id;  ?>>
-                                        <button type="submit" class="btn fixed-size-btn btn-primary <?php echo $langauge_class; ?>" ><?php echo get_msg('btn_update')?></button>
-                                        <?php echo form_close(); ?>
-                                    </td>
-                                </tr>
+                                    <?php if ($orderFinished) : ?>
+                                        <tr>
+                                            <th class="text-center align-middle">Order Finished At</th>
+                                            <td>
+                                                <span class="order-collection" style="color: grey; border-color: grey;">
+                                                    <?php echo date('H:i', strtotime($transaction->updated_date)); ?>
+                                                </span>
+                                            </td>
+                                        </tr>
+                                    <?php else : ?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <form method="post" action="your_action_url"> <!-- Replace 'your_action_url' with the actual form action URL -->
+                                                    <input type="hidden" name="trans_header_id" value="<?php echo $transaction->id; ?>">
+                                                    <button type="submit" class="btn fixed-size-btn btn-primary <?php echo $langauge_class; ?>"><?php echo get_msg('btn_update'); ?></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php endif; ?>
                                 <?php } ?>
                             </table>
                             
@@ -416,7 +503,7 @@ $('.btn-assign').click(function(){
 		  <table class="table table-bordered  elevated-box">
             <?php $count = 0; ?>
             <tr>
-                <td class="cust-info-cell" colspan="6">
+                <td class="table-header" colspan="6">
                     <b>Items Detail</b>
                 </td>
             </tr>

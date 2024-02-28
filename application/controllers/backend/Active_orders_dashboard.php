@@ -941,12 +941,70 @@ class Active_orders_dashboard extends BE_Controller {
         }
 
     }
+	/**
+	 * Resume orders
+	 */
+	function resume_orders()
+	{
+		date_default_timezone_set('Europe/London');
+		$selected_shop_id = $this->session->userdata('selected_shop_id');
+		$shop_id = $selected_shop_id['shop_id'];
+		$data['accept_orders_date'] = date('Y-m-d H:i:s');
+		// update accept orders date
+		if ( ! $this->Mobile_setting->save( $data, 'mb1' )) {
 
+			// if there is an error in inserting user data,	
+	
+				// rollback the transaction
+				$this->db->trans_rollback();
+	
+				// set error message
+				$this->data['error'] = get_msg( 'err_model' );
+				
+				return;
+		}
+		redirect( site_url() . '/admin/active_orders_dashboard/index/'.$shop_id);
+	}
+/**
+	 * Pause orders
+	 */
+	function pause_orders()
+	{
+		date_default_timezone_set('Europe/London');
+		$selected_shop_id = $this->session->userdata('selected_shop_id');
+		$shop_id = $selected_shop_id['shop_id'];
+		// prepare duration
+		if ( $this->has_data( 'duration' )) {
+			$duration = $this->get_data('duration');
+			$currentDate = date('Y-m-d H:i:s'); 
+			if($duration == -1)
+			{
+				$data['accept_orders_date'] = date('Y-m-d 23:59:59');
+			}
+			else{
+				$data['accept_orders_date'] = date('Y-m-d H:i:s', strtotime($currentDate . ' + ' . $duration . ' seconds'));
+			}
+			
+		}
+		// update accept orders date
+		if ( ! $this->Mobile_setting->save( $data, 'mb1' )) {
+
+			// if there is an error in inserting user data,	
+	
+				// rollback the transaction
+				$this->db->trans_rollback();
+	
+				// set error message
+				$this->data['error'] = get_msg( 'err_model' );
+				
+				return;
+		}
+		redirect( site_url() . '/admin/active_orders_dashboard/index/'.$shop_id);
+	}
 	/**
 	 * Assign delivery boy to transaction header
 	 */
 	function assign_delivery_boy($trans_header_id){
-		
 		//shop id
 		$selected_shop_id = $this->session->userdata('selected_shop_id');
 		$shop_id = $selected_shop_id['shop_id'];
