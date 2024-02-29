@@ -314,7 +314,7 @@ $('.btn-assign').click(function(){
                                             date_default_timezone_set('Europe/London');
                                             $currentDateTime = time();
                                             $orderTimestamp = strtotime($transaction->delivery_pickup_date.' '.$transaction->delivery_pickup_time);?>
-                                            <select style="display: ;" class="select" name="trans_status_id" id="trans_status_id">
+                                            <select style="display: none;" class="select" name="trans_status_id" id="trans_status_id">
                                                             
                                                             <?php
                                                             $conds['is_optional'] = 0;
@@ -339,7 +339,7 @@ $('.btn-assign').click(function(){
                                                             }
                                                             ?>
                                                     </select>
-                                                    <select class="select" name="delivery_boy_id" id="delivery_boy_id">
+                                                    <select style="display: none;"class="select" name="delivery_boy_id" id="delivery_boy_id">
                                                         <option value="0"><?php echo get_msg('select_deli_boy'); ?></option>
                                                         <?php
                                                         $conds['role_id'] = 5;

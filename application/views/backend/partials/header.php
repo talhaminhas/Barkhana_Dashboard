@@ -159,7 +159,7 @@
 	width: 40px;
 	height: 40px;
 	font-weight: bold; 
-	border: 3px solid  rgba(0, 0, 255, 0.4);
+	border: 1px solid  rgba(0, 0, 255, 0.4);
 	display: flex;
     align-items: center;
     justify-content: center;

@@ -58,6 +58,8 @@
 		border-radius: 5px;
 		font-size: 15px;
 		padding:10px;
+		//box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+		margin-bottom: 4px;
 	}
 </style>
 <?php
@@ -157,22 +159,24 @@
 			</div>
 		</b>
 
+		<div>
 		<?php if ($is_open == true): ?>
 			<?php if ($is_accepting_orders == false): ?>
 				<div class="banner align-middle" style="color: red;">
-					<span class="table-header align-middle">Closed For New Orders</span>
+				<span class="table-header align-middle">Closed For New Orders till </span>
+				<span class="table-header align-middle" style=""><?= date('H:i:s', strtotime($app_config->accept_orders_date)); ?></span>
 				</div>
 				<div>
-					<a style="height: 40px;" class="btn btn-success lrg-btn-size btn-assign" href="<?php echo $module_site_url . "/resume_orders/";?>">
+					<a style="height: 40px;" class="btn btn-success fixed-size-btn btn-assign" href="<?php echo $module_site_url . "/resume_orders/";?>">
 						<span>Resume Orders</span>
 					</a>
 				</div>
 			<?php else: ?>
-				<div class="banner align-middle" style="color: green; background-color: rgba(0, 255, 0, 0.2);">
+				<!--<div class="banner align-middle" style="color: green; background-color: rgba(0, 255, 0, 0.2);">
 					<span class="table-header align-middle">Accepting New Orders</span>
-				</div>
+				</div>-->
 				<div style="">
-					<a href='#' style="" class='btn lrg-btn-size btn-danger btn-assign' data-toggle="modal" data-target="#pauseOrdersModal" id="<?php echo $ongoing->id; ?>">
+					<a href='#' style="" class='btn xlrg-btn-size btn-danger btn-assign' data-toggle="modal" data-target="#pauseOrdersModal" id="<?php echo $ongoing->id; ?>">
 						<span>Pause Orders</span>
 					</a>
 				</div>
@@ -184,6 +188,7 @@
 			<div >
 			</div>
 		<?php endif; ?>
+		</div>
 	</div>
 
 	
@@ -326,8 +331,8 @@
 	<?php 
 		if ( !empty( $preparing_orders ) && count( $preparing_orders ) > 0 ): 
 		?>
-	<div class="table-responsive" style="height: 100%;">
-		<table id="ongoing-orders-table" class="table  m-0  text-center align-middle" style="">
+	<div class="table-responsive" style="height: 100%; ">
+		<table id="ongoing-orders-table" class="table  m-0  text-center align-middle" style="width:100%;">
 			
 			<thead>
 			<tr>
@@ -936,23 +941,9 @@
         });
 
     }
-    //autorefresh sound every 2 seconds
-    /*var noti_time = document.getElementById("noti_time").value ;
-    setInterval(function () {
-        refresh();
-    }, noti_time);*/
 
-    function resetRefreshTimer() {
-    clearTimeout(refreshTimer);
-    
-    var page_time = document.getElementById("page_time").value;
-
-    refreshTimer = window.setTimeout(function () {
-        window.location.reload();
-    }, page_time);
-}
     var page_time = document.getElementById("page_time").value ;
-    window.setTimeout(function () {
+    var refreshTimeout = window.setTimeout(function () {
         window.location.reload();
     }, page_time);
 
@@ -966,8 +957,10 @@
 
 		// modify link with id
 		$('#assign-deliboy-form').attr( 'action', formLink + id );
-		// Reset refresh timer to 0
-		//resetRefreshTimer();
+		window.clearTimeout(refreshTimeout);
+		refreshTimeout = window.setTimeout(function () {
+			window.location.reload();
+		}, 60000);
 	});
     $(document).ready(function () {
   	$('#new-orders-table').DataTable({
@@ -993,7 +986,7 @@
 	$(document).ready(function () {
     $('#ongoing-orders-table').DataTable({
         "columnDefs": [
-            { "orderable": false, "targets": [3, 6, 7] } 
+            { "orderable": false, "targets": [3, 8, 9] } 
         ],
         "lengthChange": false,
         "searching": false, // Disable search bar
@@ -1111,15 +1104,15 @@ window.onload = function() {
     // Delete Trigger
     $('.btn-delete').click(function(){
 
-// get id and links
-var id = $(this).attr('id');
-var btnYes = $('.btn-yes').attr('href');
-var btnNo = $('.btn-no').attr('href');
+		// get id and links
+		var id = $(this).attr('id');
+		var btnYes = $('.btn-yes').attr('href');
+		var btnNo = $('.btn-no').attr('href');
 
-// modify link with id
-$('.btn-yes').attr( 'href', btnYes + id );
-$('.btn-no').attr( 'href', btnNo + id );
-});
+		// modify link with id
+		$('.btn-yes').attr( 'href', btnYes + id );
+		$('.btn-no').attr( 'href', btnNo + id );
+		});
 
 </script>
 

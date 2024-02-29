@@ -11,12 +11,13 @@
         top: 53px;  
         z-index: 1000;
         border-color: rgba(0, 0, 255, 0.3);
+        
     }
     </style>
 <ul class="breadcrumb" style="">
 
     <li class="breadcrumb-item">
-        <a href="<?php echo site_url('/admin'); ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">
+        <a href="<?php echo site_url('/admin'); ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);">
             <?php echo get_msg('dashboard_label'); ?>
         </a>
     </li>
@@ -26,7 +27,7 @@
         <li class="breadcrumb-item">
             
 
-            <a href="<?php echo $module_site_url; ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px;">
+            <a href="<?php echo $module_site_url; ?>" style="background-color: #3498db; color: #fff; padding: 5px 10px; border-radius: 5px; box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);">
                 <?php echo ucfirst(strtolower($module_name)); ?>
             </a>
         </li>
@@ -36,7 +37,7 @@
             <li class="breadcrumb-item">
                
 
-                <span style="background-color: #ccc; padding: 5px 10px; border-radius: 5px;">
+                <span style="background-color: #ccc; padding: 5px 10px; border-radius: 5px; ">
                     <?php echo $urls; ?>
                 </span>
 

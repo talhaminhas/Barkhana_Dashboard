@@ -1094,8 +1094,9 @@ class API_Controller extends REST_Controller
 	function get_shop_info_get( $conds = array(), $limit = false, $offset = false ) 
 	{
 
+		
 		$this->is_get = true;
-
+		$app_config = $this->Mobile_setting->get_one('mb1');
 		// get id
 		$id = $this->get( 'id' );
 
@@ -1103,6 +1104,8 @@ class API_Controller extends REST_Controller
 			$shop = $this->model->get_all()->result();
 			$shop_id = $shop[0]->id;
 			$data = $this->model->get_one($shop_id);
+			$data->order_preparing_time = $app_config->default_order_time;
+			$data->accept_orders_date = $app_config->accept_orders_date;
 		}
 		$this->custom_response( $data ,$offset);
 		
