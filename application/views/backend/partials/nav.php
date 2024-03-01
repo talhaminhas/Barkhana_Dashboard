@@ -37,8 +37,8 @@
 
         <!-- Digital Clock with Date -->
         <li class="clock">
-            <span id="digitalDate" style="color: black;"></span>
-            <span id="digitalTime" style=""></span>
+            <span  id="digitalDate" style="color: black;"></span>
+            <span  id="digitalTime" style="color: black;"></span>
         </li>
 
         <li class="nav-btn">
@@ -68,15 +68,16 @@
       font-size: 16px; 
       text-align: left;
       width:170px; 
-      background: rgba(0, 0, 255, 0.2);
+      //background: rgba(0, 0, 255, 0.2);
       //box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-      padding-left: 5px;
+      padding: 5px 5px 0px 5px;
       border-radius: 5px;
     }
-    .nav-btn{
-      border-radius: 5px;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
-    }
+    .nav-btn {
+    border-radius: 5px;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
   </style>
   <script>
 function updateDigitalClock() {

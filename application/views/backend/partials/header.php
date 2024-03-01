@@ -85,6 +85,8 @@
 	<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
 		integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
 		crossorigin=""></script>
+		
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
 
 	<!-- Load Esri Leaflet from CDN -->
 	<script src="https://unpkg.com/esri-leaflet@2.5.3/dist/esri-leaflet.js"
@@ -107,6 +109,7 @@
 
 </head>
 <?php
+    date_default_timezone_set('Europe/London');
 	//$this->set_flash_msg('error',"You don't have access to admin panel.");
 	if( $this->config->item("is_demo") == 1 ) {
 
@@ -155,17 +158,20 @@
 		//border-top: 2px solid #ddd;
 		
     }
-	.icon-btn{
-	width: 40px;
-	height: 40px;
-	font-weight: bold; 
-	border: 1px solid  rgba(0, 0, 255, 0.4);
-	display: flex;
+.icon-btn {
+    width: 40px;
+    height: 40px;
+    font-weight: bold; 
+    border: 1px solid rgba(0, 0, 255, 0.4);
+    display: flex;
     align-items: center;
     justify-content: center;
-	border-radius: 5px;
-	color: rgba(0, 0, 255, 0.4);
-  }
+    border-radius: 5px;
+    color: rgba(0, 0, 255, 0.4);
+}
+
+
+
   .nav-link{
 	color: rgba(0, 0, 255, 0.6);
   }

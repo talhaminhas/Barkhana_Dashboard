@@ -63,14 +63,21 @@
           </li>
 
           <li class="nav-item has-treeview touch-friendly" style="margin-left: 2px;">
-            <a href="<?php echo site_url('admin/transactions');?>" class="nav-link">
-                <i class="fa fa-history" style="padding-right: 10px; font-size: 20px;"></i> <!-- Use "fas" for Font Awesome Solid icons -->
-                <p style="font-size: 16px; margin-bottom: 0;">
-                    <?php echo "Order History"; ?>
-                </p>
-            </a>
-        </li>
-
+              <a href="<?php echo site_url('admin/transactions');?>" class="nav-link">
+                  <i class="fa fa-history" style="padding-right: 10px; font-size: 20px;"></i> <!-- Use "fas" for Font Awesome Solid icons -->
+                  <p style="font-size: 16px; margin-bottom: 0;">
+                      <?php echo "Order History"; ?>
+                  </p>
+              </a>
+          </li>
+          <li class="nav-item has-treeview touch-friendly" style="margin-left: 2px;">
+              <a href="<?php echo site_url('admin/reservations');?>" class="nav-link">
+                  <i class="fa fa-calendar" style="padding-right: 10px; font-size: 20px;"></i> <!-- Use "fas" for Font Awesome Solid icons -->
+                  <p style="font-size: 16px; margin-bottom: 0;">
+                      <?php echo "Reservations"; ?>
+                  </p>
+              </a>
+          </li>
           <?php if ( !empty( $module_groups )): ?>
             <?php 
                 

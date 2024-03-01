@@ -1,22 +1,91 @@
+<style>
+    .fc-left button, .fc-right button {
+        padding: 10px;
+        height: 40px;
+        border: 1px solid rgba(0, 0, 255, 0.4);
+        color: purple;
+        font-weight: bold;
+        background: rgba(0, 0, 255, 0.2);
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+    .fc-left button:focus,
+    .fc-right button:focus {
+        outline: 0px  solid rgba(0, 0, 255, 0.4); 
+        background: rgba(0, 0, 255, 0.4);
+        box-shadow: none;
+    }
+    #calendar {
+        border: 1px solid rgba(0, 0, 255, 0.4); 
+        border-radius: 5px;
+
+    }
+    #calendar .fc-view {
+        margin: -13px 13px 13px 13px;
+        //border: 1px solid rgba(0, 0, 255, 0.4);
+        border-radius: 5px;
+        height: 65vh;
+        overflow-y: auto;
+        scrollbar-width: none;
+        -ms-overflow-style: none; 
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+    }
+
+    #calendar .fc-view::-webkit-scrollbar {
+        display: none; /* For Chrome, Safari, and Opera */
+    }
+    
+    #calendar .fc-content-skeleton table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+
+    /* Style for table headers (days or weeks) */
+    #calendar .fc-widget-header {
+        background-color: rgba(0, 0, 255, 0.2); 
+        color: #fff; /* Set the text color */
+    }
+/* Style for today's cell */
+    #calendar .fc-today {
+        background-color: rgba(0, 0, 255, 0.1); /* Highlight today's cell with a different background color */
+    }
+
+    body{
+        margin-top: -50px;
+    }
+
+</style>
 <?php
 $num = 4;
 $num_padded = sprintf("%02d", $num);
 //echo $num_padded; // returns 04
 ?>
-<div id="wrapper">
-    <div class="wrapper wrapper-content">
-        <div class="row animated fadeInDown">
+<div id="wrapper " class="" style="">
+    <div class=" " >
+        <div class="row animated fadeInDown" >
 
-            <div class="col-lg-12">
-                <div class="ibox float-e-margins">
+            <div class="col-lg-12" >
+                <div class="ibox float-e-margins" >
 
-                    <div class="ibox-content">
-                        <a class="btn" style="padding-top: 15px;border-radius: 10px;background-color: <?php echo $this->config->item('pending_color'); ?>;" href="#"></a> Pending
-                        <a class="btn" style="margin-left: 20px;padding-top: 15px; border-radius: 10px;background-color: <?php echo $this->config->item('confirm_color'); ?>;" href="#"></a> Confirm
-                        <a class="btn" style="margin-left: 20px;padding-top: 15px;;border-radius: 10px;background-color: <?php echo $this->config->item('cancel_color'); ?>;" href="#"></a> Cancel
-                        <a class="btn" style="margin-left: 20px;padding-top: 15px;;border-radius: 10px;background-color: <?php echo $this->config->item('complete_color'); ?>" href="#"></a> Complete
-                        <hr>
-                        <div id="calendar"></div>
+                    <div class="ibox-content" style=" ">
+                    <div class="" style="margin-bottom: 15px; display: flex; align-items: center;">
+
+                        <a class="btn" style="padding-top: 15px; border-radius: 10px; background-color: <?php echo $this->config->item('pending_color'); ?>;" href="#"></a>
+                        <span style="margin-left: 5px;"> Pending</span>
+                        <a class="btn" style="margin-left: 20px; padding-top: 15px; border-radius: 10px; background-color: <?php echo $this->config->item('confirm_color'); ?>;" href="#"></a>
+                        <span style="margin-left: 5px;"> Confirm</span>
+                        <a class="btn" style="margin-left: 20px; padding-top: 15px; border-radius: 10px; background-color: <?php echo $this->config->item('cancel_color'); ?>;" href="#"></a> 
+                        <span style="margin-left: 5px;"> Cancel</span>
+                        <a class="btn" style="margin-left: 20px; padding-top: 15px; border-radius: 10px; background-color: <?php echo $this->config->item('complete_color'); ?>" href="#"></a> 
+                        <span style="margin-left: 5px;"> Complete</span>
+                        <a href='<?php echo $module_site_url .'/add';?>' class='btn btn-primary lrg-btn-size ml-auto'>
+                            <span class='fa fa-plus'></span> 
+                            Add Reservation
+                        </a>
+
+                    </div>
+
+                        
+                        <div id="calendar" style= ""></div>
                     </div>
 
                 </div>
@@ -24,7 +93,6 @@ $num_padded = sprintf("%02d", $num);
         </div>
     </div>
 </div>
-
 <?php
 
 function getDateTime($d, $t)
@@ -149,35 +217,43 @@ $reserves = json_encode($reserve_array);
 
         /* initialize the calendar
          -----------------------------------------------------------------*/
+        
+    });
+    $(document).ready(function () {
         var date = new Date();
         var d = date.getDate();
         var m = date.getMonth();
-        var y = date.getFullYear();
+        var y = date.getFullYear(); 
 
         $('#calendar').fullCalendar({
+            timeFormat: 'H(:mm)',
+            defaultView: 'agendaWeek',
+            fixedWeekCount: false,
             header: {
                 left: 'prev,next today',
                 center: 'title',
-                right: ''
+                right: 'month,agendaWeek,agendaList,agendaDay'  // Include 'agendaList' in the right section
             },
             editable: false,
-            droppable: false, // this allows things to be dropped onto the calendar
-            drop: function() {
-                // is the "remove after drop" checkbox checked?
+            droppable: false,
+            drop: function () {
                 if ($('#drop-remove').is(':checked')) {
-                    // if so, remove the element from the "Draggable Events" list
                     $(this).remove();
                 }
             },
-            events: <?php
-                    echo $reserves;
-                    ?>
-
-
-                ,
+            events: <?php echo $reserves; ?>,
             timezone: 'local',
+            now: date,
+            eventRender: function (event, element) {
+                element.find('.fc-time').css('font-weight', 'bold');
+                element.find('.fc-time').css('font-size', '15px');
+                element.find('.fc-title').css('font-weight', 'bold'); 
+                element.find('.fc-content').css('background-color', '');
+                element.find('.fc-time').text(event.start.format('HH:mm'));
+                element.css('box-shadow','0px 2px 4px rgba(0, 0, 0, 0.5)');
+            }
         });
 
+});
 
-    });
 </script>
