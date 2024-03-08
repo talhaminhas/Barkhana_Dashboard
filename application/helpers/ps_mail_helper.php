@@ -456,50 +456,58 @@ EOL;
 
 if ( !function_exists( 'send_contact_us_emails' )) {
 
-  function send_contact_us_emails( $contact_id, $subject = "" )
+  function send_contact_us_emails( $contact_id, $shop_id)
   {
-    // get ci instance  
-    $CI =& get_instance();
-    
-    $contact_info_obj = $CI->Contact->get_one($contact_id);
 
-    $contact_name  = $contact_info_obj->name;
-    $contact_email = $contact_info_obj->email;
-    $contact_phone = $contact_info_obj->phone;
-    $contact_msg   = $contact_info_obj->message;
-    
+		$CI =& get_instance();
+		$shop = $CI->Shop->get_one('shop0b69bc5dbd68bbd57ea13dfc5488e20a');
 
-    $to = $CI->Backend_config->get_one('be1')->receive_email;
-    $sender_name = $CI->Backend_config->get_one('be1')->sender_name;
-    $hi_admin  = get_msg('hi_admin_label');
-    $name = get_msg('name_label');
-    $email = get_msg('email_label');
-    $phone = get_msg('phone_label');
-    $message = get_msg('msg_label');
-    $best_regards = get_msg( 'best_regards_label' );
+		$shop_name = $shop->name;
+		$sender_name = $CI->Backend_config->get_one('be1')->sender_name;
 
-    $msg = <<<EOL
-<p>{$hi_admin},</p>
+		$contact_info_obj = $CI->Contact->get_one($contact_id);
+		$contact_name  = $contact_info_obj->name;
+		$contact_email = $contact_info_obj->email;
+		$contact_phone = $contact_info_obj->phone;
+		$contact_msg   = $contact_info_obj->message;
 
-<p>
-{$name} : {$contact_name}<br/>
-{$email} : {$contact_email}<br/>
-{$phone} : {$contact_phone}<br/>
-{$message} : {$contact_msg}<br/>
-</p>
+		$to = $shop->email;
+		$subject = 'New Message From '.$contact_name;
+		$msg = "
+			<p>Hi $shop_name,</p>
+			<p>You have received a new message from <strong>$contact_name</strong>.</p>
+			<table style='border-collapse: collapse;'>
+				<tr>
+					<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Message Details</strong></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>From</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$contact_name</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Phone</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$contact_phone</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Email</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$contact_email</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Message</td>
+					<td colspan='2' style='padding: 5px; border: 1px solid #000;'>$contact_msg</td>
+				</tr>
+			</table>
 
+			<br>
 
-<p>
-{$best_regards},<br/>
-{$sender_name}
-</p>
-EOL;
-    
-    
-    
+			<p>Best Regards,<br/>
+				<strong>$sender_name</strong><br/>
+			</p>
+		";
 
+		
     // send email from admin
-    return $CI->ps_mail->send_from_admin( $to, $subject, $msg );
+	    return $CI->ps_mail->send_from_admin( $to, $subject, $msg );
   }
 }
 
@@ -544,26 +552,61 @@ EOL;
 if ( !function_exists( 'send_email_to_user' )) {
 	function send_email_to_user($user_id, $user_email, $user_name, $user_phone, $shop_id, $resv_id, $resv_date, $resv_time, $note) 
 	{
-		// get ci instance  
-    	$CI =& get_instance();
-
+		$CI =& get_instance();
+		
 		$shop = $CI->Shop->get_one($shop_id);
-		$resv_info = "Please take note your reservation id is " . $resv_id . " for future inquiry to the shop.";
 		
 		
 		$sender_email = trim($shop->sender_email);
 		$sender_name  = $shop->name;
+		$sender_phone  = $shop->about_phone1;
+		$sender_address = $shop->address1;
+
 		$to = $user_email;
-		$subject = 'Reservation';
+		$subject = 'Reservation Request Submitted';
 		
-		$msg = "<p>Hi ".$user_name.",</p>".
-				"<p>Your reservation has been sent to the restaurant for the following dish at below : </p><br/><br/>".
-				"Date : " . $resv_date . " (DD/MM/YYYY)<br>".
-				"Time : " . $resv_time . " (HH-MM)<br>".
-				"Additional Note : " . $note . " <br>".
-				$resv_info.
-				"<p>Best Regards,<br/>".$sender_name."</p>";
-					
+		$msg = " 
+		<p>Hi $user_name,</p>
+		<p>Please take note your reservation request has been <strong style='color: red;'>Submitted</strong>.</p>
+		<table style='border-collapse: collapse;  border: 2px solid #000;'>
+			<tr>
+				<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Reservation Details</strong></td>
+			</tr>
+			<tr>
+				<td style='padding: 5px; border: 1px solid #000;'>Date</td>
+				<td style='padding: 5px; border: 1px solid #000;'>$resv_date</td>
+			</tr>
+			<tr>
+				<td style='padding: 5px; border: 1px solid #000;'>Time</td>
+				<td style='padding: 5px; border: 1px solid #000;'>$resv_time</td>
+			</tr>
+			<tr>
+				<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Customer Details</strong></td>
+			</tr>
+			<tr>
+				<td style='padding: 5px; border: 1px solid #000;'>Name</td>
+				<td style='padding: 5px; border: 1px solid #000;'>$user_name</td>
+			</tr>
+			<tr>
+				<td style='padding: 5px; border: 1px solid #000;'>Email</td>
+				<td style='padding: 5px; border: 1px solid #000;'>$user_email</td>
+			</tr>
+			<tr>
+				<td style='padding: 5px; border: 1px solid #000;'>Phone No</td>
+				<td style='padding: 5px; border: 1px solid #000;'>$user_phone</td>
+			</tr>
+		</table>
+	
+		<br>
+	
+		<p>Best Regards,<br/>
+			<strong>$sender_name</strong><br/>
+			Email: $sender_email<br/>
+			Phone: $sender_phone<br/>
+			Address: $sender_address<br/>
+		</p>
+	";
+				
 		// send email from admin
     	return $CI->ps_mail->send_from_admin( $to, $subject, $msg ); 
 	}
@@ -576,36 +619,59 @@ if ( !function_exists( 'send_email_status_update_to_user' )) {
     	$CI =& get_instance();
 		
 		$shop = $CI->Shop->get_one($shop_id);
-		$resv_info = "Please take note your reservation status has been changed to " . $resv_status_title . ". Your reservation detail infromation at below:";
 		
 		
 		$sender_email = trim($shop->sender_email);
 		$sender_name  = $shop->name;
-		$sender_phone  = $shop->phone;
-		$sender_address = $shop->address;
+		$sender_phone  = $shop->about_phone1;
+		$sender_address = $shop->address1;
 		
 		$to = $user_email;
-		$subject = 'Reservation';
+		$subject = 'Reservation '.$resv_status_title;
 		
-		$msg = "<p>Hi ".$user_name.",</p>".
-				$resv_info.
-				"<br><br>Date : " . $resv_date . " (DD/MM/YYYY)<br>".
-				"Time : " . $resv_time . " (HH-MM)<br>".
-				"Additional Note : " . $note . " <br>".
-	
-				
-				"<br>Reserved Person Detail<br>".
-				"Name : " . $user_name ."<br>".
-				"Email : " . $user_email ."<br>".
-				"Phone No : " . $user_phone ."<br><br>".
-				
-				"<p>Best Regards,<br/>"
-				.$sender_name. "<br>".
-				"Phone(".$sender_phone.")<br>".
-				"Address(".$sender_address.")<br>".
-				"</p>";
-		
-		// send email from admin
+		$msg = "
+			<p>Hi $user_name,</p>
+			<p>Please take note, your reservation has been <strong style='color: red;'>$resv_status_title</strong>.</p>
+			<table style='border-collapse: collapse; border: 2px solid #000;'>
+				<tr>
+					<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Reservation Details</strong></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Date</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$resv_date</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Time</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$resv_time</td>
+				</tr>
+				<tr>
+					<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Customer Details</strong></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Name</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_name</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Email</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_email</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Phone No</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_phone</td>
+				</tr>
+			</table>
+
+			<br>
+
+			<p>Best Regards,<br/>
+				<strong>$sender_name</strong><br/>
+				Email: $sender_email<br/>
+				Phone: $sender_phone<br/>
+				Address: $sender_address<br/>
+			</p>
+		";
+
+	// send email from admin
     	return $CI->ps_mail->send_from_admin( $to, $subject, $msg );
 		
 	}
@@ -618,27 +684,49 @@ if ( !function_exists( 'send_email_to_shop' )) {
     	$CI =& get_instance();
     	
 		$shop = $CI->Shop->get_one($shop_id);
-		$resv_info = "Please take note your reservation id is " . $resv_id . " for future inquiry to the shop.";
-		
-		$cust_info  = "Here is customer information.<br/>";
-		$cust_info .= "User Name : " . $user_name . "<br>";
-		$cust_info .= "Email     : " . $user_email . "<br>";
-		$cust_info .= "Phone     : " . $user_phone . "<br>";		
-		
-		
-		$sender_email = $shop->sender_email;
+		$shop_name = $shop->name;
 		$sender_name = $CI->Backend_config->get_one('be1')->sender_name;
 		$to = $shop->email;
-		$subject = 'Reservation';
-		$msg = "<p>Hi ".$shop->name.",</p>".
-					"<p>You have been received the reservation at below : </p><br/><br/>".
-					"Date : " . $resv_date . " (DD/MM/YYYY)<br>".
-					"Time : " . $resv_time . " (HH-MM)<br>".
-					"Additional Note : " . $note . " <br>".
-					$resv_info. "<br/><br/>" .
-					$cust_info."<br/><br/>". 
-					"<p>Best Regards,<br/>".$sender_name."</p>";
-					
+		$subject = 'New Reservation Request';
+		$msg = "
+			<p>Hi $shop_name,</p>
+			<p>You have a new reservation request.</p>
+			<table style='border-collapse: collapse;  border: 2px solid #000;'>
+				<tr>
+					<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Reservation Details</strong></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Date</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$resv_date</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Time</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$resv_time</td>
+				</tr>
+				<tr>
+					<td colspan='2' style='padding: 5px; text-align: center; border: 1px solid #000;'><strong>Customer Details</strong></td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Name</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_name</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Email</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_email</td>
+				</tr>
+				<tr>
+					<td style='padding: 5px; border: 1px solid #000;'>Phone No</td>
+					<td style='padding: 5px; border: 1px solid #000;'>$user_phone</td>
+				</tr>
+			</table>
+
+			<br>
+
+			<p>Best Regards,<br/>
+				<strong>$sender_name</strong><br/>
+			</p>
+		";
+		
 		// send email from admin
     	return $CI->ps_mail->send_from_admin( $to, $subject, $msg );
 		

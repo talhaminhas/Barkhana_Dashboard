@@ -50,7 +50,9 @@ class Contacts extends API_Controller
 		if ( $this->is_add ) {
 			$contact_id = $obj->id;
 			$subject = get_msg('contact_receive_message');
-			send_contact_us_emails( $contact_id, $subject );
+			$shops = $this->Shop->get_all()->result();
+			$shop_id = $shops[0]->id;
+			send_contact_us_emails($contact_id, $shop_id);
 			$this->success_response( get_msg( 'success_contact'));
 			
 
