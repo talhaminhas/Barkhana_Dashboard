@@ -5,7 +5,7 @@
 	
 <section class="content animated fadeInRight">
 	<div class="card card-info">
-	    <div class="card-header">
+	    <div class="card-header" style=''>
 	        <h3 class="card-title"><?php echo get_msg('cat_info')?></h3>
 	    </div>
         <!-- /.card-header -->

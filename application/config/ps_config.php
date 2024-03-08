@@ -13,10 +13,11 @@ $config['reset_url'] = "reset_email";
 /** Themes File Names */
 $config['themes'] = array( 'default', 'green', 'blue', 'orange', 'blue-grey' );
 $config['dashboard_setting'] = 1;
-$config['pending_color']  = "#f23939";
-$config['confirm_color']  = "#219427";
-$config['complete_color'] = "#3d39f2";
-$config['cancel_color']   = "#60605b";
+$config['pending_color']  = "#E76D15FF";
+$config['confirm_color']  = "#009738FF";
+$config['complete_color'] = "#6210EAFF";
+$config['cancel_color']   = "#424242FF";
+$config['rejected_color']   = "#EA1A1AFF";
 
 
 /** System Email */

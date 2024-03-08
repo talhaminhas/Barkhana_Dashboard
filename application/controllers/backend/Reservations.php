@@ -62,62 +62,80 @@ class Reservations extends BE_Controller {
 		parent::edit( $id );
 
 	}
+
+	function add()
+	{
+		
+		$this->data['action_title'] = 'Add Reservation';
+		parent::add( );
+	}
 	
 	function save( $id = false ) {
 
+		$data = array();
+		$shop_id = "shop0b69bc5dbd68bbd57ea13dfc5488e20a";
+	    if ( $this->has_data( 'resv_date' )) {
+			$data['resv_date'] = $this->get_data( 'resv_date' );
+
+		}
+		if ( $this->has_data( 'resv_time' )) {
+			$data['resv_time'] = $this->get_data( 'resv_time' );
+
+		}
+		if ( $this->has_data( 'user_name' )) {
+			$data['user_name'] = $this->get_data( 'user_name' );
+
+		}
+		if ( $this->has_data( 'user_phone_no' )) {
+			$data['user_phone_no'] = $this->get_data( 'user_phone_no' );
+
+		}
+		if ( $this->has_data( 'user_email' )) {
+			$data['user_email'] = $this->get_data( 'user_email' );
+
+		}
+		if ( $this->has_data( 'note' )) {
+			$data['note'] = $this->get_data( 'note' );
+
+		}
+		if ( $this->has_data( 'no_of_people' )) {
+			$data['no_of_people'] = $this->get_data( 'no_of_people' );
+
+		}
+		if ( $this->has_data( 'resv_status' )) {
+			$data['status_id'] = $this->get_data( 'resv_status' );
+
+		}
+		if ( $this->has_data( 'resv_shop_id_hidden' ) && $this->get_data( 'resv_shop_id_hidden' ) != '')  {
+			$data['shop_id'] = $this->get_data( 'resv_shop_id_hidden' );
+		}
+		else{
+			$data['shop_id'] = $shop_id;
+		}
+		if ( $this->has_data( 'resv_user_id_hidden' )) {
+			$data['user_id'] = $this->get_data( 'resv_user_id_hidden' );
+
+		}
+		if ( ! $this->Reservation->save( $data, $id )) {
+
+				$this->db->trans_rollback();
+				$this->data['error'] = get_msg( 'err_model' );
+			}
+			
 		if ($this->input->server('REQUEST_METHOD')=='POST') {
 			
 			if(htmlentities( $this->input->post('resv_status_hidden')) != htmlentities( $this->input->post('resv_status'))) { 
 			
-				$data = array(
-					'status_id' => htmlentities( $this->input->post('resv_status'))
-				);
-
-				//save category
-				if ( ! $this->Reservation->save( $data, $id )) {
-				// if there is an error in inserting user data,	
-
-					// rollback the transaction
-					$this->db->trans_rollback();
-
-					// set error message
-					$this->data['error'] = get_msg( 'err_model' );
-					
-					return;
-				}
-
-				/** 
-				 * Check Transactions 
-				 */
-
-				// commit the transaction
-				if ( ! $this->check_trans()) {
-		        	
-					// set flash error message
-					$this->set_flash_msg( 'error', get_msg( 'err_model' ));
-				} else {
-
-					if ( $id ) {
-					// if user id is not false, show success_add message
-						
-						$this->set_flash_msg( 'success', get_msg( 'success_res_edit' ));
-					} else {
-					// if user id is false, show success_edit message
-
-						$this->set_flash_msg( 'success', get_msg( 'success_res_add' ));
-					}
-				}
-
-				///send noti @ MN
 				//get device token from user
-				$user_id = $this->Reservation->get_one( $id )->user_id;
-				
+				$reservation = $this->Reservation->get_one( $id );
+				$user_id = $reservation->user_id;
 				$title = $this->Reservation_status->get_one(htmlentities( $this->input->post('resv_status')))->title;
-				$message = "Reservation status has been changed to " . $title;
-
+				$message = "Your Resrvation For ".$reservation->resv_date.", ".$reservation->resv_time." is " . $title.".";
+				$data['title'] = "Resrvation For ".$reservation->resv_date.", ".$reservation->resv_time;
 				$data['message'] = $message;
 				$data['flag'] = 'reservation';
 				$data['reservation_id'] = $id;
+				$data['description'] = $message;
 
 				$devices = $this->Notitoken->get_all_device_in($user_id)->result();
 

@@ -50,6 +50,13 @@ class Reservations extends API_Controller
 				'data'	=> 'require_shop_id')
 			);
 		}
+		if (!array_key_exists('no_of_people', $data)) {
+			//$this->response(array('error' => array('message' => 'require_shop_id')));
+			$this->response(array(
+				'status'=>'error',
+				'data'	=> 'require_no_of_people')
+			);
+		}
 		//$num_padded = sprintf("%02d", $num);
 		$ts = explode(":",$data['resv_time']);
 		
@@ -68,7 +75,8 @@ class Reservations extends API_Controller
 			'user_email'     => $data['user_email'],
 			'user_phone_no'  => $data['user_phone_no'],
 			'user_name'      => $data['user_name'],
-			'status_id'      => 1 
+			'status_id'      => 1 ,
+			'no_of_people'   => $data['no_of_people'],
 		);
 		
 		

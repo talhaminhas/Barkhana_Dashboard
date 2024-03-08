@@ -26,11 +26,12 @@
 
 
 .active {
-    color: rgba(0, 0, 255, 0.8);
-    border: 0px solid rgba(0, 0, 255, 0.4);
+    color: var(--main-text-color);
+    border: 0px solid var(--main-color);
     border-radius: 5px;
-    background-color: rgba(0, 0, 255, 0.2);
-    box-shadow: 0px 2px 4px rgba(0, 0, 255, 0.7);
+    background-color: var(--main-color);
+    box-shadow: none;
+	outline: 2px solid var(--main-color)
 }
 
 
@@ -53,7 +54,7 @@
   }
     .banner{
 		//border: 3px solid rgba(255, 0, 0, 0.2);
-		background-color: rgba(255, 0, 0, 0.2);
+		background-color: var(--main-color);
 		color: red;
 		border-radius: 5px;
 		font-size: 15px;

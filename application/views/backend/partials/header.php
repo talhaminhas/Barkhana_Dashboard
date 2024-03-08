@@ -74,9 +74,12 @@
     <script src="<?php echo base_url('assets/plugins/gallery/gallery.js');?>"></script>
 	<!-- For Calendar -->
   
-    <link href="<?php echo base_url('assets/fullcalendar/css/fullcalendar.css');?>" rel="stylesheet">
+    <!--<link href="<?php echo base_url('assets/fullcalendar/css/fullcalendar.css');?>" rel="stylesheet">
     <link href="<?php echo base_url('assets/fullcalendar/css/fullcalendar.print.css');?>" rel='stylesheet' media='print'>
-	
+    <script src="<?= base_url('assets/fullcalendar/js/moment.min.js'); ?>"></script>
+    <script src="<?= base_url('assets/fullcalendar/js/fullcalendar.min.js'); ?>"></script>-->
+	<script src="<?= base_url('assets/fullcalendar/js/index.global.js'); ?>"></script>
+
 	<!-- OpenStreet Map -->
 	<!-- Load Leaflet from CDN -->
 	<link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
@@ -131,6 +134,11 @@
 		body{
 			
 		}
+		:root {
+            --main-color: #cbb2fc; 
+			--main-border-color: #6f29f8;
+			--main-text-color: #6f29f8;
+        }
 .form-control {
     height: 40px !important;
 	border: 2px solid;
@@ -162,18 +170,30 @@
     width: 40px;
     height: 40px;
     font-weight: bold; 
-    border: 1px solid rgba(0, 0, 255, 0.4);
+    border: 1px solid var(--main-border-color);
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 5px;
-    color: rgba(0, 0, 255, 0.4);
+    color: var(--main-text-color);
 }
 
-
+.btn-primary{
+	background: var(--main-color);
+	color: var(--main-text-color);
+	font-weight: bold;
+	border: 0px;
+}
+.btn-warning{
+	color: var(--main-text-color);
+	font-weight: bold;
+}
+.btn{
+	font-weight: bold;
+}
 
   .nav-link{
-	color: rgba(0, 0, 255, 0.6);
+	color: var(--main-text-color);
   }
 	.image-container{
 		width: 100%; 
@@ -188,7 +208,7 @@
 		top: 0; left: 0;
 		 width: 100%; 
 		 height: 100%;
-		 color: rgba(0, 0, 255, 0.4);
+		 color: var(--main-text-color);
 	}
 	.img-fluid{
 		width: 97%; height: 250px; object-fit: cover;

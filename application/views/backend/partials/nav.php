@@ -1,5 +1,5 @@
   <!-- Navbar -->
-  <nav class=" navbar navbar-expand  table-header align-middle fixed-top"  style="background-color: rgba(0, 0, 255, 0.3); padding-left:300px;">
+  <nav class=" navbar navbar-expand  table-header align-middle fixed-top"  style="background-color: var(--main-color); padding-left:300px;">
     <?php $be_url = $this->config->item('be_url'); ?>
     
     <!-- Left navbar links -->
@@ -13,7 +13,7 @@
 
       <!-- Brand Logo -->
       
-        <span class="brand-text  " style="margin-left: 180px; width:100%; font-size: 27px; " >
+        <span class="brand-text text-left" style="color: var(--main-text-color); margin-left: 20px; width:100%; font-size: 27px; " >
           <?php 
               
 
@@ -37,8 +37,8 @@
 
         <!-- Digital Clock with Date -->
         <li class="clock">
-            <span  id="digitalDate" style="color: black;"></span>
-            <span  id="digitalTime" style="color: black;"></span>
+            <span  id="digitalDate" style=""></span>
+            <span  id="digitalTime" style=""></span>
         </li>
 
         <li class="nav-btn">
@@ -67,11 +67,10 @@
       margin-right: 10px; 
       font-size: 16px; 
       text-align: left;
-      width:170px; 
-      //background: rgba(0, 0, 255, 0.2);
-      //box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.5);
+      width:180px; 
       padding: 5px 5px 0px 5px;
       border-radius: 5px;
+      color: var(--main-text-color);
     }
     .nav-btn {
     border-radius: 5px;
