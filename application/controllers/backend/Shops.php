@@ -395,6 +395,12 @@ class Shops extends BE_Controller
 				$data['minimum_order_amount'] = $this->get_data('minimum_order_amount');
 			}
 
+			// prepare auto_accept_orders label
+			if ($this->has_data('auto_accept_orders')) {
+				$data['auto_accept_orders'] = 1;
+			} else {
+				$data['auto_accept_orders'] = 0;
+			}
 			// prepare pickup_message label
 			if ($this->has_data('pickup_message')) {
 

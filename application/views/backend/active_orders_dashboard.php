@@ -142,9 +142,11 @@
 
 		<!-- Tab buttons -->
 		<b style="">
-			<div id="tab1-button" class="tab-button" onclick="openTab('tab1')">
-				<span class="tab-number"><?= count($new_orders) ?></span><br> New Orders
-			</div>
+			<?php if (!empty($new_orders) && count($new_orders) > 0){ ?>
+				<div id="tab1-button" class="tab-button" onclick="openTab('tab1')">
+					<span class="tab-number"><?= count($new_orders) ?></span><br> New Orders
+				</div>
+			<?php } ?>
 			<div id="tab2-button" class="tab-button" onclick="openTab('tab2')">
 				<span class="tab-number"><?= count($preparing_orders) ?></span><br> Preparing Now
 			</div>
@@ -155,9 +157,11 @@
 			<div style="color: green;" id="tab4-button" class="tab-button" onclick="openTab('tab4')">
 				<span class="tab-number"><?= count($completed_orders) ?></span><br> Completed Orders
 			</div>
-			<div  style="color: red;" id="tab5-button" class="tab-button" onclick="openTab('tab5')">
-				<span class="tab-number" ><?= count($rejected_orders) ?></span><br> Rejected Orders
-			</div>
+			<?php if (!empty($rejected_orders) && count($rejected_orders) > 0){ ?>
+				<div  style="color: red;" id="tab5-button" class="tab-button" onclick="openTab('tab5')">
+					<span class="tab-number" ><?= count($rejected_orders) ?></span><br> Rejected Orders
+				</div>
+			<?php } ?>
 		</b>
 
 		<div>
@@ -452,9 +456,13 @@
 											</a>
 										<div>
 									<?php elseif ($this->Transactionstatus->get_one($ongoing->trans_status_id)->ordering == "3" && $ongoing->pick_at_shop == "0"): ?>
-										<span>Waiting For Driver</span>
+										<span style="font-weight: bold; color: <?= $this->Transactionstatus->get_one($ongoing->trans_status_id)->color_value ?>;">
+											Waiting For Driver
+										</span>
 									<?php else: ?>
-										<?php echo $title; ?>
+										<span style="font-weight: bold; color: <?= $this->Transactionstatus->get_one($ongoing->trans_status_id)->color_value ?>;">
+											<?php echo $title; ?>
+										</span>
 									<?php endif; ?>
 								</td>
 

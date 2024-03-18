@@ -61,7 +61,7 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 		$conds['transactions_header_id'] = $trans_header_obj->id;
 
 		$trans_details_obj = $CI->Transactiondetail->get_all_by($conds)->result();
-		$header_color = "#fc6f03";
+		$header_color = "";
 		//For Transaction Detials
 		for($i=0;$i<count($trans_details_obj);$i++) 
 		{
@@ -98,19 +98,17 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 						}
 						
 					} 
-					$att_info_str = "<li style='
-						background-color: #fabcb9;
-						border: 0px solid #ddd;
-						border-radius: 10px;
-						padding: 15px;
-						margin: 10px 0;
-						list-style: none;
-						'>
-							<div style='font-size: 20px; font-weight: bold; color: {$header_color}; margin-bottom: 10px'> 
+					$att_info_str = "<table style='border-collapse: collapse; width: 100%; border: 1px solid #000; border-radius: 10px; margin: 10px 0;'>
+					<tr>
+						<td style='padding: 15px;'>
+							<div style='font-size: 20px; font-weight: bold; margin-bottom: 10px'>
 								Extras
 							</div>
 							{$addon_content}
-						</li>";
+						</td>
+					</tr>
+				</table>";
+				
 
 				} 
 				//$att_info_str = rtrim($att_info_str, ","); 
@@ -142,44 +140,36 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 					</span>";
 				}
 				
-				$order_items .= "<li style='
-				background-color: #e6f7ff;
-				border: 0px solid #ddd;
-				border-radius: 10px;
-				padding: 15px;
-				margin: 10px 0;
-				list-style: none;
-				'>
-				<div style='font-size: 22px; font-weight: bold; color: {$header_color}; margin-bottom: 10px; display: flex; justify-content: space-between;'>
-				{$trans_details_obj[$i]->product_name}
-				{$product_discount_info_str}
-				</div>
-					<ul style='padding: 0;'>{$att_info_str}</ul>
-					<div style= 'display: flex; justify-content: space-between;'>
-						<span >
-							Quantity:
-						</span> 
-						<span style='text-align: right;'>
-							{$trans_details_obj[$i]->qty}
-						</span>
-					</div>
-					<div style= 'display: flex; justify-content: space-between;'>
-						<span>
-							Item Price:
-						</span> 
-						<span style='text-align: right;'>
-							£{$item_price}
-						</span>
-					</div>
-					<div style='display: flex; justify-content: space-between; font-size: 25px; font-weight: bold;'>
-						<div>
-							<span>Total:</span> 
-						</div>
-						<div style=' font-weight: bold; '>
-							£{$total_amount} {$trans_details_obj[$i]->product_unit}
-						</div>
-					</div>
-				</li>";
+				$order_items .= "<table style='border-collapse: collapse; width: 100%; border: 1px solid #000; border-radius: 10px; margin: 10px 0;'>
+					<tr style=''>
+						<td style='font-size: 22px; font-weight: bold; padding: 15px;  display: flex; justify-content: space-between;'>
+							{$trans_details_obj[$i]->product_name}
+							{$product_discount_info_str}
+						</td>
+					</tr>
+					<tr>
+						<td style='padding-right: 15px; padding-left: 15px; padding-bottom: 15px;'>
+							<ul style='padding: 0;'>{$att_info_str}</ul>
+							<div style='display: flex; justify-content: space-between;'>
+								<span>Quantity:</span>
+								<span style='text-align: right;'>{$trans_details_obj[$i]->qty}</span>
+							</div>
+							<div style='display: flex; justify-content: space-between;'>
+								<span>Item Price:</span>
+								<span style='text-align: right;'>£{$item_price}</span>
+							</div>
+							<div style='display: flex; justify-content: space-between; font-size: 25px; font-weight: bold;'>
+								<div>
+									<span>Total:</span>
+								</div>
+								<div style='font-weight: bold;'>
+									£{$total_amount} {$trans_details_obj[$i]->product_unit}
+								</div>
+							</div>
+						</td>
+					</tr>
+				</table>";
+
 
 				$att_info_str = "";
 				$sub_total_amt += $item_price * $trans_details_obj[$i]->qty;
@@ -235,51 +225,52 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 				</div>
 			</div>";
 		}
-		$email_content = 
-		"<p>{$payment_info}</p>
-		<div style='
-			background-color: #fabcb9;
-			padding: 15px;
-			border-radius: 10px;
-			margin: 10px 0;
-		'>
-			<p style='font-size: 22px; font-weight: bold; color: {$header_color};'><strong>{$prd_detail_info}:</strong></p>
-			<div style='
-				background-color: #fabcb9;
-				border: 0px solid #ddd;
-				border-radius: 10px;
-				padding: 15px;
-				margin: 10px 0;
-			'>
-				{$order_items}
-				<div style='display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;'>
-					<div>
-						<span>{$sub_total}:</span> 
-					</div>
-					<div style=' text-align: right;'>
-						£{$sub_total_amt}
-					</div>
-				</div>
-				{$coupon_discount_info}
-				<div style='display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;'>
-					<div>
-						<span>{$shipping_cost}:</span> 
-					</div>
-					<div style=' text-align: right;'>
-						+£{$shipping_amount}
-					</div>
-				</div>
-			</div>
-			<div style='display: flex; justify-content: space-between; font-size: 25px; font-weight: bold; color: red;'>
-					<div>
-						<span>{$total_bal_amt}:</span> 
-					</div>
-					<div style=' text-align: right;'>
-						£{$total_balance_amount}
-					</div>
-			</div>
-		</div>
-		<p>{$best_regards},<br>{$sender_name}</p>";
+		$email_content = "
+    <p>{$payment_info}</p>
+    <table style='border-collapse: collapse; width: 100%; border: 2px solid #000;'>
+        <tr>
+            <td colspan='2' style='padding: 15px; border-radius: 10px; margin: 10px 0; text-align: center; border: 1px solid #000;'>
+                <p style='font-size: 22px; font-weight: bold;'>{$prd_detail_info}:</p>
+            </td>
+        </tr>
+        <tr>
+            <td style='border: 1px solid #000; border-radius: 10px; padding: 15px; margin: 10px 0;'>
+                {$order_items}
+                <div style='display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;'>
+                    <div>
+                        <span>{$sub_total}:</span>
+                    </div>
+                    <div style='text-align: right;'>
+                        £{$sub_total_amt}
+                    </div>
+                </div>
+                {$coupon_discount_info}
+                <div style='display: flex; justify-content: space-between; font-size: 18px; font-weight: bold;'>
+                    <div>
+                        <span>{$shipping_cost}:</span>
+                    </div>
+                    <div style='text-align: right;'>
+                        +£{$shipping_amount}
+                    </div>
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan='2' style='border: 1px solid #000; border-radius: 10px; padding: 15px; margin: 10px 0;'>
+                <div style='display: flex; justify-content: space-between; font-size: 25px; font-weight: bold; color: red;'>
+                    <div>
+                        <span>{$total_bal_amt}:</span>
+                    </div>
+                    <div style='text-align: right;'>
+                        £{$total_balance_amount}
+                    </div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <p>{$best_regards},<br><strong>{$sender_name}</strong>.</p>";
+
+
 
 		//Shop or User
 		if ($to_who == "shop") {
@@ -287,7 +278,7 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 			$title = $hi . ' ' . $shop_name;
 			$content = <<<EOL
 			<p>{$order_receive_info}</p>
-			<p>{$trans_code}: {$trans_header_obj->trans_code}</p>
+			<p>{$trans_code}: <strong>{$trans_header_obj->trans_code}</strong></p>
 			{$email_content}
 		EOL;
 
@@ -298,7 +289,7 @@ if ( !function_exists( 'send_transaction_order_emails' )) {
 			$title = $hi . ' ' . $user_name;
 			$content = <<<EOL
 			<p>New Order is placed with the following information:</p>
-			<p>{$trans_code}: {$trans_header_obj->trans_code}</p>
+			<p>{$trans_code}: <strong>{$trans_header_obj->trans_code}</strong></p>
 			<p>{$trans_status_label}: {$trans_status}</p>
 			{$email_content}
 		EOL;

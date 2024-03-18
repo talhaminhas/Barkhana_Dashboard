@@ -29,7 +29,22 @@ class Users extends API_Controller
 		// convert customize category object
 		$this->ps_adapter->convert_user( $obj );
 	}
-	
+
+	function user_location_by_id_get() 
+	{
+		$user_id = $this->get('user_id');
+		if (!$user_id) {
+			$this->response(array('error' => array('message' => 'required user_id')));
+		}
+		$user = $this->User->get_one($user_id);
+		$this->response(
+			array(
+				'user_id' => $user->user_id,
+				'user_lat'=> $user->user_lat,
+				'user_lng' => $user->user_lng
+			)
+		);
+	}
 	/**
 	 * Users Registration
 	 */

@@ -1,5 +1,7 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+require 'C:\xampp\htdocs\barkhana\vendor\autoload.php';
+//$command = 'php -f C:\xampp\htdocs\barkhana\application\config\server.php';
+//exec($command, $output, $return_var);
 
 /*
 | -------------------------------------------------------------------

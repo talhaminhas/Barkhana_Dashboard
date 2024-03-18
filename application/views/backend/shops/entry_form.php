@@ -569,7 +569,14 @@ echo form_open( '', $attributes);
 								<!-- Monday -->
 								<div class="col-md-4">
 									<div class="form-check">
-										<label><input type="checkbox" name="monday" id="monday" <?php echo $disabled; ?> value="1" <?php if($monday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('monday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="monday" id= "monday" data-style="ios"
+											value="1" <?php if($monday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('monday_label') ?>
+										</label>
 									</div>
 
 								</div>
@@ -590,9 +597,15 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label><input type="checkbox" name="tuesday" id="tuesday" <?php echo $disabled; ?> value="1" <?php if($tuesday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('tuesday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="tuesday" id= "tuesday" data-style="ios"
+											value="1" <?php if($tuesday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('tuesday_label') ?>
+										</label>
 									</div>
-
 								</div>
 									
 								<div class="col-md-4">
@@ -611,7 +624,14 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label><input type="checkbox" name="wednesday" id="wednesday" <?php echo $disabled; ?> value="1" <?php if($wednesday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('wednesday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="wednesday" id= "wednesday" data-style="ios"
+											value="1" <?php if($wednesday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('wednesday_label') ?>
+										</label>									
 									</div>
 
 								</div>
@@ -632,8 +652,13 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label class="form-check-label">
-											<label><input type="checkbox" name="thursday" id="thursday" <?php echo $disabled; ?> value="1" <?php if($thursday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('thursday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="thursday" id= "thursday" data-style="ios"
+											value="1" <?php if($thursday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('thursday_label') ?>
 										</label>
 									</div>
 
@@ -655,8 +680,13 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label class="form-check-label">
-											<label><input type="checkbox" name="friday" id="friday" <?php echo $disabled; ?> value="1" <?php if($friday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('friday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="friday" id= "friday" data-style="ios"
+											value="1" <?php if($friday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('friday_label') ?>
 										</label>
 									</div>
 
@@ -678,8 +708,13 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label class="form-check-label">
-											<label><input type="checkbox" name="saturday" id="saturday" <?php echo $disabled; ?> value="1" <?php if($saturday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('saturday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="saturday" id= "saturday" data-style="ios"
+											value="1" <?php if($saturday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('saturday_label') ?>
 										</label>
 									</div>
 
@@ -701,8 +736,13 @@ echo form_open( '', $attributes);
 
 								<div class="col-md-4">
 									<div class="form-check">
-										<label class="form-check-label">
-											<label><input type="checkbox" name="sunday" id="sunday" <?php echo $disabled; ?> value="1" <?php if($sunday == 1) echo "checked";?> >&nbsp;&nbsp;<?php echo get_msg('sunday_label') ?></label>
+										<label>
+											<input class="toggle-btn" type="checkbox" name="sunday" id= "sunday" data-style="ios"
+											value="1" <?php if($sunday == 1) echo "checked";?> 
+											data-toggle="toggle" 
+											data-onstyle="success"
+											data-offstyle="danger">
+											<?php echo get_msg('sunday_label') ?>
 										</label>
 									</div>
 
@@ -789,21 +829,18 @@ echo form_open( '', $attributes);
 
 
 						<div class="form-group">
-							<div class="form-check">
 								<label>
-								
+								<?php echo get_msg( 'global_enabled' ); ?>
+								</label>
+								<br/>
 								<?php echo form_checkbox( array(
 									'name' => 'global_enabled',
 									'id' => 'global_enabled',
 									'value' => 'accept',
 									'checked' => set_checkbox('stripe_enabled', 1, ( @$shop->global_enabled == 1 )? true: false ),
-									'class' => 'form-check-input'
+									'class' => 'form-check-input',
+									'style' => 'margin: 0px;'
 								));	?>
-
-								<?php echo get_msg( 'global_enabled' ); ?>
-
-								</label>
-							</div>
 						</div>
 
 						<br>
@@ -1369,6 +1406,20 @@ echo form_open( '', $attributes);
 
 								<input class="form-control" type="text" placeholder="<?php echo get_msg('minimum_order_amount');?>" name='minimum_order_amount' id='minimum_order_amount'
 								value="<?php echo $shop->minimum_order_amount;?>">
+								
+								<br/>
+								<input class="toggle-btn" type="checkbox" name="auto_accept_orders" id= "auto_accept_orders" data-style="ios"
+									<?= set_checkbox('auto_accept_orders', 1, (@$shop->auto_accept_orders == 1) ? true : false) ? 'checked' : ''; ?> 
+									data-toggle="toggle" 
+									data-onstyle="success"
+									data-offstyle="danger">
+								<label>
+									Auto Accept Orders
+									<a href="#" class="tooltip-ps" data-toggle="tooltip" 
+										title="<?php echo get_msg('shop_name_tooltips')?>">
+									</a>
+								</label>
+
 							</div>
 						</div>	
           			</div>

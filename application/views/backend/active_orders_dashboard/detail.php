@@ -461,6 +461,16 @@ $('.btn-assign').click(function(){
                                             </td>
                                             <?php } ?>
                                     </tr>
+                                    <?php if($this->Transactionstatus->get_one($transaction->trans_status_id)->ordering < "4"){?>
+                                        <tr>
+                                            <td colspan="2">
+                                                <form method="post" action="your_action_url"> <!-- Replace 'your_action_url' with the actual form action URL -->
+                                                    <input type="hidden" name="trans_header_id" value="<?php echo $transaction->id; ?>">
+                                                    <button type="submit" class="btn fixed-size-btn btn-primary <?php echo $langauge_class; ?>"><?php echo get_msg('btn_update'); ?></button>
+                                                </form>
+                                            </td>
+                                        </tr>
+                                    <?php } ?>
                                 <?php } 
                                 ?>
                                 <?php
@@ -475,15 +485,6 @@ $('.btn-assign').click(function(){
                                                 <span class="order-collection" style="color: grey; border-color: grey;">
                                                     <?php echo date('H:i', strtotime($transaction->updated_date)); ?>
                                                 </span>
-                                            </td>
-                                        </tr>
-                                    <?php else : ?>
-                                        <tr>
-                                            <td colspan="2">
-                                                <form method="post" action="your_action_url"> <!-- Replace 'your_action_url' with the actual form action URL -->
-                                                    <input type="hidden" name="trans_header_id" value="<?php echo $transaction->id; ?>">
-                                                    <button type="submit" class="btn fixed-size-btn btn-primary <?php echo $langauge_class; ?>"><?php echo get_msg('btn_update'); ?></button>
-                                                </form>
                                             </td>
                                         </tr>
                                     <?php endif; ?>

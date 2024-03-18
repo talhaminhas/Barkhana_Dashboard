@@ -40,6 +40,7 @@
   	</style>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="<?php echo base_url('assets/plugins/font-awesome/css/font-awesome.min.css'); ?>">
+  	
 	<!-- Ionicons -->
 	<link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
 	<!-- Theme style -->
@@ -109,7 +110,8 @@
 
 	<!-- DataTables JavaScript -->
 	<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.11.5/js/jquery.dataTables.min.js"></script>
-
+	<link href="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css" rel="stylesheet">
+	<script src="https://cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js"></script>
 </head>
 <?php
     date_default_timezone_set('Europe/London');
@@ -138,6 +140,7 @@
             --main-color: #cbb2fc; 
 			--main-border-color: #6f29f8;
 			--main-text-color: #6f29f8;
+			--main-field-border-color: #808080
         }
 .form-control {
     height: 40px !important;
@@ -177,7 +180,13 @@
     border-radius: 5px;
     color: var(--main-text-color);
 }
-
+.toggle.ios, .toggle-on.ios, .toggle-off.ios {
+	margin-right: 20px;
+	 border-radius: 20px;
+	}
+  .toggle.ios .toggle-handle { 
+	
+}
 .btn-primary{
 	background: var(--main-color);
 	color: var(--main-text-color);

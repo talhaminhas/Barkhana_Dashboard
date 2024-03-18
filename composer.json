@@ -2,6 +2,9 @@
     "require": {
         "globalpayments/php-sdk": "^3.1",
         "firebase/php-jwt": "^6.8",
-        "vlucas/phpdotenv": "^5.5"
+        "vlucas/phpdotenv": "^5.5",
+        "cboden/ratchet": "^0.4.4",
+        "react/event-loop": "^1.5",
+        "react/socket": "^1.15"
     }
 }

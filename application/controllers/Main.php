@@ -17,6 +17,7 @@ class Main extends BE_Controller {
 
 		$this->load->library( 'PS_Mail' );
 
+		
 		if ( isset( $_GET['url'] )) {
 		// if source url is existed, that url need to be redirected after login/logout
 		

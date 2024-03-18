@@ -191,7 +191,7 @@ class Transactionheaders extends API_Controller
 
 
 		$shop_id = $shop_obj[0]->id;
-
+		$auto_accept_orders = $shop_obj[0]->auto_accept_orders;
 	
 	
 
@@ -421,8 +421,7 @@ class Transactionheaders extends API_Controller
 	 		}
 
 	 		// trans_status_id
-
-	 		$conds_stage['start_stage'] = '1';
+	 		$conds_stage['ordering'] = $auto_accept_orders == '0' ? '1' : '2';
 			$trans_data = $this->Transactionstatus->get_one_by($conds_stage);
 			$trans_status_id = $trans_data->id;
 			
@@ -652,7 +651,7 @@ class Transactionheaders extends API_Controller
 				*/
 
 				$to_who = "user";
-				$subject = get_msg('order_receive_subject');
+				$subject = "Order Has Been Placed";
 				send_transaction_order_emails( $trans_header_id, $to_who, $subject );
 
 				$this->convert_object($trans_header_obj);
@@ -742,18 +741,6 @@ class Transactionheaders extends API_Controller
 
 
 
-	function stripe_checking_get()
-	{
-
-		\Stripe\Stripe::setApiKey("sk_test_lxHim6W6aJAjb4jjAtfviY0t");
-		try {
-		  \Stripe\Charge::all();
-		  echo "TLS 1.2 supported, no action required.";
-		} catch (\Stripe\Error\ApiConnection $e) {
-		  echo "TLS 1.2 is not supported. You will need to upgrade your integration.";
-		}
-
-	}
 
 
 	function assign_deliveryboy_post()

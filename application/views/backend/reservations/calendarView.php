@@ -348,7 +348,7 @@ function getLabelColor($status)
     var scrollTimeString = hours + ':' + minutes + ':' + seconds;
 
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'timeGridDay',
+        initialView: 'listWeek',
         fixedWeekCount: false,
         editable: false,
         droppable: false,
