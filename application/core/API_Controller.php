@@ -50,6 +50,7 @@ class API_Controller extends REST_Controller
 	 */
 	function __construct( $model, $is_login_user_nullable = false )
 	{
+		
 		// header('Access-Control-Allow-Origin: *');
     	// header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 

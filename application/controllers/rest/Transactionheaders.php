@@ -21,6 +21,7 @@ class Transactionheaders extends API_Controller
 	 */
 	function __construct()
 	{
+		
 		parent::__construct( 'Transactionheader' );
 		$this->jwtfilter->authenticate();
 	}
@@ -741,6 +742,18 @@ class Transactionheaders extends API_Controller
 
 
 
+	function stripe_checking_get()
+	{
+
+		\Stripe\Stripe::setApiKey("sk_test_lxHim6W6aJAjb4jjAtfviY0t");
+		try {
+		  \Stripe\Charge::all();
+		  echo "TLS 1.2 supported, no action required.";
+		} catch (\Stripe\Error\ApiConnection $e) {
+		  echo "TLS 1.2 is not supported. You will need to upgrade your integration.";
+		}
+
+	}
 
 
 	function assign_deliveryboy_post()

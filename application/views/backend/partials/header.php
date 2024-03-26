@@ -69,7 +69,11 @@
 	<!-- jQuery -->
     <script src="<?php echo base_url( 'assets/plugins/jquery/jquery.min.js' ); ?>"></script>
 
+	<script src="<?php echo base_url( 'assets/js/BrowserPrint-3.1.250.min.js' ); ?>"></script>
+	<script src="<?php echo base_url( 'assets/js/BrowserPrint-Zebra-1.1.250.min.js' ); ?>"></script>
+
 	<link href="https://fonts.googleapis.com/css?family=Roboto+Mono|Work+Sans" rel="stylesheet">
+	
 	<!-- gallery lightbox -->
     <link rel="stylesheet" href="<?php echo base_url('assets/plugins/gallery/gallery.css'); ?>">
     <script src="<?php echo base_url('assets/plugins/gallery/gallery.js');?>"></script>
@@ -419,3 +423,205 @@
 }
  
 		</script>
+		<script >
+var selected_device;
+var devices = [];
+function setup()
+{
+	//Get the default device from the application as a first step. Discovery takes longer to complete.
+	BrowserPrint.getDefaultDevice("printer", function(device)
+			{
+		
+				//Add device to list of devices and to html select element
+				selected_device = device;
+				devices.push(device);
+				var html_select = document.getElementById("selected_device");
+				var option = document.createElement("option");
+				option.text = device.name;
+				html_select.add(option);
+				
+				//Discover any other devices available to the application
+				BrowserPrint.getLocalDevices(function(device_list){
+					for(var i = 0; i < device_list.length; i++)
+					{
+						//Add device to list of devices and to html select element
+						var device = device_list[i];
+						if(!selected_device || device.uid != selected_device.uid)
+						{
+							devices.push(device);
+							var option = document.createElement("option");
+							option.text = device.name;
+							option.value = device.uid;
+							html_select.add(option);
+						}
+					}
+					
+				}, function(){
+                    alert("Error getting local devices")
+                },"printer");
+				
+			}, function(error){
+				alert("Error: Unable to connect to the printer");
+			})
+            //alert(printer);
+}
+var marginLeft = '        ';
+var marginRight = '      ';
+var lineLength = 34;
+function printOrder(transaction) {
+
+    //each line has 8 + 34 + 6 = 48 char
+
+    var orderString = '';
+    orderString += alignEdges('.','.','.');
+    orderString += alignMiddle('Order Details');
+    orderString += alignEdges('.','.','.');
+    orderString += alignEdges('Order No:',' ',transaction.trans_code);
+    orderString += alignEdges('Order Type:',' ',transaction.pick_at_shop === '0' ? 'Delivery' : 'Collection');
+    orderString += alignEdges(transaction.pick_at_shop === '0' ? 'Delivery Date:' : 'Collection Date',' ', transaction.delivery_pickup_date);
+    orderString += alignEdges(transaction.pick_at_shop === '0' ? 'Delivery Time:' : 'Collection Time',' ', transaction.delivery_pickup_time);
+    orderString += alignEdges('.','.','.');
+    orderString += alignMiddle('Customer Details');
+    orderString += alignEdges('.','.','.');
+    orderString += alignEdges('Name:',' ',transaction.contact_name);
+    orderString += alignEdges('Phone:',' ',transaction.contact_phone);
+    orderString += alignEdges('Address:',' ',transaction.contact_address.slice(0, 24));
+    if(transaction.contact_address.length > 24)
+        orderString += nextLine(9, transaction.contact_address.slice(24, transaction.contact_address.length));
+        orderString += alignEdges('.','.','.');
+    orderString += alignMiddle('Items Detail');
+    orderString += alignEdges('.','.','.');
+    var itemSubtotal = 0;
+    var itemNumber = 0;
+    <?php 
+    $conds['transactions_header_id'] = $transaction->id;
+    $all_detail =  $this->Transactiondetail->get_all_by( $conds );
+    foreach($all_detail->result() as $transaction_detail){
+        $addon_name_info  = explode("#", $transaction_detail->product_addon_name);
+        $addon_price_info = explode("#", $transaction_detail->product_addon_price);
+    ?>
+        itemNumber += 1;
+        var transactionDetail = <?= json_encode($transaction_detail) ?>;
+        orderString += alignEdges(transactionDetail.product_name,' ', 
+        (parseFloat(transactionDetail.price) + parseFloat(transactionDetail.discount_amount)).toFixed(2).toString());
+        if(transactionDetail.discount_amount !== '0')
+            orderString += alignEdges('Discount Amount:', ' ', '- ' + parseFloat(transactionDetail.discount_amount).toFixed(2).toString());
+        var addonNames =  <?= json_encode($addon_name_info) ?>;
+        var addonPrices = <?= json_encode($addon_price_info) ?>;
+        var addonFlag = 0;
+        if (addonNames[0] !== '') {
+            
+            for (var k = 0; k < addonNames.length; k++) {
+                if (addonNames[k] !== "") {
+                    addonFlag = 1;
+                    orderString += alignEdges('  ' + addonNames[k], ' ', '+ ' + parseFloat(addonPrices[k]).toFixed(2).toString() + '  ');
+                }
+            }
+        } else {
+            addonInfoStr = "";
+        }
+        orderString += alignEdges('Quantity:',' ',transactionDetail.qty);
+        var total =  parseFloat(transactionDetail.qty * (transactionDetail.original_price - transactionDetail.discount_amount));
+        itemSubtotal += total; 
+        orderString += alignEdges('Total:',' ',total.toFixed(2).toString());
+        orderString += alignEdges('.','.','.');
+    <?php 
+    }
+    ?>
+    orderString += alignMiddle('Order Summary');
+    orderString += alignEdges('.','.','.');
+    orderString += alignEdges('Items Sub Total:',' ',itemSubtotal.toFixed(2).toString());
+    if(transaction.coupon_discount_amount !== '0')
+        orderString += alignEdges('Coupon Discount:', ' ', '- ' + parseFloat(transaction.coupon_discount_amount).toFixed(2).toString());
+    if(transaction.shipping_amount !== '0')
+        orderString += alignEdges('Delivery Cost:', ' ', '+ ' + parseFloat(transaction.shipping_amount).toFixed(2).toString());
+        orderString += alignEdges('.','.','.');
+    orderString += alignEdges('Sub Total:', ' ',
+        (parseFloat(transaction.sub_total_amount) + parseFloat(transaction.shipping_amount)).toFixed(2).toString());
+    orderString += alignEdges('.','.','.');
+    if(transaction.memo !== '')
+    {
+        orderString += alignMiddle('Message From Customer');
+        orderString += alignEdges('.','.','.');
+        orderString += formatMessage(transaction.memo);
+        orderString += alignEdges('.','.','.');
+    }
+    
+    orderString += '\n\n\n';
+    console.log(orderString);
+    //selected_device.send(orderString, undefined, errorCallback);
+}
+
+function formatMessage(message) {
+    formatedMessage = '';
+    for (let i = 0; i < message.length; i += lineLength) {
+        let line = message.substring(i, i + lineLength);
+        // Trim leading and trailing spaces from the line
+        line = line.trim();
+        // Add spaces to the end of the line if its length is less than lineLength
+        while (line.length < lineLength) {
+            line += ' ';
+        }
+        // Add '-' where a word is broken
+        if (i + lineLength < message.length && message[i + lineLength] !== ' ') {
+            const lastSpaceIndex = line.lastIndexOf(' ');
+            if (lastSpaceIndex !== -1) {
+                line = line.substring(0, lastSpaceIndex) + '-' + line.substring(lastSpaceIndex + 1);
+            }
+        }
+        formatedMessage += marginLeft + line + marginRight;
+    }
+    return formatedMessage;
+}
+function alignEdges(string1, character, string2) {
+    const remainingLength = lineLength - (string1.length + string2.length + 1);
+
+    // If remaining length is negative or zero, return empty string
+    if (remainingLength <= 0) {
+        return "";
+    }
+
+    // Repeat the character for the remaining length
+    const repeatedCharacter = character.repeat(remainingLength);
+
+    // Combine strings with the repeated character
+    const combinedString = marginLeft + string1 + character + repeatedCharacter + string2 + marginRight;
+
+    return combinedString;
+}
+function alignMiddle(string) {
+
+    if (string.length % 2 !== 0) {
+        string += ' ';
+    }
+    const remainingLength = lineLength - string.length;
+
+    // If remaining length is negative or zero, return empty string
+    if (remainingLength <= 0) {
+        return "";
+    }
+
+    // Calculate spaces needed on both sides
+    const spacesOnEachSide = Math.floor(remainingLength / 2);
+
+    // Construct the combined string with equal spaces on both sides
+    const combinedString = marginLeft + " ".repeat(spacesOnEachSide) + string + " ".repeat(spacesOnEachSide) + marginRight;
+
+    return combinedString.slice(0, 48);
+}
+
+function nextLine(spacesInFront, str ) {
+    
+    const spacesToAddEnd = Math.max(0, lineLength - str.length - spacesInFront);
+    const spacesToAddStart = Math.max(0, spacesInFront);
+    
+    const paddedString = marginLeft + ' '.repeat(spacesToAddStart) + str + ' '.repeat(spacesToAddEnd) + marginRight;
+    
+    return paddedString;
+}
+var errorCallback = function(errorMessage){
+	alert("Error: " + errorMessage);
+}
+
+window.onload = setup;
+</script>

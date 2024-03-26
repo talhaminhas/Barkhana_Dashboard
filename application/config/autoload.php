@@ -1,5 +1,6 @@
 <?php
-require 'C:\xampp\htdocs\barkhana\vendor\autoload.php';
+
+//require 'C:\xampp\htdocs\barkhana\vendor\autoload.php';
 //$command = 'php -f C:\xampp\htdocs\barkhana\application\config\server.php';
 //exec($command, $output, $return_var);
 
@@ -139,4 +140,5 @@ $autoload['model'] = array( 'User', 'Module', 'Role', 'Image', 'Category','Subca
 
 
 //date_default_timezone_set('Asia/Yangon');
-date_default_timezone_set('America/Los_Angeles');
+date_default_timezone_set('Europe/London');
+

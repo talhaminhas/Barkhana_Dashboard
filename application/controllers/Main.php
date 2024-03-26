@@ -13,6 +13,7 @@ class Main extends BE_Controller {
 	 * load required variables, libraries
 	 */
 	function __construct() {
+		
 		parent::__construct( NO_AUTH_CONTROL, 'MAIN' );
 
 		$this->load->library( 'PS_Mail' );

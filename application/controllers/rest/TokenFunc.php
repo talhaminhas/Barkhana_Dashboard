@@ -81,7 +81,6 @@ class TokenFunc extends API_Controller
 
     function refresh_token_post()
     {
-        
         $timezone = new DateTimeZone('Europe/London');
         $expired= $this->jwtlib->isTokenExpired($this->post( 'user_token' ));
         $token= array();

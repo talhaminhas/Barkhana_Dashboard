@@ -12,6 +12,7 @@ class Users extends API_Controller
 	 */
 	function __construct()
 	{
+		
 		parent::__construct( 'User' );
 		//$this->load->library('JwtLib');
 		// Apply the JwtFilter to specific methods
@@ -32,6 +33,7 @@ class Users extends API_Controller
 
 	function user_location_by_id_get() 
 	{
+		
 		$user_id = $this->get('user_id');
 		if (!$user_id) {
 			$this->response(array('error' => array('message' => 'required user_id')));

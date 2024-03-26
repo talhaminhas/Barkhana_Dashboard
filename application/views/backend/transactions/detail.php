@@ -104,7 +104,11 @@ $('.btn-assign').click(function(){
     <table class="table table-bordered elevated-box">
         <tr>
             <td class="table-header" colspan="8">
-                <h4><b>Order Detail</b></h4>
+                <div class = "row align-middle text-center" style=" display: flex; justify-content: space-between;">
+                    <h4 style="flex-grow: 1; " class="label-column text-center align-middle" ><b>Order Detail</b></h4>
+                    <input type="button" class=" align-center btn std-btn-size btn-danger" style="margin-right: 5px;"
+                     value="Print" onclick="printOrder(<?php echo htmlspecialchars(json_encode($transaction)); ?>)">
+                </div>
             </td>
         </tr>
         <tr>

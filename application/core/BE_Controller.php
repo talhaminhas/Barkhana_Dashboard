@@ -18,6 +18,7 @@ class BE_Controller extends PS_Controller {
 	 */
 	function __construct( $auth_level, $module_name )
 	{
+		
 		parent::__construct( $auth_level, $module_name );
 
 		// template path

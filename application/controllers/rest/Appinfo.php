@@ -11,6 +11,7 @@ class Appinfo extends API_Controller
 	 */
 	function __construct()
 	{
+		
 		// call the parent
 		parent::__construct( 'Appinfo' );	
 		$this->jwtfilter->authenticate();	

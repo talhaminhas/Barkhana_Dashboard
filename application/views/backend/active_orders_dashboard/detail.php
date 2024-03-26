@@ -87,6 +87,8 @@ $('.btn-assign').click(function(){
 		//resetRefreshTimer();
 	});
 </script>
+<meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+
 <div class="invoice p-3 mb-3 shadow-sm rounded  elevated-box">
   	<!-- title row -->
   	<div class="row ">
@@ -94,7 +96,11 @@ $('.btn-assign').click(function(){
     <table class="table table-bordered elevated-box">
         <tr>
             <td class="table-header" colspan="8">
-                <h4><b>Order Detail</b></h4>
+                <div class = "row align-middle text-center" style=" display: flex; justify-content: space-between;">
+                    <h4 style="flex-grow: 1; " class="label-column text-center align-middle" ><b>Order Detail</b></h4>
+                    <input type="button" class=" align-center btn std-btn-size btn-danger" style="margin-right: 5px;"
+                     value="Print" onclick="printOrder(<?php echo htmlspecialchars(json_encode($transaction)); ?>)">
+                </div>
             </td>
         </tr>
         <tr>
@@ -102,7 +108,7 @@ $('.btn-assign').click(function(){
             <td class="text-center align-middle"><?php echo $transaction->trans_code; ?></td>
             <td class="label-column text-center align-middle">Date</td>
             <td class="text-center align-middle"><?php echo date('Y-m-d', strtotime($transaction->added_date)); ?></td>
-            <td class="label-column text-center align-middle">Recieving Time</td>
+            <td class="label-column text-center align-middle">Time</td>
             <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->added_date)); ?></td>
             <td class="label-column text-center align-middle">Pickup Time</td>
             <td class="text-center align-middle"><?php echo date('H:i', strtotime($transaction->delivery_pickup_time)); ?></td>

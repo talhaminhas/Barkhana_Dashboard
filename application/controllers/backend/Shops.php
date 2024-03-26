@@ -13,6 +13,7 @@ class Shops extends BE_Controller
 	function __construct()
 	{
 
+		
 		parent::__construct(MODULE_CONTROL, 'SHOPS');
 		///start allow module check
 		$conds_mod['module_name'] = $this->router->fetch_class();

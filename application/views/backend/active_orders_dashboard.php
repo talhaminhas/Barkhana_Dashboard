@@ -64,6 +64,7 @@
 	}
 </style>
 <?php
+
 		date_default_timezone_set('Europe/London');
 		//new orders
 		$app_config = $this->Mobile_setting->get_one('mb1');
@@ -317,7 +318,6 @@
 							
 							
 							<?php endif; ?>
-
 						</tr>
 
 					<?php endforeach; ?>
