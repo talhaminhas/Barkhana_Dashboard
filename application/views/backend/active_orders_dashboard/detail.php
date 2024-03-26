@@ -103,7 +103,7 @@ $('.btn-assign').click(function(){
                 </div>
             </td>
         </tr>
-        <tr>
+        <tr> 
             <td class="label-column text-center align-middle">Order Number</td>
             <td class="text-center align-middle"><?php echo $transaction->trans_code; ?></td>
             <td class="label-column text-center align-middle">Date</td>
